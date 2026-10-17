@@ -67,3 +67,11 @@ Do not falsely label sports and broadcasters live without a verified feed. Do no
 - Network-first first-party service worker cache replaces prior cache-first behaviour; version updates after deployment no longer depend solely on manually bumping a cache name.
 - GitHub Actions QA workflow and `.nojekyll` marker included.
 - GitHub repository planned: `Maxi1412/global-tv-hub`. **No remote repository or live URL has been confirmed**. User must create the repo; then upload complete code and image assets, enable GitHub Pages, and verify production behaviour.
+
+## Post-v0.5 priorities (17 October 2026)
+
+**Already built:** A static GitHub Pages PWA with premium Sky, NOW UK and DAZN provider entries, free-event sports discovery, distinction between direct HLS candidates and official services, private authorised HLS URL mapping, local source diagnostics, playback retry/recovery, sports access filtering, smoke tests and unchanged approved design references.
+
+**Remaining integration:** Acquire authorised browser-playable provider feeds where APIs/terms allow; determine whether authenticated providers offer official embed SDK integrations. A Sky/WOW/DAZN subscription does not itself provide a third-party HLS URL. Implement server-proxied EPG only after reviewing rights, rates and keys, with secrets kept off the static Pages repository. Test browser CORS, geo access and HD bitrate from Orihuela Costa, Spain, on each target device and create an evidence-backed channel health matrix. The user's key UX constraint: selecting a channel **never** sends them automatically to another site. For unavailable feeds, provide an honest in-app no-source state.
+
+Do not republish unlicensed premium feeds, bypass DRM or geographic controls, or infer live status from a channel's name. App source is in the repository; remote `main` remains canonical; validate any changes via `node tests/smoke.cjs` and Chromium UI tests before deploying.

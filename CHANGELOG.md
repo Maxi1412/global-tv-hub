@@ -30,3 +30,13 @@
 - Add automatic retry across configured stream candidates with playback-status messages and quality selection.
 - Bundle two CDN entry points for HLS player load resilience.
 - Keep IPTV subscription credentials/user stream URLs out of GitHub by storing local source overrides.
+
+## v0.5 · 2026-10-17 — Sports catalogue, access tiers and playback resilience
+
+- Added Sky Sport Bundesliga, Mix and Top Event (Germany), Sky Sports Football, Tennis and Cricket (UK), DAZN F1 Spain and a SPORT1 free-TV listing. Paid entries intentionally have no false free direct HLS URLs.
+- Added Red Bull TV, UEFA.tv, ServusTV On and RTL selected F1 free event research to Sports Hub, explicitly noting territory and provider restrictions.
+- New Sports Hub filter tabs for `Free selection` and `Subscription` plus visible sport badges.
+- In-app stream diagnostics: latest outcome, timestamp and source label, stored only on device with clear option.
+- Better HLS fallback lifecycle: reset stall watchdog on new time updates; attempt one local media recovery when HLS reports a fatal decode error.
+- Clearer labels distinguish unverified public in-app stream candidates from guaranteed playback.
+- Desktop and mobile UI smoke-tested in headless Chromium using static inline assets; stream access not tested.

@@ -53,3 +53,10 @@ These are **official viewing pages verified via public search**, not proof that 
 - Node smoke tests: routes, channel selection, no outgoing channel-watch buttons, per-channel source form, sports in-app navigation, quality picker, source catalog and cache.
 - PWA cannot confirm actual CDN video playback from the container: outgoing HTTP/DNS are unavailable.
 - Free streams can still be blocked by a browser's CORS policy, carrier filters, broadcast rights, or disconnected origin. User network QA is necessary.
+
+## v0.5 QA (17 October 2026)
+
+- `node --check app.js`, `node --check data.js`, `node --check sw.js`: pass.
+- `node tests/smoke.cjs`: pass; covers sports free/subscription filters, channel mapping, app navigation, private HLS setup, diagnostics and source transparency.
+- Headless Chromium: desktop 1440x900 and mobile 390x844 smoke tests passed by exercising Sports filters, Sky F1 source handling and Live TV routes. Screenshot output inspected. Browser test used an inlined static shell because local network/file navigation was administratively blocked.
+- Limitations: No live HLS feed was verified in the user's Spain browser; no provider DRM license, streaming subscription or international rights were acquired; public HLS candidates remain unverified.

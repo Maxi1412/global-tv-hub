@@ -67,3 +67,25 @@ See `QA_REPORT.md` and `CHANGELOG.md` for the verified QA/improvement loop.
 - For RTL, ProSieben, SAT.1, Sky and other DRM/subscription channels, no unrestricted browser-compatible source has been verified; the player stays inside the app with a Connect Source form instead of opening other websites. Private IPTV stream URLs are stored on-device only (not in this repository).
 - Sports cards show details within the PWA instead of redirecting. No fictional live TV programme information or sports fixtures.
 - **Important:** Publicly indexed playlists do not establish redistributing rights, broadcaster endorsement, geographic availability, CORS capability, or guaranteed HD. The broadcaster/provider controls access and resolution.
+
+## v0.5: Sports streaming architecture and source transparency
+
+- **Published-provider research**: Sky/WOW Germany covers German F1 and Bundesliga with a paid subscription; Sky Sports/NOW UK is a separate paid UK service. DAZN holds the F1 rights in Spain through 2030. No authorised browser-compatible Sky or DAZN HLS feed is presently supplied to this app.
+- **Selected legal free coverage**: Red Bull TV (specific live events), UEFA.tv (selected youth, women's and futsal games and highlights), ServusTV On (territory-specific free sporting events) and occasional RTL free-TV F1 races in Germany. A free official website does **not** imply it allows third-party embedding or playback in Spain.
+- **In-app source architecture**: Public HLS candidates and user-provided authorised HTTPS HLS feeds remain distinct; adaptive quality comes from the actual playlist, with 720p/1080p offered only when present.
+- **Improved playback**: Failed CDN sources fall back without leaving Global TV Hub; one fatal HLS media decode failure gets a local recover attempt before fallback. Startup and stall timeouts are separated, and channel source diagnostics are stored locally.
+- **Local privacy**: No provider passwords, tokens or HLS links are stored in the public GitHub repository. Users who have licensed provider feeds can configure them in the app's Settings on their own device.
+- **Scope**: This update does not bypass subscription, DRM, or geographic restrictions; it does not embed copyrighted pay-TV feeds from unauthorised sites.
+
+Primary rights and service references (checked October 17, 2026):
+- https://dazngroup.com/press-room/dazn-renueva-los-derechos-de-formula-1-en-espana-portugal-y-andorra-hasta-2030/
+- https://www.wowtv.de/live-sport
+- https://www.sky.de/sport
+- https://www.nowtv.com/membership/watch-sky-sports
+- https://www.uefa.com/uefatv-faq/
+- https://www.redbull.tv/events
+- https://www.servustv.com/de/content/seite/sport-livestreams-bei-servustv-on
+- https://www.sport1.de/unternehmen/faq
+- https://media.rtl.com/pressemappe/Die-Motorsport-Saison-2026-bei-RTL-Deutschland/
+
+**Limit**: Repo smoke tests validate application behavior but **not** real-time media loading, regional availability, stream bitrates, DRM access, or licensing. Test with the actual user's devices in Spain.
