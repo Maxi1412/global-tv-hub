@@ -43,14 +43,18 @@ for (const [route,expected] of [['live','Live TV'],['sports','Sports you can wat
   assert.ok(ui.innerHTML.includes(expected),`route ${route}`);
 }
 click('channel','rtl');
-assert.match(ui.innerHTML,/No public browser-compatible feed/);
+assert.match(ui.innerHTML,/no confirmed public browser-compatible stream/);
 assert.ok(!ui.innerHTML.includes('data-official'),'channel plays must never redirect');
 click('channel','ard');
 assert.match(ui.innerHTML,/Retry in app/);
 assert.match(ui.innerHTML,/VLC export/);
 assert.match(ui.innerHTML,/quality-select/);
+assert.match(ui.innerHTML,/Try another feed/,'in-app fallback control');
+assert.match(ui.innerHTML,/Programme blocked/,'rights notice handling');
 click('filter','News');
 assert.match(ui.innerHTML,/tagesschau24/);
+assert.ok(catalog.channels.some(x=>x.id==='tagesschau24'&&x.stream),'tagesschau24 public candidate');
+for(const id of ['alexberlin','dokusat','hr','brnorth','terramater']) assert.ok(catalog.channels.some(x=>x.id===id&&x.stream),'free broadcaster feed '+id);
 assert.match(ui.innerHTML,/phoenix/);
 click('filter','Sports');
 assert.match(ui.innerHTML,/Sky Sport 1 HD/);

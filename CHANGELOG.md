@@ -1,3 +1,11 @@
+## v0.7 — 17 October 2026: fixes from Spain playback screenshots
+- Prioritize public broadcaster main feed before alternates. ARD now tries international HLS before domestic. Ignore historical last-working ARD source so saved blocked German stream cannot override international.
+- Include viewer-controlled Try another feed and Programme blocked? controls while keeping player in-app.
+- Correct the meaning of video 'playing': an HLS connection is not proof of viewable programming, especially on geoblocked channels.
+- Remove generic football picture behind unrelated channels and show German public channels in the Channel Guide instead of first five sports stations.
+- Add tagesschau24 and five further free German public/FAST stream candidates: ALEX Berlin, Dokusat, hr, BR Nord, Terra Mater WILD.
+- Update tests and offline cache version. Actual Spanish device playback of new sources remains unverified.
+
 ## v0.6 — One-click free sports streaming
 - Add six direct public HLS sports channels with multiple public-source fallbacks where available.
 - Map six Sports Hub cards directly to the internal player; no source-entry prompt or external site redirect.

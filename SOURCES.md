@@ -42,3 +42,13 @@ Updated 17 October 2026. This prototype is an independent directory, not a strea
 - World of Freesports: https://mainstreammedia-worldoffreesportsintl-rakuten.amagi.tv/hls/amagi_hls_data_rakutenAA-mainstreammediafreesportsintl-rakuten/CDN/master.m3u8
 - **Not available:** Sky Sport F1/Sky Sports UK or full DAZN F1 licensed live race streams without authorised paid integration. No open stream claimed.
 - Source discovery from IPTV-org public listings is not playback testing; verify CORS, manifest, H.264, rights in Spain before promoting a feed as working.
+
+## v0.7 — additional public channel candidates (not verified in Spain)
+- tagesschau24: https://tagesschau.akamaized.net/hls/live/2020115/tagesschau/tagesschau_1/master.m3u8
+- ALEX Berlin: https://alex-stream.rosebud-media.de/bounce/alexlivetv50.smil/index.m3u8
+- Dokusat: https://muc3.iptv-playoutcenter.de/dokusat/dokusat1/playlist.m3u8
+- hr-fernsehen: https://hrhls.akamaized.net/hls/live/2024525/hrhls/index.m3u8
+- BR Nord: https://mcdn.br.de/br/fs/bfs_nord/hls/de/master.m3u8
+- Terra Mater WILD German: https://53ff3982.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/UmxheHhUVi1ldV9UZXJyYU1hdGVyV2lsZF9ITFM/playlist.m3u8
+- https://github.com/iptv-org/iptv/blob/master/streams/de.m3u
+- ARD international rights: https://hilfe.ard.de/mediathek/verfuegbarkeit-und-verweildauer-mt/abruf-von-livestreams-im-ausland/
