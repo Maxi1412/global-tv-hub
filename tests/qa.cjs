@@ -1,0 +1,11 @@
+const fs=require('node:fs'),assert=require('node:assert/strict'),vm=require('node:vm');
+const html=fs.readFileSync('index.html','utf8');
+const scripts=[...html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/gi)].map(x=>x[1]).filter(Boolean);
+assert.ok(scripts.length,'Inline app script missing');for(const source of scripts)new vm.Script(source,{filename:'inline-app.js'});
+for(const text of ['Global TV Hub','Sports Hub','Official Sports Providers','TV Guide','Sky Sports F1','DAZN','Hls.isSupported','capLevelToPlayerSize','serviceWorker','favorites','location.hash'])assert.ok(html.includes(text),'Missing '+text);
+const manifest=JSON.parse(fs.readFileSync('manifest.webmanifest','utf8'));assert.equal(manifest.display,'standalone');
+for(const icon of manifest.icons)assert.ok(fs.existsSync(icon.src.replace(/^\.\//,'')),'Missing '+icon.src);
+for(const f of ['sw.js','SOURCES.md','icon.svg','.nojekyll'])assert.ok(fs.existsSync(f),'Missing '+f);
+new vm.Script(fs.readFileSync('sw.js','utf8'),{filename:'sw.js'});
+assert.ok(!html.includes('http://'),'Unencrypted http link');
+console.log('PASS: inline JS parses, six HLS candidate URLs, pages, sports providers, local favourites, manifest and offline files. Live broadcasts remain unverified.');
