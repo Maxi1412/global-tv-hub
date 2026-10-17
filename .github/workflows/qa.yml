@@ -20,3 +20,13 @@ jobs:
           node --check sw.js
       - name: App and catalogue smoke test
         run: node tests/smoke.cjs
+      - name: Probe public HLS manifests (CI-region availability only)
+        run: node tests/probe-sources.cjs
+        continue-on-error: true
+      - name: Upload public source audit
+        uses: actions/upload-artifact@v4
+        with:
+          name: public-source-manifest-audit
+          path: source-health-ci.json
+          if-no-files-found: ignore
+
