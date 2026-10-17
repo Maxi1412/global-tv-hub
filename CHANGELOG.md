@@ -1,3 +1,10 @@
+## v0.6 — One-click free sports streaming
+- Add six direct public HLS sports channels with multiple public-source fallbacks where available.
+- Map six Sports Hub cards directly to the internal player; no source-entry prompt or external site redirect.
+- Clarify unavailable Sky/DAZN premium channels and prevent misleading live-race claims.
+- Bump offline PWA cache to v6 and extend smoke tests for stream-linked sports cards.
+- Playback in Spain remains unverified; no authenticated or pirated Sky feeds included.
+
 # Global TV Hub changelog
 
 ## v0.3 — 2026-10-17

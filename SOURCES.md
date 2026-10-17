@@ -32,3 +32,13 @@ Updated 17 October 2026. This prototype is an independent directory, not a strea
 - Integrate a licensed EPG. Never display invented live match times.
 - Add image assets from the locally built original v0.2 package; the first public preview is deliberately lightweight and self-contained.
 - Validate PWA install on Android Chrome and on desktop browsers; an SVG-only manifest icon can have platform-specific limitations.
+
+## v0.6 — Direct free sports TV, not premium race rebroadcasts
+- Red Bull TV: https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master.m3u8 (1080p rendition reported independently; ES/EU FAST alternatives in data.js)
+- More Than Sports TV: https://mts1.iptv-playoutcenter.de/mts/mts-web/playlist.m3u8 (1080p master public listing, German free TV; browser CORS unverified)
+- Teledeporte Spain: https://rtvelivestream.rtve.es/rtvesec/tdp/tdp_main.m3u8 (RTVE public 720p listed feed, alternate in data.js)
+- DF1 Germany: https://dbjwcot8t7nyd.cloudfront.net/out/v1/9d068a9428444b458324ad77b5a0a4b8/index.m3u8 (German free sports, geo restrictions possible)
+- Motorvision free FAST: https://stream.ads.ottera.tv/playlist.m3u8?network_id=535 (partner channel, Rakuten fallback)
+- World of Freesports: https://mainstreammedia-worldoffreesportsintl-rakuten.amagi.tv/hls/amagi_hls_data_rakutenAA-mainstreammediafreesportsintl-rakuten/CDN/master.m3u8
+- **Not available:** Sky Sport F1/Sky Sports UK or full DAZN F1 licensed live race streams without authorised paid integration. No open stream claimed.
+- Source discovery from IPTV-org public listings is not playback testing; verify CORS, manifest, H.264, rights in Spain before promoting a feed as working.
