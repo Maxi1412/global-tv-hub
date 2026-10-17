@@ -1,0 +1,69 @@
+/** Global TV Hub: deterministic, dependency-free interface and catalogue smoke tests. */
+const {readFileSync, existsSync}=require('node:fs');
+const {runInNewContext}=require('node:vm');
+const {join}=require('node:path');
+const assert=require('node:assert/strict');
+const root=join(__dirname,'..');
+const ui={innerHTML:'',callbacks:{},addEventListener(type,cb){this.callbacks[type]=cb;}};
+const toaster={textContent:'',hidden:true};
+const searchEl={value:'',selectionStart:1,focus(){},setSelectionRange(){}};
+const doc={
+  getElementById(id){return ({app:ui,toast:toaster,'search-input':searchEl})[id]??null},
+  querySelectorAll(){return []},
+};
+const loc={hash:'#home',protocol:'file:',hostname:''};
+const browser={TV_DATA:null,location:loc,history:{replaceState(_a,_b,to){loc.hash=to}},scrollTo(){},addEventListener(){},open(){}};
+const saved={};
+const local={getItem(k){return saved[k]??null},setItem(k,v){saved[k]=v;}};
+const sandbox={window:browser,document:doc,location:loc,localStorage:local,navigator:{},setTimeout(){return 2},clearTimeout(){},URL,Blob,Date,Math};
+runInNewContext(readFileSync(join(root,'data.js'),'utf8'),sandbox,{filename:'data.js'});
+const catalog=browser.TV_DATA;
+assert.ok(catalog.channels.length >= 28,'channel catalogue must contain German and international sports subscriptions');
+assert.equal(catalog.channels.filter(x=>x.stream).length,6,'six unverified direct HLS entries');
+assert.ok(catalog.channels.every(x=>x.official===null||x.official.startsWith('https://')));
+assert.ok(catalog.channels.every(x=>x.stream===null||x.stream.startsWith('https://')));
+assert.equal(new Set(catalog.channels.map(x=>x.id)).size,catalog.channels.length,'unique channel IDs');
+assert.equal(new Set(catalog.sports.map(x=>x.id)).size,catalog.sports.length,'unique sport IDs');
+for (const s of catalog.sports) {
+  assert.ok(s.url.startsWith('https://'),s.name+' official destination');
+  assert.ok(existsSync(join(root,'assets',s.image)),s.name+' thumbnail');
+}
+runInNewContext(readFileSync(join(root,'app.js'),'utf8'),sandbox,{filename:'app.js'});
+assert.match(ui.innerHTML,/German Live TV/);
+const click=(name,value)=>ui.callbacks.click({target:{closest(){return {dataset:{[name]:value}};}}});
+for (const [route,expected] of [['live','Live TV'],['sports','Formula 1, football'],['guide','TV Programme Guide'],['favorites','My Favourites'],['settings','Settings & Sources'],['search','Search']]) {
+  click('nav',route);
+  assert.ok(ui.innerHTML.includes(expected),`route ${route}`);
+}
+click('channel','rtl');
+assert.match(ui.innerHTML,/Official live page/);
+assert.ok(!ui.innerHTML.includes('Try live stream'),'no proprietary unlicensed HLS');
+click('channel','ard');
+assert.match(ui.innerHTML,/Try live stream/);
+assert.match(ui.innerHTML,/Export for VLC/);
+assert.match(ui.innerHTML,/quality-select/);
+click('filter','News');
+assert.match(ui.innerHTML,/tagesschau24/);
+assert.match(ui.innerHTML,/phoenix/);
+click('filter','Sports');
+assert.match(ui.innerHTML,/Sky Sport 1 HD/);
+assert.match(ui.innerHTML,/Sky Sports Main Event/);
+click('nav','sports');
+click('sportFilter','Football');
+assert.ok(ui.innerHTML.includes('Sportschau'),'free ARD sports entry');
+assert.ok(!ui.innerHTML.includes('MotoGP'),'football filter excludes motorsport');
+click('nav','settings');
+assert.match(ui.innerHTML,/Import M3U playlist/);
+assert.match(ui.innerHTML,/mobile-settings/,'mobile settings entry on all screens');
+click('clear','history');
+assert.ok(ui.innerHTML.includes('Settings & Sources'),'clearing history retains current page');
+click('nav','live');
+ui.callbacks.input({target:{id:'search-input',value:'ARTE',selectionStart:4}});
+assert.match(ui.innerHTML,/Results for/);
+assert.ok(ui.innerHTML.includes('ARTE'),'search works from live route');
+assert.equal(loc.hash,'#search');
+const sw=readFileSync(join(root,'sw.js'),'utf8');
+assert.ok(sw.includes('fetch(req).then'),'network-first version freshness');
+assert.ok(sw.includes('u.origin!==self.location.origin'),'external broadcaster requests excluded from caching');
+assert.ok(existsSync(join(root,'.nojekyll')),'GitHub Pages compatible');
+console.log('PASS — expanded channel catalogue, 6 HLS candidates, official sport links, 7 routes, responsive settings, search, filters, cache update logic');

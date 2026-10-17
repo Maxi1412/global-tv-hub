@@ -1,15 +1,22 @@
-name: PWA Quality Checks
+name: PWA QA
 on:
   push:
     branches: [main]
   pull_request:
+permissions:
+  contents: read
 jobs:
-  check:
+  smoke-test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Validate Global TV Hub static files
-        run: node tests/qa.cjs
+      - name: Check JavaScript
+        run: |
+          node --check app.js
+          node --check data.js
+          node --check sw.js
+      - name: App and catalogue smoke test
+        run: node tests/smoke.cjs

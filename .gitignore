@@ -1,0 +1,6 @@
+# Local test output and editor files (keep approved artwork under design-reference/)
+qa-*.png
+.DS_Store
+node_modules/
+coverage/
+*.log

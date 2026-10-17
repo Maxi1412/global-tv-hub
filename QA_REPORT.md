@@ -1,24 +1,48 @@
-# Global TV Hub — QA pass (2026-10-17)
+# QA update — Global TV Hub v0.3, 17 October 2026
 
-## Verified
-- GitHub commit on main contains index.html, manifest.webmanifest, sw.js, icon.svg and sources.
-- GitHub Actions **PWA Quality Checks** completed successfully on commit 72ef84f75750a09a146d5675996505ede95361e8.
-- HTML embedded JavaScript and service worker compile using Node VM validation.
-- Required routes (Home, Live TV, Sports, Guide, Favourites, Search, Settings), favourites and official provider cards pass structural checks.
-- Mobile navigation corrected: icon spans now remain visible at narrow widths.
+- `node --check` for all JavaScript: PASS.
+- `node tests/smoke.cjs`: PASS, 28 channel entries, six unverified HLS candidates, new official Sky/Eurosport entries and manifest-based quality menu.
+- Chromium automation attempted through local HTTP and file URL. Both failed before page load with `ERR_BLOCKED_BY_ADMINISTRATOR` in this execution environment. **No browser visual test or device playback is claimed.**
+- Sky Deutschland confirms Sky Sport 1 HD, 2 HD and F1 HD exist, subscription required.
+- NOW UK confirms Sky Sports services and that Full HD depends on plan/device; access from Spain is not verified and may be refused.
+- Official F1 rights for Spain through 2030: DAZN/F1 joint announcement, September 8, 2026.
+- HLS source URLs are old candidates, not verified broadcasting rights, resolution or real-time operation. No fictitious live indicators or EPG fixtures.
+- Remaining: actual browser QA, GitHub Pages deployment verification, Spain playback checks, HD bitrate/manifest resolution auditing, supported EPG source, licences for embedded pay TV.
 
-## Research additions
-- German Sky Sport 1 HD, Sky Sport 2 HD, Sky Sport NFL; WOW streaming portal.
-- UK Sky Sports Main Event, Sky Sports Premier League, Sky Sports Football; official viewing pages.
-- Existing F1, Sky Sport F1, Bundesliga, DAZN España, MotoGP, Sportschau and ZDF Sport links retained.
+# Global TV Hub — QA and improvement report
 
-## Still unverified
-- Site is not published until the GitHub Pages setting is enabled by repository owner.
-- Visual screenshot/layout on actual mobile and desktop device.
-- Real broadcast playback, direct HLS availability/CORS/DRM/geoblocking from Spain.
-- Actual 720p/1080p/4K source quality, startup speed or buffering performance.
-- PWA installation across devices; SVG-only icon has varying platform compatibility.
-- EPG integration, programme times, provider sign-in, sync database.
+**Build:** v0.2 | **Date:** 2026-10-17 | **Status:** functional source-code prototype; deployment / broadcast access pending
 
-## Design assets
-The initial hosted GitHub page is a lightweight self-contained functioning preview inspired by the approved images. The earlier local v0.2 project package and the three original full-resolution designs were not uploaded to this repository. A future Git-capable asset sync is required to preserve the exact reference imagery and richer v0.2 layouts in this remote repository.
+## Confirmed locally
+- `node --check app.js`, `data.js`, `sw.js` — PASS.
+- `node tests/smoke.cjs` — PASS: 19 stations, six direct HLS **candidates**, unique catalogue IDs, 7 navigation routes, direct-player vs official-link differentiation, News and football filters, free Sportschau link, search transition, Settings button, external URL sanity and first-party-only cache behaviour.
+- Verified linked artwork assets exist in the project.
+- `.nojekyll` and dependency-free GitHub Actions test workflow added for repository-based QA.
+- Original three user-approved design images remain unmodified under `design-reference/`.
+
+## Bugs corrected in the QA improvement loop
+1. Settings not reachable from mobile navigation: add Settings button in mobile topbar.
+2. Search from Live TV did not stop playback: stop active media before replacing player view.
+3. Clear-history command left current UI unchanged: render after clearing.
+4. Failed network fetch of HLS.js could prevent retries: reset cached promise on failure.
+5. Corrupt/non-array localStorage values could break app startup: validate saved collections.
+6. Cache-first service worker could pin outdated UI after GitHub commits: network-first same-origin resources with offline fallback.
+
+## External sources added or corrected
+- ARD Das Erste live: https://www.ardmediathek.de/LIVE
+- tagesschau24: https://www.ardmediathek.de/tagesschau24/live/Y3JpZDovL2Rhc2Vyc3RlLmRlL3RhZ2Vzc2NoYXUvbGl2ZXN0cmVhbQ
+- phoenix: https://www.ardmediathek.de/live/phoenix/Y3JpZDovL3dkci5kZS9CZWl0cmFnLTE3YTg4ZDdmLWI5NTAtNDcyNy05M2E0LWE3NzI3YjkxNjVkZQ
+- ONE: https://www.ardmediathek.de/live/one/Y3JpZDovL3dkci5kZS9CZWl0cmFnLTkxOWU4MzNlLWYxYTktNDdmYi1iNmYwLTNmMTllNjVkMDBkMQ
+- KiKA: https://www.ardmediathek.de/live/kika/Y3JpZDovL2tpa2EuZGUvTGl2ZXN0cmVhbS1LaUth
+- ARD Sportschau: https://www.ardmediathek.de/sport
+- ZDF: https://www.zdf.de/live-tv
+
+These are **official viewing pages verified via public search**, not proof that video works embedded or from Spain. No new unlicensed HLS URLs were added.
+
+## Unverified / next QA gates
+- Visual screenshots and responsive layout across real phone/tablet/desktop: Chromium headless in this runtime timed out. No visual pass claim.
+- Browser PWA install, offline reload and update behaviour in a real HTTPS deployment: not yet validated.
+- Real HLS playback, CORS/DRM, regional rights and performance from user's actual connection in Spain: not validated.
+- Official broadcaster pages' account requirements and paywalls can change without notice.
+- No live match schedule, EPG, account sync or server persistence has been connected yet.
+- `Maxi1412/global-tv-hub` repository must be created and GitHub Pages configured; no URL is live as part of this report.

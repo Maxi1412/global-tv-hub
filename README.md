@@ -1,36 +1,59 @@
-# Global TV Hub
+# Global TV Hub — PWA prototype v0.3
 
-German live television and sports directory — responsive, installable PWA preview for desktop and Android.
+A responsive, installable Progressive Web App built from the three user-approved concept screenshots. This is a working frontend prototype and playback integration scaffold; **it is not a live-TV service with confirmed access to all displayed stations**.
 
-## Open the app
+## Available now
 
-After GitHub Pages is enabled under Settings → Pages → Deploy from a branch → main / (root), use the GitHub Pages URL shown in settings.
+- Responsive Home, Live TV, Sports Hub, Programme Guide, Favourites, Search and Settings screens. On mobile, Settings remains accessible from the toolbar.
+- Official broadcaster/provider actions open verified viewing pages (availability is subject to location/account/rights).
+- 28 listed TV stations, including authorised Sky / Eurosport launchers, and six direct HLS URL **candidates** (Das Erste, ZDF, ARTE, 3sat, ZDFinfo, ZDFneo). In-app HTML5/HLS.js playback attempts, error feedback and fallback to official websites are implemented. **Candidates have not been network/geo-verified in Spain.**
+- Channels without verified direct streams (RTL, ProSieben, SAT.1, Kabel Eins etc.) launch official providers, not illicit or fabricated feeds.
+- Source-based quality selector: HLS streams show the actual variants advertised by their manifest; Auto remains the default and can adapt to network speed. HD delivery is never guaranteed.
+- Sports discovery (F1, Bundesliga, Champions League, Premier League, tennis, MotoGP, plus free ARD Sportschau and ZDF Sport options); links to authorised providers. DAZN holds F1 rights for Spain through 2030.
+- Persistent favourites and recently played streams (browser localStorage), custom HLS channel registration, local M3U playlist import, and export of individual HLS entries as `.m3u` files that VLC can open.
+- Network-first service worker (updates visible on the next online visit), manifest and 192/512px icons for PWA installation; offline *interface shell* only (video feeds always require online access).
+- The three original approved UI mockups are preserved in `/design-reference/`. Supporting images inside the working UI are cropped from this AI-generated design artwork.
 
-The repository is currently named **global-tv-hub.** (notice the trailing period). Rename it in Settings → General to **global-tv-hub** for a simpler site URL, then configure Pages.
+## How to open
 
-## Features (public preview v0.3)
-- Dark TV dashboard based on approved product style, responsive navigation for PC and mobile.
-- 19 channel catalogue entries with broadcaster-owned official links.
-- Six unverified public HLS candidates for ARD, ZDF, ARTE, 3sat, ZDFinfo and ZDFneo.
-- HLS playback through browser/native HLS or pinned hls.js engine (Auto / best quality source).
-- Sports directory: DAZN Spain, Movistar, Sky Deutschland F1 and Bundesliga, UK Sky Sports F1, RTL+, Sportschau, ZDF Sport, MotoGP, tennis.
-- Search, country/type filtering, persistent browser-local favourites.
-- TV guide placeholder that makes no claims about current programming.
-- Offline PWA shell, manifest and SVG icon. See browser-specific icon/install limitations below.
-- Automatic QA checks through GitHub Actions on code changes.
+For a **quick UI review**, extract the ZIP and open `index.html` in a browser. File-based opening may not provide PWA installation, clipboard support or HLS streaming.
 
-## Source quality and access
-**Direct HLS URLs are unverified candidates, not guaranteed working channels or verified 1080p broadcasts.** Subscriptions, geographic rights, CORS, content protection and provider quality settings apply. Check real performance on a Spanish connection. For paid content, cards open official provider websites; no DRM bypass or illicit restreaming is provided.
+For actual PWA installation and streaming tests, serve the directory over **HTTPS or localhost**. The user's Windows environment/server setup is not yet verified; Codex should inspect the PC and choose a tested command/hosting approach instead of assuming software or paths.
 
-No backend or cloud database yet; favourites stay on your current device. This is a functional lightweight online preview, not yet a full clone of the three user-approved artwork mockups. The more detailed local v0.2 source package and original design images remain to be synced by a Git-capable development environment in the future. Do not overwrite this online preview without comparing the new implementation.
+This project's default data is in `data.js`; front-end interaction logic is in `app.js`; design styling is in `styles.css`.
 
-## QA / development
-- Run `node tests/qa.cjs` — structural/syntax checks.
-- Open the published page on desktop/mobile to test navigation, search and favourites.
-- Verify HLS, CORS, geo restrictions, measured resolution, buffering and provider access **on an actual connection in Spain**.
-- Replace generic sports portal links with event-deep links only when official provider endpoints allow it.
-- A licensed EPG is required before showing real programme titles/times.
-- Full PWA installability requires testing on Android Chrome; SVG-only icon support differs by browser. Add real PNG 192×192 and 512×512 icons before claiming cross-platform installability.
-- Static GitHub Pages cannot host a synchronised per-user database; choose a secure backend and auth later if wanted.
+## Important channel status
 
-See [SOURCES.md](SOURCES.md) for official broadcasters, sports services and HD guidelines.
+**Official site** = researched broadcaster site linked. This does **not** guarantee access from Spain.
+
+**HLS candidate** = a direct URL from public IPTV community catalogue(s) pointing to broadcaster delivery hosts, wired to the player but **not tested** from Spain and not checked for embedding permission. A link may be inaccessible, geoblocked, DRM-protected, CORS-restricted, deprecated, or disallowed for reuse.
+
+No current programmes, sports matches, live status or kick-off times are fabricated. The EPG layout is a placeholder until an authorised live guide is integrated.
+
+## Known limitations
+
+- Browser automation screenshot/visual rendering was unavailable in the build environment (Chromium headless timed out); JS source and route/data smoke tests passed.
+- Content playback, DRM and regional access must be verified **on your actual network in Spain**. VLC export only downloads a playlist pointer, not TV content.
+- HLS.js is loaded on demand from `https://cdn.jsdelivr.net/npm/hls.js@1/dist/hls.min.js`. It requires an internet connection and a compatible browser. Vendor and version-pin before production if desired.
+- Data/preferences are local-device only; no login, sync, recording, server, backend or EPG API is integrated.
+- Mobile site layout is coded responsively but needs real browser visual QA.
+- Authenticated broadcaster accounts should be used only on their official app/site unless a formal supported integration exists.
+
+## Local validation performed
+
+- `node --check app.js`, `node --check data.js`, `node --check sw.js` — passed.
+- `node tests/smoke.cjs` — passed (19 channels, 6 HLS candidates, seven routes, search transition, sports filters, mobile-settings presence and version-aware caching).
+- Local HTTP server returned 200 for the app shell.
+- Live-source playback tests were **not possible**: no access to remote broadcaster hosts from the tool environment.
+
+See `CODEX_HANDOFF.md` for next stages, reference screenshots, detailed constraints and verified research links.
+
+## GitHub repository and Pages
+
+The repository is `Maxi1412/global-tv-hub`. Keep code, screenshots and documentation here; Git commit history gives a versioned source of truth. It is **not an application database**: favourites and imported playlists still live only in each browser's localStorage.
+
+The repository has been created. To publish with GitHub Pages, configure Settings → Pages → Build and deployment → Source: Deploy from a branch → `main` and `/(root)`; Save. The `.nojekyll` marker permits publication of the `.github` directory without Jekyll processing. Production site must be verified after publication; do not assume it is live just because code was pushed.
+
+The GitHub Actions workflow `.github/workflows/qa.yml` runs syntax and catalogue smoke tests automatically after pushes and pull requests. Browser visual and Spain playback tests remain separate QA gates.
+
+See `QA_REPORT.md` and `CHANGELOG.md` for the verified QA/improvement loop.
