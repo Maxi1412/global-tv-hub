@@ -1,3 +1,9 @@
+## v0.7.1 — stream audit follow-up and mobile navigation
+- GitHub CI probed 34 candidate HLS URLs: 25 returned valid manifests, 9 failed in the CI region (not a Spain playback test).
+- Remove Motorvision Rakuten fallback returning HTTP 400.
+- In mobile Live TV, remove redundant empty guide placeholders to reveal the channel list immediately; full Guide tab remains.
+- Add 'Direct feeds' quick filter to channel list, excluding channels without configured streams.
+
 ## v0.7 — 17 October 2026: fixes from Spain playback screenshots
 - Prioritize public broadcaster main feed before alternates. ARD now tries international HLS before domestic. Ignore historical last-working ARD source so saved blocked German stream cannot override international.
 - Include viewer-controlled Try another feed and Programme blocked? controls while keeping player in-app.

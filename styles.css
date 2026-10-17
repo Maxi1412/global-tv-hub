@@ -13,3 +13,5 @@
 /* v0.5: Compact free-vs-premium sports labels, matching the approved dark dashboard. */
 .sport-tier{display:inline-flex!important;font-size:10px!important;line-height:1.25;border:1px solid #42607a;border-radius:100px;padding:3px 9px;margin-top:5px;width:max-content;color:#cadbea!important;background:rgba(5,23,45,.78)}
 .source-history .provider-row p{overflow-wrap:anywhere}
+/* v0.7.1: mobile Live TV prioritizes the channel list; the real Guide remains in its own tab. */
+@media(max-width:620px){.live-layout>.stage>.section{display:none}.live-layout .channel-list{max-height:none}.live-layout .aside{gap:12px}}

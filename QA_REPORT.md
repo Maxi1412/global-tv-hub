@@ -1,3 +1,10 @@
+## v0.7.1 live-manifest audit (17 October 2026)
+GitHub-hosted audit of 34 public HLS candidate endpoints: 25 returned a syntactically valid HLS manifest, 9 failed. This check occurred from a GitHub Actions runner, not a phone in Spain, and does NOT guarantee playable images or any broadcasting rights. Failure examples: Motorvision's Rakuten fallback returned HTTP 400 and is removed; DF1 and Hamburg1 had network/region errors; ZDF, ZDFinfo, ZDFneo, 3sat and ARTE returned HTTP 403 from the US test runner, consistent with possible geographic restrictions. Do not assume these streams have failed in Spain without on-device testing.
+
+Fixes: Mobile Live TV now shows channels immediately beneath playback instead of the nonfunctional programme placeholder list. A Direct feeds filter makes it easy to find channel entries with configured sources. The Programme Guide remains available as a separate tab. The remaining raw HLS candidates require Spanish playback testing; no paid channel is represented as a free working feed.
+
+GitHub Actions audit: https://github.com/Maxi1412/global-tv-hub/actions/runs/39066994621
+
 # QA update — Global TV Hub v0.3, 17 October 2026
 
 - `node --check` for all JavaScript: PASS.
