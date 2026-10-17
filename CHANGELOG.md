@@ -22,3 +22,11 @@
 ## v0.1 — 17 October 2026
 - Initial frontend prototype based on three approved visual concepts.
 - Seven routes, channels, six HLS candidates, official provider links, local favourites, local M3U import, basic offline app shell and PWA manifest.
+
+
+## v0.4 — In-app playback first
+- Stop external redirects on channel/sports cards; add no-source state and source connector.
+- Add ARD international HD, DW English/Spanish, NDR worldwide and other publicly listed German feeds (not Spain-tested).
+- Add automatic retry across configured stream candidates with playback-status messages and quality selection.
+- Bundle two CDN entry points for HLS player load resilience.
+- Keep IPTV subscription credentials/user stream URLs out of GitHub by storing local source overrides.

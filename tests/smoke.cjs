@@ -19,7 +19,7 @@ const sandbox={window:browser,document:doc,location:loc,localStorage:local,navig
 runInNewContext(readFileSync(join(root,'data.js'),'utf8'),sandbox,{filename:'data.js'});
 const catalog=browser.TV_DATA;
 assert.ok(catalog.channels.length >= 28,'channel catalogue must contain German and international sports subscriptions');
-assert.equal(catalog.channels.filter(x=>x.stream).length,6,'six unverified direct HLS entries');
+assert.ok(catalog.channels.filter(x=>x.stream).length>=12,'at least 12 public playback candidates');
 assert.ok(catalog.channels.every(x=>x.official===null||x.official.startsWith('https://')));
 assert.ok(catalog.channels.every(x=>x.stream===null||x.stream.startsWith('https://')));
 assert.equal(new Set(catalog.channels.map(x=>x.id)).size,catalog.channels.length,'unique channel IDs');
@@ -36,11 +36,11 @@ for (const [route,expected] of [['live','Live TV'],['sports','Formula 1, footbal
   assert.ok(ui.innerHTML.includes(expected),`route ${route}`);
 }
 click('channel','rtl');
-assert.match(ui.innerHTML,/Official live page/);
-assert.ok(!ui.innerHTML.includes('Try live stream'),'no proprietary unlicensed HLS');
+assert.match(ui.innerHTML,/Connect source/);
+assert.ok(!ui.innerHTML.includes('data-official'),'channel plays must never redirect');
 click('channel','ard');
-assert.match(ui.innerHTML,/Try live stream/);
-assert.match(ui.innerHTML,/Export for VLC/);
+assert.match(ui.innerHTML,/Retry in app/);
+assert.match(ui.innerHTML,/VLC export/);
 assert.match(ui.innerHTML,/quality-select/);
 click('filter','News');
 assert.match(ui.innerHTML,/tagesschau24/);
@@ -54,6 +54,7 @@ assert.ok(ui.innerHTML.includes('Sportschau'),'free ARD sports entry');
 assert.ok(!ui.innerHTML.includes('MotoGP'),'football filter excludes motorsport');
 click('nav','settings');
 assert.match(ui.innerHTML,/Import M3U playlist/);
+assert.match(ui.innerHTML,/link-feed-form/,'per-channel private source link form');
 assert.match(ui.innerHTML,/mobile-settings/,'mobile settings entry on all screens');
 click('clear','history');
 assert.ok(ui.innerHTML.includes('Settings & Sources'),'clearing history retains current page');
@@ -66,4 +67,4 @@ const sw=readFileSync(join(root,'sw.js'),'utf8');
 assert.ok(sw.includes('fetch(req).then'),'network-first version freshness');
 assert.ok(sw.includes('u.origin!==self.location.origin'),'external broadcaster requests excluded from caching');
 assert.ok(existsSync(join(root,'.nojekyll')),'GitHub Pages compatible');
-console.log('PASS — expanded channel catalogue, 6 HLS candidates, official sport links, 7 routes, responsive settings, search, filters, cache update logic');
+console.log('PASS — internal-only channel and sports interactions, 12+ public HLS candidates, private stream setup, player quality, 7 routes, UI controls');

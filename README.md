@@ -57,3 +57,13 @@ The repository has been created. To publish with GitHub Pages, configure Setting
 The GitHub Actions workflow `.github/workflows/qa.yml` runs syntax and catalogue smoke tests automatically after pushes and pull requests. Browser visual and Spain playback tests remain separate QA gates.
 
 See `QA_REPORT.md` and `CHANGELOG.md` for the verified QA/improvement loop.
+
+
+## v0.4 — In-app playback and source fallback
+
+- Channel tiles now open the embedded player, never a third-party site. A stream candidate begins connecting automatically after the channel is selected.
+- Public broadcaster/CDN candidates include Das Erste international 1080p, ARTE, KiKA international, NDR international, WDR, Hamburg 1, NRWision, QVC, ARD-alpha, BR, and Deutsche Welle English/Spanish. Sources are *unverified for playback on a Spanish connection*. 
+- The player tries multiple available sources in order (personal authorised stream first, then catalogue candidates), with error and startup timeout handling. Successful browser playback is remembered locally for future ordering. Video quality selection uses only advertised renditions.
+- For RTL, ProSieben, SAT.1, Sky and other DRM/subscription channels, no unrestricted browser-compatible source has been verified; the player stays inside the app with a Connect Source form instead of opening other websites. Private IPTV stream URLs are stored on-device only (not in this repository).
+- Sports cards show details within the PWA instead of redirecting. No fictional live TV programme information or sports fixtures.
+- **Important:** Publicly indexed playlists do not establish redistributing rights, broadcaster endorsement, geographic availability, CORS capability, or guaranteed HD. The broadcaster/provider controls access and resolution.

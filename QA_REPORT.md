@@ -46,3 +46,10 @@ These are **official viewing pages verified via public search**, not proof that 
 - Official broadcaster pages' account requirements and paywalls can change without notice.
 - No live match schedule, EPG, account sync or server persistence has been connected yet.
 - `Maxi1412/global-tv-hub` repository must be created and GitHub Pages configured; no URL is live as part of this report.
+
+
+## v0.4 playback regression checks
+
+- Node smoke tests: routes, channel selection, no outgoing channel-watch buttons, per-channel source form, sports in-app navigation, quality picker, source catalog and cache.
+- PWA cannot confirm actual CDN video playback from the container: outgoing HTTP/DNS are unavailable.
+- Free streams can still be blocked by a browser's CORS policy, carrier filters, broadcast rights, or disconnected origin. User network QA is necessary.
