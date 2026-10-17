@@ -1,0 +1,5 @@
+/* Cache only the Global TV Hub shell. Streaming providers are never cached. */
+const CACHE='gtv-shell-v03';const URLS=['./','./index.html','./manifest.webmanifest','./icon.svg'];
+self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(URLS)).then(()=>self.skipWaiting())));
+self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
+self.addEventListener('fetch',e=>{const r=e.request,u=new URL(r.url);if(r.method!=='GET'||u.origin!==location.origin)return;e.respondWith(fetch(r).then(v=>{if(v.ok){const copy=v.clone();caches.open(CACHE).then(c=>c.put(r,copy)).catch(()=>{});}return v;}).catch(()=>caches.match(r).then(x=>x||(r.mode==='navigate'?caches.match('./index.html'):Response.error()))))});
