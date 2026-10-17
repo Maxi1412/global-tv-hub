@@ -40,3 +40,5 @@
 - Better HLS fallback lifecycle: reset stall watchdog on new time updates; attempt one local media recovery when HLS reports a fatal decode error.
 - Clearer labels distinguish unverified public in-app stream candidates from guaranteed playback.
 - Desktop and mobile UI smoke-tested in headless Chromium using static inline assets; stream access not tested.
+
+- Included FIFA+ on DAZN under the free football sports options, following the official May/June 2026 migration.

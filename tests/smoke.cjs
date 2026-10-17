@@ -23,6 +23,7 @@ assert.ok(catalog.channels.filter(x=>x.stream).length>=12,'at least 12 public pl
 assert.ok(catalog.channels.some(x=>x.id==='skybuli' && x.stream===null),'Sky Bundesliga must never be presented as free embedded stream');
 assert.ok(catalog.channels.some(x=>x.id==='skyukfootball' && x.stream===null),'Sky UK listings require licensed access');
 assert.ok(catalog.sports.some(x=>x.id==='redbulltv' && x.accessTier==='Free selection'),'free sports directory');
+assert.ok(catalog.sports.some(x=>x.id==='fifaplus' && x.accessTier==='Free selection'),'FIFA+ free sports on DAZN');
 assert.ok(catalog.sports.some(x=>x.id==='skyf1' && x.accessTier==='Subscription'),'paid provider directory');
 assert.ok(catalog.channels.every(x=>x.official===null||x.official.startsWith('https://')));
 assert.ok(catalog.channels.every(x=>x.stream===null||x.stream.startsWith('https://')));

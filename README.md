@@ -89,3 +89,5 @@ Primary rights and service references (checked October 17, 2026):
 - https://media.rtl.com/pressemappe/Die-Motorsport-Saison-2026-bei-RTL-Deutschland/
 
 **Limit**: Repo smoke tests validate application behavior but **not** real-time media loading, regional availability, stream bitrates, DRM access, or licensing. Test with the actual user's devices in Spain.
+
+- FIFA+ moved to DAZN in May 2026; its free programme can be viewed there with a free DAZN account, subject to event rights. Official reference: https://www.dazn.com/en-ES/help/articles/36029102113053-fifa-on-dazn-everything-you-need-to-know
