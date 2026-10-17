@@ -38,7 +38,7 @@ for (const s of catalog.sports) {
 runInNewContext(readFileSync(join(root,'app.js'),'utf8'),sandbox,{filename:'app.js'});
 assert.match(ui.innerHTML,/German Live TV/);
 const click=(name,value)=>ui.callbacks.click({target:{closest(){return {dataset:{[name]:value}};}}});
-for (const [route,expected] of [['live','Live TV'],['sports','Formula 1, football'],['guide','TV Programme Guide'],['favorites','My Favourites'],['settings','Settings & Sources'],['search','Search']]) {
+for (const [route,expected] of [['live','Live TV'],['sports','Sports you can watch'],['guide','TV Programme Guide'],['favorites','My Favourites'],['settings','Settings & Sources'],['search','Search']]) {
   click('nav',route);
   assert.ok(ui.innerHTML.includes(expected),`route ${route}`);
 }
