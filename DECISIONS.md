@@ -1,5 +1,14 @@
 # Decisions
 
+## 21 October 2026
+
+- Prefer the highest stable rendition up to 1080p for built-in HLS playback. Preserve Auto as a user-selectable fallback.
+- Cap ALEX at 720p: its advertised 1080p rendition repeatedly stalled while 720p advanced reliably.
+- Do not label every channel Full HD. Publish exact source ceilings: four HLS channels at 720p, QVC at 540p and Hamburg 1 at 480p.
+- Do not add official ARD-family streams that return 403 from Spain, even when their manifests are visible on broadcaster pages.
+- Treat Joyn and Zattoo as legitimate viewing platforms, not source feeds. Account access does not grant a third-party embed licence.
+- Keep real-time EPG empty until a stable, licensed and browser-consumable data source is verified.
+
 ## 18 October 2026
 
 - Keep the approved premium dark dashboard visually intact. Functional player/source changes may use the existing player frame.

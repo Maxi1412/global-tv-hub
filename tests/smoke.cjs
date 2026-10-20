@@ -24,7 +24,9 @@ for(const id of ['redbulltv','morethansports','teledeporte','motorvision','world
 assert.ok(catalog.channels.some(c=>c.id==='df1'&&c.stream===null),'dead / Spain-blocked DF1 feed must not be attempted');
 assert.ok(catalog.channels.some(c=>c.id==='hamburg1'&&c.embed?.startsWith('https://www.youtube-nocookie.com/embed/')),'official Hamburg 1 player stays in app');
 assert.equal(catalog.sourceAuditMeta.region,'ES','published browser screen identifies Spain region');
-assert.equal(catalog.sourceAudit.ard.result,'programme-blackout','rights slate is distinct from viewable programming');
+assert.equal(catalog.sourceAudit.ard.result,'playback-screened','current ARD sample records moving programming while retaining rights caveat');
+assert.equal(catalog.channels.find(x=>x.id==='alexberlin').preferredMaxHeight,720,'ALEX broken 1080p rendition is capped at stable 720p');
+assert.ok(Object.values(catalog.sourceAudit).filter(x=>x.resolution==='1920×1080').length>=16,'current audit records at least 16 Full HD sources');
 assert.equal(catalog.sourceAudit.zdf.result,'geo-blocked','blocked manifest is not labelled playable');
 assert.ok(catalog.sports.some(s=>s.channelId==='redbulltv'),'sports cards bind to playable channels');
 assert.ok(catalog.channels.some(x=>x.id==='skybuli' && x.stream===null),'Sky Bundesliga must never be presented as free embedded stream');
@@ -113,5 +115,7 @@ assert.ok(sw.includes('u.origin!==self.location.origin'),'external broadcaster r
 const appSource=readFileSync(join(root,'app.js'),'utf8');
 assert.ok(!appSource.includes("if(video.canPlayType('application/vnd.apple.mpegurl'))"),'Chromium native-HLS claim must not bypass HLS.js');
 assert.ok(appSource.includes('Playback confirmed'),'player waits for advancing video before recording success');
+assert.ok(appSource.includes('capLevelToPlayerSize:false'),'built-in playback may select a verified 1080p rendition even in the compact dashboard player');
+assert.ok(appSource.includes('preferredMaxHeight'),'known unstable top renditions can be capped to a stable source quality');
 assert.ok(existsSync(join(root,'.nojekyll')),'GitHub Pages compatible');
 console.log('PASS — HLS.js-first playback, advancing-video confirmation, official embed support, Spain source status, 7 routes, UI controls');

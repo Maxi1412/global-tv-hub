@@ -1,41 +1,52 @@
 # Global TV Hub — sports, quality and source status
 
-Updated 18 October 2026. This PWA is an independent directory/player, not a broadcaster. Source URLs remain controlled by their owners and can change or restrict individual programmes. “Screened” below means a short Chrome/Windows sample through a confirmed ES network exit with advancing video and a visually inspected frame; it is not a long-run uptime promise or rights clearance.
+Updated 21 October 2026. This PWA is an independent directory/player, not a broadcaster. Source URLs remain controlled by their owners and can change or restrict individual programmes. “Screened” below means a short Chrome/Windows sample through a confirmed ES network exit with decoded dimensions, advancing video and a visually inspected frame; it is not a long-run uptime promise, audio certification or rights clearance.
 
-## v0.8 Spain browser screen
+## v0.9 Spain browser and quality screen
 
 | Channel | Result in Spain | Highest rendered sample | Notes |
 |---|---|---:|---|
-| ALEX Berlin | Moving video | 1280×720 | Repaired by preferring HLS.js over Chromium native HLS. |
+| ALEX Berlin | Moving video | 1280×720 | 720p remained stable. The advertised 1080p rendition stalled and is deliberately capped. |
 | Dokusat | Moving video | 1920×1080 | Public playout candidate; 1080p observed. |
-| hr-fernsehen | Programme blackout | 960×540 | Transport worked; broadcaster rights slate was visible. |
+| hr-fernsehen | Moving video | 1280×720 | Highest rendition is 720p. An earlier sample showed a broadcaster rights slate. |
 | BR Nord | Moving video | 1920×1080 | Public broadcaster CDN. |
-| Terra Mater WILD | Moving video | 960×540 | Manifest advertises up to 1080p. |
-| Red Bull TV | Moving video | 960×540 | Free channel content; not premium live Formula 1. |
+| Terra Mater WILD | Moving video | 1920×1080 | Highest rendition selected and decoded. |
+| Red Bull TV | Moving video | 1920×1080 | Free channel content; not premium live Formula 1. |
 | More Than Sports TV | Moving video | 1920×1080 | Sports programming observed. |
-| Teledeporte | Moving video | 1024×576 | Repaired by HLS.js; cycling was visible during the sample. |
+| Teledeporte | Moving video | 1280×720 | Highest rendition is 720p. |
 | DF1 | Unavailable | — | Old hostname no longer resolves; current official CDN explicitly blocks Spain. |
-| Motorvision | Moving video | 854×480 | Repaired by HLS.js; motoring programme observed. |
-| World of Freesports | Moving video | 848×480 | Free FAST feed. |
-| Das Erste / ARD | Programme blackout | 960×540 | Transport worked; broadcaster rights slate was visible. |
+| Motorvision | Moving video | 1920×1080 | Free FAST motoring programme observed. |
+| World of Freesports | Moving video | 1920×1080 | Free FAST feed at its highest rendition. |
+| Das Erste / ARD | Moving video | 1920×1080 | Moving programme in the current sample; earlier rights slate proves programme-specific blocking can recur. |
 | ZDF | Geo blocked | — | 403/ORB in Spain; ZDF confirms 24/7 streams are Germany-only. |
 | ARTE | Geo blocked | — | Direct endpoints returned 403/ORB; official embed reported the programme unavailable in Spain. |
 | 3sat | Geo blocked | — | 403/ORB in Spain; automatic attempt removed. |
 | ZDFinfo | Geo blocked | — | 403/ORB in Spain; automatic attempt removed. |
 | ZDFneo | Geo blocked | — | 403/ORB in Spain; automatic attempt removed. |
-| tagesschau24 | Moving video | 960×540 | Repaired by HLS.js. |
+| tagesschau24 | Moving video | 1280×720 | Highest rendition is 720p. |
 | KiKA | Moving video | 1920×1080 | Moving programme observed. |
-| NDR International | Moving video | 960×540 | Repaired by HLS.js. |
-| WDR | Moving video | 1280×720 | CDN redirected to a playable international path. |
-| Hamburg 1 | Official embedded video | 854×480 | Official YouTube live player replaces dead legacy HLS. |
-| NRWision | Moving video | 1280×720 | Moving programme observed. |
+| NDR International | Moving video | 1920×1080 | Highest rendition selected and decoded. |
+| WDR | Moving video | 1920×1080 | CDN redirected to a playable path; highest rendition decoded. |
+| Hamburg 1 | Official embedded video | 854×480 | Official YouTube player; no authorised 1080p rendition was found. |
+| NRWision | Moving video | 1920×1080 | Reached 1080p after a short quality ramp. |
 | QVC Deutschland | Moving video | 960×540 | Moving programme observed. |
 | DW English | Moving video | 1920×1080 | Advancing playback observed. |
-| DW Español | Moving video | 960×540 | Repaired by HLS.js. |
-| ARD-alpha | Moving video | 1280×720 | Moving programme observed. |
+| DW Español | Moving video | 1920×1080 | Highest rendition selected and decoded. |
+| ARD-alpha | Moving video | 1920×1080 | Highest rendition selected and decoded. |
 | BR Süd | Moving video | 1920×1080 | Moving programme observed. |
 
-The retained catalogue now has 21 HLS channels (25 URLs including fallbacks) plus one official embedded player. On the same ES network, all 25 retained HLS URLs returned a valid root manifest, a valid media playlist, and bytes from a media segment. That network-path result is not a substitute for the visual browser rows above.
+The retained catalogue has 21 HLS channels (25 URLs including fallbacks) plus one official embedded player. All 21 HLS channels confirmed advancing after the v0.9 Full-HD-first change: 16 decoded at 1920×1080, four at their 1280×720 source/stability limit, and QVC at its 960×540 source limit. Hamburg 1's official embed decoded at 854×480. On the same ES network, all 25 HLS URLs returned a root manifest, media playlist and segment bytes. Network-path success is not a substitute for the browser evidence above.
+
+## Platform and integration research — 21 October 2026
+
+- **ARD Mediathek** is the strongest free direct broadcaster source. The configured feeds work in Spain, but programme-specific international rights slates can appear. Official phoenix, ONE, MDR, rbb, SWR and Radio Bremen streams were individually rechecked and returned HTTP 403 from Spain, so they were not added as false-working sources.
+- **ZDF** confirms its ZDF/ZDFneo/ZDFinfo/3sat 24/7 streams are Germany-only. Its worldwide event streams are programme-specific and cannot replace those linear channels.
+- **Joyn Free** advertises more than 100 German live channels and HD viewing, including ProSieben/SAT.1 channels, with free registration for some streams. No licensed third-party embed/SDK was found, and access remains controlled by Joyn and territory.
+- **Zattoo Free** advertises more than 190 channels but explicitly excludes ProSiebenSat.1 and RTL Group channels from its free tier. It requires an account and exposes no authorised static-PWA stream connection.
+- **FIFA+ on DAZN** is free after registration and carries selected international football, not every premium league or match. DAZN does not authorise framing its service without consent.
+- **UEFA.tv**, **Sportschau**, **ZDF Sport**, **SPORT1**, **Red Bull TV**, **More Than Sports TV**, **Teledeporte**, **Motorvision** and **World of Freesports** remain useful lawful free selections, but their event schedules and territorial rights differ.
+- **Formula 1 in Spain** remains DAZN-controlled through 2030 for complete live coverage. RTL shows selected 2026 sessions/races in Germany, and Sky/WOW or Sky Sports/NOW are paid territory-specific services. None supplies this project with a licensed browser feed or partner SDK.
+- **Real programme titles and fixtures** remain unconnected. Broadcaster pages expose current schedules, but no stable, licensed, cross-origin EPG feed suitable for this static PWA was verified. The app continues to show no fabricated programme data.
 
 ## Free and broadcaster routes
 - ARD: https://www.ardmediathek.de/LIVE — geoblocking can apply to individual programmes.
@@ -59,11 +70,12 @@ The retained catalogue now has 21 HLS channels (25 URLs including fallbacks) plu
 
 - RTL's published CBC video-player documentation requires each test and production domain to be activated on RTL's URL whitelist. A public player library does not supply RTL+ live-TV entitlement, media identifiers or redistribution permission: https://vms-embed.rtl.de/docs/NGVOD-APIDokumentationv5-021221-1251-444.pdf
 - RTL+'s consumer terms prohibit copying or making its content publicly available through other websites. A formal content/technology partnership would be required: https://plus.rtl.de/agb
-- DAZN Spain grants a personal, non-transferable streaming licence and explicitly prohibits embedding/framing DAZN in another service without consent: https://www.dazn.com/es-ES/help/articles/29275660114973-terminos-y-condiciones-de-uso-dazn-espana-vigentes-a-partir-del-1-de-agosto-de-2025
+- DAZN Spain grants a personal, non-transferable streaming licence and explicitly prohibits embedding/framing DAZN in another service without consent: https://www.dazn.com/en-ES/help/articles/16391473315101-terms-conditions
 - No publicly authorised consumer embed was verified for Joyn, Sky/WOW or Eurosport during this review. Their entries therefore remain unavailable in the player pending a direct partner agreement and supported SDK/feed; this is an evidence boundary, not a claim that private commercial integrations do not exist.
 
 ## HD-first design
-- Use adaptive HLS AUTO by default, with capLevelToPlayerSize enabled where supported to avoid unneeded bandwidth.
+- Start at the highest stable source rendition up to 1080p. ALEX is capped at 720p because its advertised 1080p path stalled in repeated Spain tests.
+- Keep Auto available in the quality menu when bandwidth or buffering makes a fixed rendition unsuitable.
 - Report source-advertised resolution only after manifest parsing; actual rendering can be lower.
 - A higher quality than the broadcaster supplies cannot be created in the app.
 - Authenticated sports streams are linked to the official service; do not scrape DRM, passwords or private URLs.
@@ -72,7 +84,7 @@ The retained catalogue now has 21 HLS channels (25 URLs including fallbacks) plu
 ## Future QA tasks
 - Obtain source-owner permission evidence where public listing provenance is incomplete, and repeat longer Spain stability checks per provider/date/browser/device.
 - Integrate a licensed EPG. Never display invented live match times.
-- Add image assets from the locally built original v0.2 package; the first public preview is deliberately lightweight and self-contained.
+- Preserve the approved design-reference assets and dark dashboard while improving playback and source evidence.
 - Validate PWA install on Android Chrome and on desktop browsers; an SVG-only manifest icon can have platform-specific limitations.
 
 ## v0.6 — Direct free sports TV, not premium race rebroadcasts

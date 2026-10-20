@@ -1,13 +1,14 @@
 # CODEX HANDOFF — GLOBAL TV HUB
 
-**Updated:** 18 October 2026 (Europe/Madrid/Paris time)
+**Updated:** 21 October 2026 (Europe/Madrid/Paris time)
 
 ## Canonical project
 
 - Local checkout: `C:\Users\acer\AI-Workspace\Projects\Active\global-tv-hub`
 - Repository and canonical branch: `https://github.com/Maxi1412/global-tv-hub` → `main`
 - Live PWA: `https://maxi1412.github.io/global-tv-hub/`
-- Release: **v0.8.0**
+- Published release: **v0.8.0** at `ba5e87ebda226c6ce2e2936ec62834dbd6a853b0`
+- Current local release candidate: **v0.9.0**, fully verified locally and pending publication
 - Published v0.8 implementation commit: `12e33b5ca9470fc090669fea47ec74585f9d7e15`
 - Last published baseline before this release: v0.7.1 at `16ef64bac6a4ca556c7d1868b2689d934a479c83`
 - GitHub `main`, GitHub Pages and the live browser build were rechecked on 21 October 2026. Recheck again before future edits; do not rely on the old baseline SHA.
@@ -29,17 +30,28 @@ Selecting a German television or sports channel should start reliable, HD-prefer
 - Never publish pirate feeds, extract subscription tokens, bypass DRM/geoblocking, or present Sky/DAZN/RTL+/Joyn content as free.
 - Do not invent programme titles, fixtures, start times or “LIVE” badges. Ship EPG data only after its licence, stable IDs, update cadence and Spain-local time handling are verified.
 
-## Current v0.8 implementation
+## Current v0.9 implementation candidate
 
 - Catalogue: **55 channels**.
 - Automatic in-app playback: **21 HLS channels / 25 retained HLS URLs**, plus **one official Hamburg 1 YouTube embed**.
-- Player: HLS.js first in Chromium, native HLS only as a fallback, automatic source failover, adaptive quality menu, local device diagnostics and retry controls.
+- Player: HLS.js first in Chromium, native HLS only as a fallback, automatic source failover, Full-HD-first quality selection, adaptive/manual quality menu, local device diagnostics and retry controls.
 - Success rule: decoded dimensions must be non-zero and video time must advance by at least 1.5 seconds. A transient `playing` event is not enough.
 - Fatal errors after playback begins now invoke recovery/fallback instead of leaving a false connected status.
 - Source labels show the published Spain browser screen separately from the current device's local result.
 - The Guide now exposes honest channel availability while a licensed real-time EPG remains pending.
 - Hamburg 1 plays through the official player inside the existing video frame. Known-blocked ZDF-family/ARTE/DF1 sources are no longer retried.
-- Service-worker shell cache is v8; broadcaster and stream requests remain excluded from caching.
+- Service-worker shell cache is v9; broadcaster and stream requests remain excluded from caching.
+
+## Spain evidence from 21 October 2026
+
+- All 25 retained HLS URLs passed root-manifest, media-playlist and segment sampling from the ES network.
+- All 21 configured HLS channels confirmed advancing after the v0.9 quality change.
+- Sixteen decoded at 1920×1080. ALEX, hr, Teledeporte and tagesschau24 decoded at 1280×720. QVC decoded at 960×540. Hamburg 1's official embed decoded at 854×480.
+- ALEX's advertised 1080p rendition stalled repeatedly; its channel configuration now caps playback at stable 720p.
+- Every source frame was captured and visually inspected; the expected station/programme identities were visible.
+- All 33 no-source catalogue channels stayed in the PWA, exposed no retry control and made no false playback claim.
+- Official phoenix, ONE, MDR, rbb, SWR and Radio Bremen HLS sources were individually extracted from broadcaster pages but returned HTTP 403 from Spain, so they were not added.
+- Joyn, Zattoo, FIFA+ on DAZN, UEFA.tv, SPORT1, Sportschau, ZDF Sport, Formula 1, Sky/WOW/NOW and DAZN were researched. None provides this static PWA with a licensed premium feed or general-purpose embed.
 
 ## Why the player changed
 
@@ -91,6 +103,7 @@ node --check app.js
 node --check data.js
 node --check sw.js
 node --check tests/probe-sources.cjs
+node tests/qa.cjs
 node tests/smoke.cjs
 $env:AUDIT_REGION='Spain (ES) network, local machine; NOT visual playback'
 node tests/probe-sources.cjs

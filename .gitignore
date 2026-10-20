@@ -1,6 +1,7 @@
 # Local test output and editor files (keep approved artwork under design-reference/)
 qa-*.png
 .playwright-cli/
+.playwright-mcp/
 source-health-ci.json
 work-v08-*.png
 .DS_Store

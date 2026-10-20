@@ -57,7 +57,7 @@ async function probe(s){
 (async()=>{
   const results=[];
   for(let i=0;i<sources.length;i+=limit)results.push(...await Promise.all(sources.slice(i,i+limit).map(probe)));
-  const summary={generatedAt:new Date().toISOString(),region,checked:results.length,manifestOk:results.filter(x=>['segment-sample-ok','segment-sample-failed','manifest-ok-no-segment'].includes(x.status)).length,segmentSampleOk:results.filter(x=>x.status==='segment-sample-ok').length,failed:results.filter(x=>!['segment-sample-ok','manifest-ok-no-segment'].includes(x.status)).length};
+  const summary={generatedAt:new Date().toISOString(),region,checked:results.length,manifestOk:results.filter(x=>['segment-sample-ok','segment-sample-failed','manifest-ok-no-segment'].includes(x.status)).length,segmentSampleOk:results.filter(x=>x.status==='segment-sample-ok').length,advertises1080p:results.filter(x=>(x.advertisedResolutions||[]).some(r=>Number(r.split('x')[1])>=1080)).length,below1080p:results.filter(x=>x.selectedResolution&&Number(x.selectedResolution.split('x')[1])<1080).length,failed:results.filter(x=>!['segment-sample-ok','manifest-ok-no-segment'].includes(x.status)).length};
   fs.writeFileSync('source-health-ci.json',JSON.stringify({summary,results},null,2));
   console.log('PUBLIC FEED PATH AUDIT: '+JSON.stringify(summary));
   for(const x of results)console.log(x.id+' '+x.priority+' '+x.status+' '+x.latencyMs+'ms'+(x.selectedResolution?' '+x.selectedResolution:''));

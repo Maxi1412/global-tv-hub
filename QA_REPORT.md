@@ -1,3 +1,30 @@
+## v0.9.0 Full HD and platform audit (21 October 2026)
+
+### Channel-by-channel playback result
+
+- Re-ran all 25 retained HLS URLs from an ES network: 25 root manifests, 25 media playlists and 25 sampled segment paths passed.
+- Exercised every one of the 21 configured HLS channels in Chrome, forced the highest stable rendition, verified non-zero decoded dimensions, advancing time, ready state and no media error, and captured/visually inspected a frame from every channel.
+- The frame contact sheet matched the expected station/programme identities; this was real moving video, not a poster or transient `playing` event.
+- 16 channels decoded at 1920×1080: Dokusat, BR Nord, Terra Mater WILD, Red Bull TV, More Than Sports TV, Motorvision, World of Freesports, Das Erste, KiKA, NDR International, WDR, NRWision, DW English, DW Español, ARD-alpha and BR Süd.
+- Four channels have a verified 1280×720 ceiling: ALEX Berlin (its advertised 1080p rendition stalled), hr-fernsehen, Teledeporte and tagesschau24. QVC's source ceiling is 960×540. Hamburg 1's official YouTube live player decoded at 854×480.
+- ARD and hr showed actual programming in this pass. Earlier rights slates remain valid evidence that restricted programmes can replace the picture at another time.
+- All 33 catalogue entries without an in-app source were clicked. None exposed a retry control or pretended to play; each remained inside the PWA with an unavailable-source explanation.
+
+### v0.9 player regression
+
+- The HLS player now selects the highest stable rendition up to 1080p before confirming playback. It no longer caps quality to the compact dashboard player's CSS size.
+- A per-channel ceiling prevents ALEX's broken 1080p rendition from replacing reliable 720p playback. Auto remains in the quality menu.
+- Post-change local browser regression confirmed all 21 HLS channels again: 16 at 1080p, four at 720p and QVC at 540p.
+- Approved layout and all three design references remain unchanged.
+
+### Lawful platform/source research
+
+- Joyn and Zattoo are legitimate German platforms, but require their own accounts/territories and expose no licensed static-PWA playback integration.
+- FIFA+ on DAZN is a useful free football selection after registration; it is not a general substitute for premium football rights. DAZN's current Spain terms prohibit framing without consent.
+- Complete Formula 1 coverage in Spain is DAZN-controlled through 2030. Sky/WOW, Sky Sports/NOW and RTL's selected German free-TV races do not provide an authorised feed for this project.
+- Official phoenix, ONE, MDR, rbb, SWR and Radio Bremen HLS sources were individually extracted from their broadcaster pages and returned HTTP 403 from Spain; they were not added.
+- No suitable licensed cross-origin EPG was verified, so no programme titles or fixtures were fabricated.
+
 ## v0.8.0 Spain browser playback pass (18 October 2026)
 
 ### Environment and scope

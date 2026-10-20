@@ -1,3 +1,13 @@
+## v0.9.0 — Full-HD-first playback and current platform audit
+
+- Re-test every catalogue channel and every retained HLS path from Spain, including decoded resolution, advancing time, errors and visually inspected station/programme frames.
+- Prefer the highest stable HLS rendition up to 1080p instead of allowing the compact player size to hold an available Full HD feed at 360p/540p.
+- Cap ALEX Berlin at its stable 720p rendition because its advertised 1080p path repeatedly stalled; retain Auto for bandwidth-sensitive playback.
+- Publish the current quality matrix: 16 HLS channels at 1080p, four at 720p, QVC at 540p and Hamburg 1's official embed at 480p.
+- Refresh lawful-source research for Joyn, Zattoo, ARD/ZDF, FIFA+ on DAZN, UEFA.tv, SPORT1, Sportschau, Formula 1, Sky/WOW/NOW and premium integrations.
+- Recheck official phoenix, ONE, MDR, rbb, SWR and Radio Bremen streams individually; all remained 403-blocked from Spain and were not added.
+- Keep the approved dark interface intact, bump the offline shell to v9, strengthen smoke tests and extend the network audit with Full HD counts.
+
 ## v0.8.0 — Spain browser playback and honest source health
 
 - Test every configured HLS channel in the live GitHub Pages app from a confirmed ES network exit, with browser media state and screenshots separating moving video, decoder failure, rights slate, CORS/ORB block, DNS failure and timeout.
