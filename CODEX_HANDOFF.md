@@ -8,8 +8,9 @@
 - Repository and canonical branch: `https://github.com/Maxi1412/global-tv-hub` → `main`
 - Live PWA: `https://maxi1412.github.io/global-tv-hub/`
 - Release: **v0.8.0**
+- Published v0.8 implementation commit: `12e33b5ca9470fc090669fea47ec74585f9d7e15`
 - Last published baseline before this release: v0.7.1 at `16ef64bac6a4ca556c7d1868b2689d934a479c83`
-- Recheck `origin/main` and the Pages app before future edits; do not rely on the old baseline SHA.
+- GitHub `main`, GitHub Pages and the live browser build were rechecked on 21 October 2026. Recheck again before future edits; do not rely on the old baseline SHA.
 
 The older handoff incorrectly described this as an unpublished local prototype. That statement is superseded: the GitHub repository and Pages app are real, canonical and active.
 
@@ -77,6 +78,11 @@ See `SOURCES.md` for the channel matrix and `QA_REPORT.md` for the test method a
 - Mobile 390×844 Guide: source statuses visible, no console errors, layout visually inspected.
 - Desktop 1440×900 embedded player: visually inspected and preserved within the approved layout.
 - Offline app-shell reload: PASS. Television playback still correctly requires internet access.
+- GitHub Actions PWA QA: PASS — `https://github.com/Maxi1412/global-tv-hub/actions/runs/39510956085`.
+- GitHub Pages build/deployment: PASS — `https://github.com/Maxi1412/global-tv-hub/actions/runs/39510955441`.
+- Exact deployed Pages app: all 21 retained HLS channels reached `Playback confirmed` with advancing time, non-zero dimensions and no media errors. Observed confirmation times in this short pass were approximately 2.2–6.5 seconds.
+- Deployed Hamburg 1 official embed loaded inside the PWA. Deployed ZDF showed the Spain-unavailable state with no retry control.
+- Deployed 390×844 Guide had no horizontal overflow; browser console had no errors (two benign browser/embed warnings only).
 
 ## Commands
 
@@ -94,7 +100,7 @@ The probe writes `source-health-ci.json`. It deliberately samples only 32 KiB of
 
 ## Next work, in order
 
-1. Recheck the deployed Pages build on Android Chrome and any target TV browser, including autoplay, remote/focus input and PWA installation.
+1. Check the deployed Pages build on physical Android Chrome and any target TV browser, including autoplay, remote/focus input and PWA installation.
 2. Run longer stability samples and record join time, stalls, rendered bitrate/resolution, audio, live latency and fallback behavior.
 3. Seek source-owner permission/provenance evidence where a retained public feed came through a community directory.
 4. Contact RTL, Joyn, Sky/WOW, DAZN and Eurosport only through formal partner routes if licensed premium playback remains a product requirement.

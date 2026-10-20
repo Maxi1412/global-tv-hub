@@ -44,7 +44,17 @@ Forcing the exact same seven URLs through HLS.js produced advancing, visually co
 - Desktop 1440×900 QA confirmed the official Hamburg 1 player inside the existing dashboard frame.
 - Offline reload returned the complete app shell from service-worker cache; live television correctly remains network-dependent.
 
-See `SOURCES.md` for the channel-by-channel matrix. The next release gate is a clean commit, GitHub Actions, Pages deployment and re-test of the exact live v0.8 URL.
+See `SOURCES.md` for the channel-by-channel matrix.
+
+### v0.8 deployed Pages verification (21 October 2026)
+
+- Published implementation commit: `12e33b5ca9470fc090669fea47ec74585f9d7e15`.
+- GitHub Actions PWA QA completed successfully: https://github.com/Maxi1412/global-tv-hub/actions/runs/39510956085
+- GitHub Pages build and deployment completed successfully: https://github.com/Maxi1412/global-tv-hub/actions/runs/39510955441
+- The exact public app returned HTTP 200 and exposed v0.8.0, the advancing-playback confirmation code and the Spain source audit.
+- All 21 retained HLS channels reached `Playback confirmed` on the deployed site with advancing time, non-zero decoded dimensions and no final media error. Short confirmation times were approximately 2.2–6.5 seconds.
+- Hamburg 1's official YouTube player loaded inside the deployed PWA. ZDF showed `Unavailable from Spain` with no retry control.
+- The deployed Guide at 390×844 showed channel health, had no horizontal overflow and produced no browser console errors. Two benign warnings came from iframe compatibility/browser graphics handling.
 
 ## v0.7.1 live-manifest audit (17 October 2026)
 GitHub-hosted audit of 34 public HLS candidate endpoints: 25 returned a syntactically valid HLS manifest, 9 failed. This check occurred from a GitHub Actions runner, not a phone in Spain, and does NOT guarantee playable images or any broadcasting rights. Failure examples: Motorvision's Rakuten fallback returned HTTP 400 and is removed; DF1 and Hamburg1 had network/region errors; ZDF, ZDFinfo, ZDFneo, 3sat and ARTE returned HTTP 403 from the US test runner, consistent with possible geographic restrictions. Do not assume these streams have failed in Spain without on-device testing.
