@@ -25,6 +25,16 @@
 - Official phoenix, ONE, MDR, rbb, SWR and Radio Bremen HLS sources were individually extracted from their broadcaster pages and returned HTTP 403 from Spain; they were not added.
 - No suitable licensed cross-origin EPG was verified, so no programme titles or fixtures were fabricated.
 
+### v0.9 deployed Pages verification
+
+- Published implementation commit: `ec3c4843d82d198649fdf8a45ab923333af19476`.
+- GitHub Actions PWA QA completed successfully: https://github.com/Maxi1412/global-tv-hub/actions/runs/39514584540
+- GitHub Pages build and deployment completed successfully: https://github.com/Maxi1412/global-tv-hub/actions/runs/39514584773
+- The exact public build exposed v0.9.0 and the Full-HD-first selection logic.
+- All 21 HLS channels reached `Playback confirmed` with advancing time, non-zero decoded dimensions and no media error: 16 at 1920×1080, four at 1280×720 and QVC at 960×540.
+- Hamburg 1's official YouTube live video advanced at 854×480 inside the PWA. ZDF remained correctly unavailable with no retry control, iframe or video URL.
+- At 390×844, the deployed Guide had no horizontal overflow. The `global-tv-hub-shell-v9` cache populated and reloaded the complete app shell offline.
+
 ## v0.8.0 Spain browser playback pass (18 October 2026)
 
 ### Environment and scope

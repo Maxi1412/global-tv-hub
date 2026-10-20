@@ -7,8 +7,8 @@
 - Local checkout: `C:\Users\acer\AI-Workspace\Projects\Active\global-tv-hub`
 - Repository and canonical branch: `https://github.com/Maxi1412/global-tv-hub` → `main`
 - Live PWA: `https://maxi1412.github.io/global-tv-hub/`
-- Published release: **v0.8.0** at `ba5e87ebda226c6ce2e2936ec62834dbd6a853b0`
-- Current local release candidate: **v0.9.0**, fully verified locally and pending publication
+- Published release: **v0.9.0** implementation at `ec3c4843d82d198649fdf8a45ab923333af19476`
+- Current local checkout: aligned with canonical GitHub `main`; the v0.9 public build was verified after deployment
 - Published v0.8 implementation commit: `12e33b5ca9470fc090669fea47ec74585f9d7e15`
 - Last published baseline before this release: v0.7.1 at `16ef64bac6a4ca556c7d1868b2689d934a479c83`
 - GitHub `main`, GitHub Pages and the live browser build were rechecked on 21 October 2026. Recheck again before future edits; do not rely on the old baseline SHA.
@@ -95,6 +95,16 @@ See `SOURCES.md` for the channel matrix and `QA_REPORT.md` for the test method a
 - Exact deployed Pages app: all 21 retained HLS channels reached `Playback confirmed` with advancing time, non-zero dimensions and no media errors. Observed confirmation times in this short pass were approximately 2.2–6.5 seconds.
 - Deployed Hamburg 1 official embed loaded inside the PWA. Deployed ZDF showed the Spain-unavailable state with no retry control.
 - Deployed 390×844 Guide had no horizontal overflow; browser console had no errors (two benign browser/embed warnings only).
+
+## Verification completed for v0.9
+
+- JavaScript syntax checks, `node tests/qa.cjs`, `node tests/smoke.cjs` and `git diff --check`: PASS.
+- ES network path probe: 25 checked, 25 manifest/media/segment paths passed; 20 URLs advertise a 1080p rendition.
+- GitHub Actions PWA QA: PASS — `https://github.com/Maxi1412/global-tv-hub/actions/runs/39514584540`.
+- GitHub Pages build/deployment: PASS — `https://github.com/Maxi1412/global-tv-hub/actions/runs/39514584773`.
+- Exact deployed app: all 21 HLS channels reached `Playback confirmed` with advancing time and no media error. Sixteen decoded at 1920×1080; ALEX, hr, Teledeporte and tagesschau24 decoded at 1280×720; QVC decoded at 960×540.
+- Deployed Hamburg 1 official embed played at 854×480 inside the PWA. Deployed ZDF had no source, retry control, iframe or video URL.
+- Deployed 390×844 Guide had no horizontal overflow. The v9 service-worker cache populated and the app shell reloaded offline.
 
 ## Commands
 
