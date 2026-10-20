@@ -1,77 +1,102 @@
 # CODEX HANDOFF — GLOBAL TV HUB
 
-**Project status:** functional local frontend prototype, v0.3, updated 2026-10-17. Continue from these files; do not restart the UI or overwrite the approved design.
+**Updated:** 18 October 2026 (Europe/Madrid/Paris time)
 
-## Non-negotiable design rules
+## Canonical project
 
-The user approved the three original UI mockups **exactly as the intended dashboard visual direction**. They are included unchanged:
+- Local checkout: `C:\Users\acer\AI-Workspace\Projects\Active\global-tv-hub`
+- Repository and canonical branch: `https://github.com/Maxi1412/global-tv-hub` → `main`
+- Live PWA: `https://maxi1412.github.io/global-tv-hub/`
+- Release: **v0.8.0**
+- Last published baseline before this release: v0.7.1 at `16ef64bac6a4ca556c7d1868b2689d934a479c83`
+- Recheck `origin/main` and the Pages app before future edits; do not rely on the old baseline SHA.
 
-1. `design-reference/01-approved-home.png`
-2. `design-reference/02-approved-sports.png`
-3. `design-reference/03-approved-player-guide.png`
+The older handoff incorrectly described this as an unpublished local prototype. That statement is superseded: the GitHub repository and Pages app are real, canonical and active.
 
-Current working screens are implemented using independent HTML/CSS/JS, with UI art derived from those mockups. Polish fidelity against these references only after requesting approval of any material visual changes. Avoid introducing actual movie thumbnails, logo assets, or sports broadcasts without confirming usage rights.
+## User goal and non-negotiable rules
 
-## Existing project layout
+Selecting a German television or sports channel should start reliable, HD-preferred playback **inside Global TV Hub** whenever a lawful browser-compatible source exists. A user should not be redirected or asked to paste a stream URL during normal catalogue use.
 
-- `index.html` — HTML shell, metadata and PWA manifest registration.
-- `styles.css` — dark theme, desktop/tablet/mobile layout.
-- `app.js` — routes, event handling, persistent favourites/history, search, channel player, M3U imports, VLC playlist exports.
-- `data.js` — sourced channel catalogue and sports provider links (does not contain secrets).
-- `sw.js`, `manifest.webmanifest`, `assets/icon-*.png` — PWA shell and installability.
-- `assets/*.webp` — supporting visuals cropped from user-approved AI images.
-- `tests/smoke.cjs` — dependency-free JS UI smoke checks.
+- Preserve the approved premium dark dashboard. Do not materially redesign it without approval.
+- The three unchanged visual authorities are:
+  - `design-reference/01-approved-home.png`
+  - `design-reference/02-approved-sports.png`
+  - `design-reference/03-approved-player-guide.png`
+- Preserve favourites, history, custom streams, authorised linked feeds and local diagnostics. Storage keys were not changed in v0.8.
+- A valid manifest is not playback proof. Require segment access, decoded dimensions, advancing time and a visually inspected moving frame before describing a source as screened playback.
+- A broadcaster rights slate is working transport but unavailable programming; report it separately.
+- Never publish pirate feeds, extract subscription tokens, bypass DRM/geoblocking, or present Sky/DAZN/RTL+/Joyn content as free.
+- Do not invent programme titles, fixtures, start times or “LIVE” badges. Ship EPG data only after its licence, stable IDs, update cadence and Spain-local time handling are verified.
 
-## Next tasks, in order
+## Current v0.8 implementation
 
-1. **PC environment:** inspect current Node, OS, paths, server config and local tools. Agree on the destination folder before changing the machine. Preserve this code and design assets.
-2. **Visual QA:** open all screens at desktop/phone/tablet resolutions, compare to three approved images, fix obvious UI discrepancies and accessible navigation. Do not redesign.
-3. **Channel-by-channel real playback checks from Spain:** record timestamp, URL, device/browser, CORS, HLS manifest status, actual audio/video, DRM and geoblocking. Check ARD, ZDF, ARTE, 3sat, ZDFinfo, ZDFneo first; retain official-site fallbacks. Never mark success based only on an HTTP 200 or a public playlist's presence.
-4. **Private German broadcasters:** investigate official embed/API partnerships or legitimate account links for RTL+, Joyn (ProSieben, Sat.1, Kabel Eins). No DRM bypass, credential scraping, restreaming, piracy playlists or geographic rights circumvention.
-5. **Sports:** test DAZN official account/app routing for Spain (F1 and MotoGP), SPORT1 live page and relevant authorised football/tennis providers. Populate actual event schedule only via permitted, maintained data source; handle time zone Europe/Madrid.
-6. **EPG:** pick a permitted EPG feed, channel mapping and data update cadence; add timestamps in Spain local time and no fake live statuses.
-7. **Hardening:** error retry controls, request timeout, HLS.js dependency pinning/bundling, import-validation improvements, usable video quality/subtitle controls, TV remote/focus interactions, performance, responsive polish.
-8. **Delivery:** set up tested HTTPS deployment, PWA installability checks (Chrome/Android/desktop), opt-in cross-device sync if desired, documentation and backup.
+- Catalogue: **55 channels**.
+- Automatic in-app playback: **21 HLS channels / 25 retained HLS URLs**, plus **one official Hamburg 1 YouTube embed**.
+- Player: HLS.js first in Chromium, native HLS only as a fallback, automatic source failover, adaptive quality menu, local device diagnostics and retry controls.
+- Success rule: decoded dimensions must be non-zero and video time must advance by at least 1.5 seconds. A transient `playing` event is not enough.
+- Fatal errors after playback begins now invoke recovery/fallback instead of leaving a false connected status.
+- Source labels show the published Spain browser screen separately from the current device's local result.
+- The Guide now exposes honest channel availability while a licensed real-time EPG remains pending.
+- Hamburg 1 plays through the official player inside the existing video frame. Known-blocked ZDF-family/ARTE/DF1 sources are no longer retried.
+- Service-worker shell cache is v8; broadcaster and stream requests remain excluded from caching.
 
-## Playback mode distinctions
+## Why the player changed
 
-- Direct HLS: `data.js` stream candidate, attempted in `app.js` using native video or hls.js. Candidate != verified working.
-- Official site: genuine viewing URL on the station card. Browsers may open a tab; third-party login/geo conditions remain.
-- VLC: exports an M3U pointer for VLC. This is not a guaranteed deep-link into Android VLC, and does not download broadcasts.
-- DRM content: not embedded unless broadcaster supports an authorised, licensed mechanism.
+On the live v0.7.1 app, Chrome returned `maybe` for native HLS support. The app trusted that answer and bypassed HLS.js. Several valid feeds briefly fired `playing` and then stopped at 0:00 with a demuxer parse error while the UI still said the signal was connected.
 
-## Verified research sources / URLs (reviewed 17 Oct 2026)
+The exact same ALEX Berlin, DW Español, NDR International, tagesschau24, hr, Teledeporte and Motorvision sources produced advancing video through HLS.js. v0.8 therefore prefers HLS.js and verifies real progress before success.
 
-- ARD Livestream: https://www.ardmediathek.de/live
-- ARD foreign-viewing restrictions: https://hilfe.ard.de/mediathek/verfuegbarkeit-und-verweildauer-mt/abruf-von-livestreams-im-ausland/
-- ZDF livestream overview and Germany-only 24/7 geographic restriction: https://www.zdf.de/live-tv and https://www.zdf.de/fragen-und-antworten-zdf-streaming-100
-- RTL+ channel viewing: https://plus.rtl.de/rtlde-rtl ; RTL+ live TV overview https://plus.rtl.de/rtlplus-root/live-tv-f_127
-- ProSieben: https://www.joyn.de/live-tv/prosieben
-- SAT.1: https://www.joyn.de/live-tv/sat1
-- Kabel Eins: https://www.joyn.de/live-tv/kabel-eins
-- ARTE live: https://www.arte.tv/de/live/
-- SPORT1 live: https://www.sport1.de/tv-video/tv
-- Formula 1 DAZN Spain rights through 2030 (2026-09-08 official F1 announcement): https://corp.formula1.com/formula-1-and-dazn-extend-broadcast-partnership-in-spain-andorra-and-portugal-through-2030/
-- HLS.js official docs: https://github.com/video-dev/hls.js
-- Public IPTV candidate listings *only, not rights clearance or verified Spain playback*: https://github.com/unbelauscht/german-tv-m3u8/blob/main/german-tv.m3u and https://github.com/iptv-org/iptv/blob/master/streams/de.m3u
+## Spain evidence from 18 October 2026
 
-## Hard constraints
+Environment: Chrome on Windows through a network exit confirmed as country code `ES`. Samples were approximately 9–18 seconds. This is not proof for every Spanish ISP/device, long-run stability, audible sound or future uptime.
 
-Do not falsely label sports and broadcasters live without a verified feed. Do not claim all German channels are viewable from Spain. Do not claim a connection was tested remotely in this environment. Keep the approved UI, all existing local preferences/data, and user-entered streams intact during future migrations. Seek explicit confirmation before changing major UI elements, folder structure, or preexisting working configurations.
+- Moving picture observed for **19 HLS channels**.
+- ARD and hr transported video but showed official programme-rights slates during the sample.
+- All 21 retained HLS channels reached the repaired player's `Playback confirmed` state with advancing time and non-zero decoded dimensions.
+- Hamburg 1's official embedded player loaded and played inside the PWA at 854×480.
+- All **25/25 retained HLS URLs** returned a root manifest, media playlist and a capped 32 KiB segment sample from the ES network.
+- ZDF, ZDFinfo, ZDFneo and 3sat returned 403/ORB; ZDF states its 24/7 streams are Germany-only.
+- ARTE direct streams returned 403/ORB and its official player reported the current programme unavailable in Spain.
+- DF1's old host failed; its current official CloudFront source explicitly country-blocked Spain.
 
-## QA iteration v0.3 and GitHub deployment
+See `SOURCES.md` for the channel matrix and `QA_REPORT.md` for the test method and historical audit trail.
 
-- `QA_REPORT.md` documents checks performed and unverified runtime behaviour.
-- Mobile Settings entry, corrupt browser storage handling, search navigation playback cleanup, history-clear rerender and retryable HLS library loading fixed.
-- Official TV viewing pages for phoenix, ONE and KiKA added; ARD Sportschau and ZDF Sport free sports links added as **official pages**, not direct HLS.
-- Network-first first-party service worker cache replaces prior cache-first behaviour; version updates after deployment no longer depend solely on manually bumping a cache name.
-- GitHub Actions QA workflow and `.nojekyll` marker included.
-- GitHub repository planned: `Maxi1412/global-tv-hub`. **No remote repository or live URL has been confirmed**. User must create the repo; then upload complete code and image assets, enable GitHub Pages, and verify production behaviour.
+## Premium channel findings
 
-## Post-v0.5 priorities (17 October 2026)
+- DAZN Spain's consumer terms grant a personal, non-transferable streaming licence and prohibit embedding/framing DAZN in another service without consent.
+- RTL publishes player documentation, but the player requires domain activation on RTL's whitelist. The library does not itself provide RTL+ live-TV entitlement, media IDs or redistribution permission.
+- No publicly authorised consumer embed was verified for Joyn, Sky/WOW or Eurosport. Private commercial partner integrations may exist, but none is licensed to this project.
+- Premium channels therefore remain discoverable but unavailable inside the player. A formal provider agreement plus a supported SDK/feed is the correct next route.
 
-**Already built:** A static GitHub Pages PWA with premium Sky, NOW UK and DAZN provider entries, free-event sports discovery, distinction between direct HLS candidates and official services, private authorised HLS URL mapping, local source diagnostics, playback retry/recovery, sports access filtering, smoke tests and unchanged approved design references.
+## Verification completed for v0.8
 
-**Remaining integration:** Acquire authorised browser-playable provider feeds where APIs/terms allow; determine whether authenticated providers offer official embed SDK integrations. A Sky/WOW/DAZN subscription does not itself provide a third-party HLS URL. Implement server-proxied EPG only after reviewing rights, rates and keys, with secrets kept off the static Pages repository. Test browser CORS, geo access and HD bitrate from Orihuela Costa, Spain, on each target device and create an evidence-backed channel health matrix. The user's key UX constraint: selecting a channel **never** sends them automatically to another site. For unavailable feeds, provide an honest in-app no-source state.
+- JavaScript syntax checks: PASS.
+- `node tests/smoke.cjs`: PASS.
+- ES network path probe: 25 checked, 25 manifest/media/segment paths passed.
+- Local browser regression: all 21 HLS channels confirmed advancing; Hamburg 1 embed loaded in app.
+- Mobile 390×844 Guide: source statuses visible, no console errors, layout visually inspected.
+- Desktop 1440×900 embedded player: visually inspected and preserved within the approved layout.
+- Offline app-shell reload: PASS. Television playback still correctly requires internet access.
 
-Do not republish unlicensed premium feeds, bypass DRM or geographic controls, or infer live status from a channel's name. App source is in the repository; remote `main` remains canonical; validate any changes via `node tests/smoke.cjs` and Chromium UI tests before deploying.
+## Commands
+
+```powershell
+node --check app.js
+node --check data.js
+node --check sw.js
+node --check tests/probe-sources.cjs
+node tests/smoke.cjs
+$env:AUDIT_REGION='Spain (ES) network, local machine; NOT visual playback'
+node tests/probe-sources.cjs
+```
+
+The probe writes `source-health-ci.json`. It deliberately samples only 32 KiB of one segment per source and is network evidence, not visual playback, sound confirmation or rights clearance.
+
+## Next work, in order
+
+1. Recheck the deployed Pages build on Android Chrome and any target TV browser, including autoplay, remote/focus input and PWA installation.
+2. Run longer stability samples and record join time, stalls, rendered bitrate/resolution, audio, live latency and fallback behavior.
+3. Seek source-owner permission/provenance evidence where a retained public feed came through a community directory.
+4. Contact RTL, Joyn, Sky/WOW, DAZN and Eurosport only through formal partner routes if licensed premium playback remains a product requirement.
+5. Choose a licensed EPG/sports schedule provider with stable channel IDs and static-Pages-compatible delivery; otherwise add a small backend without committing credentials.
+6. Keep `main` canonical, run all QA before publishing, verify the exact live Pages app after each deployment, and use Git history for rollback.

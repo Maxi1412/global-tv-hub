@@ -22,6 +22,8 @@ jobs:
         run: node tests/smoke.cjs
       - name: Probe public HLS manifests (CI-region availability only)
         run: node tests/probe-sources.cjs
+        env:
+          AUDIT_REGION: GitHub Actions runner; NOT Spain playback
         continue-on-error: true
       - name: Upload public source audit
         uses: actions/upload-artifact@v4

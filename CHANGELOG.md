@@ -1,3 +1,15 @@
+## v0.8.0 — Spain browser playback and honest source health
+
+- Test every configured HLS channel in the live GitHub Pages app from a confirmed ES network exit, with browser media state and screenshots separating moving video, decoder failure, rights slate, CORS/ORB block, DNS failure and timeout.
+- Prefer HLS.js in Chromium even when `canPlayType()` reports native HLS as `maybe`; this restores moving playback for ALEX Berlin, DW Español, NDR International, tagesschau24, hr, Teledeporte and Motorvision.
+- Require advancing `currentTime` and non-zero decoded dimensions before recording playback success. Fatal errors after an initial `playing` event now trigger failure/fallback instead of leaving a false connected status.
+- Update the displayed rendered resolution when adaptive HLS changes level and seed adaptive bitrate selection for HD-preferred broadband playback. The quality selector still exposes manifest-advertised 720p/1080p options where available.
+- Remove known non-working automatic attempts: obsolete DF1 and Hamburg 1 HLS URLs, and ZDF/3sat/ZDFinfo/ZDFneo/ARTE feeds that returned 403/ORB from Spain.
+- Add Hamburg 1's official YouTube live embed inside the existing player; no redirect or manual URL is required.
+- Publish channel-level Spain screening metadata in the catalogue and surface it separately from on-device diagnostics.
+- Upgrade the network probe from manifest-only checks to manifest, media-playlist, advertised-resolution, CORS-header and 32 KiB segment-path sampling. The report states its execution region instead of always claiming GitHub Actions.
+- Bump the offline shell cache to v8 and the visible release label to v0.8.0. Approved layout and design references remain unchanged.
+
 ## v0.7.1 — stream audit follow-up and mobile navigation
 - GitHub CI probed 34 candidate HLS URLs: 25 returned valid manifests, 9 failed in the CI region (not a Spain playback test).
 - Remove Motorvision Rakuten fallback returning HTTP 400.

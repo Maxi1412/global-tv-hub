@@ -1,3 +1,51 @@
+## v0.8.0 Spain browser playback pass (18 October 2026)
+
+### Environment and scope
+
+- Exact live baseline tested first: `https://maxi1412.github.io/global-tv-hub/` at `16ef64bac6a4ca556c7d1868b2689d934a479c83`.
+- Test machine network exit independently returned country code `ES`.
+- Browser: Chrome on Windows through Playwright; every configured HLS channel was selected in the live PWA, media state was inspected and a player-frame screenshot was captured.
+- Samples were approximately 9–18 seconds. “Moving video” means non-zero dimensions, advancing `currentTime`, no final media error, and a visually inspected frame. It does not establish long-run stability, audible sound, future uptime or rights clearance.
+- The three approved design-reference PNGs were inspected and remain unmodified.
+
+### Baseline defect reproduced
+
+Chromium reported native HLS support as `maybe`, so v0.7.1 bypassed HLS.js. DW Español, NDR International, tagesschau24, hr, ALEX Berlin and Teledeporte briefly fired `playing`, then stopped at 0:00 with `DEMUXER_ERROR_COULD_NOT_PARSE`; the app incorrectly retained “Video signal connected.” Motorvision also failed in the built-in route despite a valid manifest.
+
+Forcing the exact same seven URLs through HLS.js produced advancing, visually confirmed video. v0.8 therefore prefers HLS.js whenever supported, falls back to native HLS only when necessary, and waits for at least 1.5 seconds of advancing decoded video before storing success. Later video errors now trigger fallback instead of being ignored after the first `playing` event.
+
+### v0.8 local-build regression result
+
+- All 21 retained HLS channels reached `Playback confirmed` in the repaired app with advancing video and non-zero decoded dimensions.
+- Hamburg 1's official YouTube live embed played inside the existing dashboard at 854×480; the obsolete HLS endpoint was removed.
+- ARD and hr transported video but showed official programme-rights slates during the visual sample. They are classified as `programme-blackout`, not viewable programming.
+- ZDF, 3sat, ZDFinfo and ZDFneo returned 403/ORB from Spain. ZDF's own help states its 24/7 channel streams are Germany-only. Their automatic sources were removed.
+- ARTE direct endpoints returned 403/ORB and the official ARTE embed explicitly reported that the current programme was unavailable in the country. Its unstable direct attempts were removed.
+- DF1's former hostname no longer resolved. The current `live_stream` URL published by DF1's own site returned a CloudFront country-block message in Spain, so no replacement was presented as playable.
+- Premium RTL+/Joyn/Sky/WOW/DAZN/Eurosport channels still have no licensed third-party playback integration in this static PWA. They remain unavailable in app rather than being backed by pirate feeds.
+
+### Spain network-path audit after source cleanup
+
+`AUDIT_REGION='Spain (ES) network, local machine; NOT visual playback' node tests/probe-sources.cjs`
+
+- 25 public HLS URLs checked across 21 channels.
+- 25 valid root manifests.
+- 25 valid media-playlist paths and successful 32 KiB media-segment samples.
+- Advertised maximum resolution was recorded separately from rendered browser resolution.
+- The probe does not claim actual playback, sound, programme availability or rights; those claims require the browser evidence above.
+
+### Deterministic QA
+
+- `node --check app.js`, `data.js`, `sw.js`, and `tests/probe-sources.cjs`: PASS.
+- `node tests/smoke.cjs`: PASS.
+- Smoke coverage now includes HLS.js-first selection, advancing-video confirmation, Spain source metadata, the official Hamburg 1 embed, and the absence of retry controls for known blocked DF1/ZDF sources.
+- Approved visual design remains intact; changes are limited to player behavior, factual source labels, the embedded video surface, and documentation.
+- Responsive browser QA passed at 390×844 for the Guide with published source status visible and no console errors.
+- Desktop 1440×900 QA confirmed the official Hamburg 1 player inside the existing dashboard frame.
+- Offline reload returned the complete app shell from service-worker cache; live television correctly remains network-dependent.
+
+See `SOURCES.md` for the channel-by-channel matrix. The next release gate is a clean commit, GitHub Actions, Pages deployment and re-test of the exact live v0.8 URL.
+
 ## v0.7.1 live-manifest audit (17 October 2026)
 GitHub-hosted audit of 34 public HLS candidate endpoints: 25 returned a syntactically valid HLS manifest, 9 failed. This check occurred from a GitHub Actions runner, not a phone in Spain, and does NOT guarantee playable images or any broadcasting rights. Failure examples: Motorvision's Rakuten fallback returned HTTP 400 and is removed; DF1 and Hamburg1 had network/region errors; ZDF, ZDFinfo, ZDFneo, 3sat and ARTE returned HTTP 403 from the US test runner, consistent with possible geographic restrictions. Do not assume these streams have failed in Spain without on-device testing.
 
