@@ -19,3 +19,21 @@
 /* v0.8: official provider embeds occupy the existing player frame without changing the dashboard layout. */
 .player iframe{display:none;position:absolute;inset:0;width:100%;height:100%;background:#000;border:0}
 .player iframe.active{display:block}
+
+/* v0.10: sports cards distinguish verified playback from provider-only access. */
+.sport-art{display:grid;place-items:center;width:100%;height:128px;background:radial-gradient(circle at 70% 25%,#1968a8 0,#0b3359 34%,#071625 76%);font-size:50px;line-height:1}
+.sport-symbol{position:absolute;top:9px;left:9px;z-index:4;display:grid;place-items:center;width:33px;height:33px;border-radius:50%;background:#07182bd9;border:1px solid #47769b;font-size:17px;box-shadow:0 4px 14px #0006}
+.sport-tier.playable{border-color:#148ee5;color:#9edbff!important;background:#063a66e6}
+.sport-tier.provider{border-color:#6f6184;color:#d8cbea!important;background:#2d2142d9}
+.sport-tier.unavailable{border-color:#8f4652;color:#ffc2c9!important;background:#491d27d9}
+.sport-detail{margin:15px 0 3px;padding:18px;border:1px solid #167dc2;border-radius:13px;background:linear-gradient(135deg,#0d2d49,#0a1d30);box-shadow:0 9px 26px #0003;outline:none;scroll-margin-top:12px}
+.sport-detail:focus{border-color:#46b6ff;box-shadow:0 0 0 2px #198ed044,0 9px 26px #0003}
+.sport-detail-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+.sport-detail-head h2{font-size:20px;margin:5px 0 0}
+.sport-close{display:grid;place-items:center;width:35px;height:35px;flex:0 0 auto;border-radius:9px;border:1px solid #37617f;background:#102b43;color:#bedaf1}
+.sport-close:hover{background:#194464}.sport-close svg{width:17px;height:17px}
+.sport-detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:15px 0}
+.sport-detail-grid>div{padding:11px;border:1px solid #2b4d67;border-radius:9px;background:#081b2c}
+.sport-detail-grid strong{display:block;margin-top:5px;font-size:12px;line-height:1.45;color:#ddecfb}
+.sport-detail p{margin:9px 0;color:#a8c0d7;font-size:12px;line-height:1.65}
+@media(max-width:620px){.sport-art{height:119px}.sport-symbol{width:30px;height:30px;font-size:15px}.sport-detail{padding:14px}.sport-detail-grid{grid-template-columns:minmax(0,1fr)}}

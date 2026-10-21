@@ -31,21 +31,25 @@ assert.equal(catalog.sourceAudit.zdf.result,'geo-blocked','blocked manifest is n
 assert.ok(catalog.sports.some(s=>s.channelId==='redbulltv'),'sports cards bind to playable channels');
 assert.ok(catalog.channels.some(x=>x.id==='skybuli' && x.stream===null),'Sky Bundesliga must never be presented as free embedded stream');
 assert.ok(catalog.channels.some(x=>x.id==='skyukfootball' && x.stream===null),'Sky UK listings require licensed access');
-assert.ok(catalog.sports.some(x=>x.id==='redbulltv' && x.accessTier==='Free selection'),'free sports directory');
-assert.ok(catalog.sports.some(x=>x.id==='fifaplus' && x.accessTier==='Free selection'),'FIFA+ free sports on DAZN');
+assert.ok(catalog.sports.some(x=>x.id==='redbulltv' && x.accessTier==='Play in app'),'verified sports playback card');
+assert.ok(catalog.sports.some(x=>x.id==='fifaplus' && x.accessTier==='Free official'),'FIFA+ official free selection on DAZN');
 assert.ok(catalog.sports.some(x=>x.id==='skyf1' && x.accessTier==='Subscription'),'paid provider directory');
+for(const category of ['Basketball','Ice Hockey','Golf','Cricket','Rugby','Handball','American Football','Athletics']) assert.ok(catalog.sports.some(x=>x.category===category),'sports category '+category);
+assert.equal(catalog.sports.filter(s=>s.channelId).length,5,'five sports cards have direct in-app channel bindings');
+assert.ok(catalog.sports.filter(s=>s.channelId).every(s=>s.quality),'every directly playable sports card publishes its verified maximum');
 assert.ok(catalog.channels.every(x=>x.official===null||x.official.startsWith('https://')));
 assert.ok(catalog.channels.every(x=>x.stream===null||x.stream.startsWith('https://')));
 assert.equal(new Set(catalog.channels.map(x=>x.id)).size,catalog.channels.length,'unique channel IDs');
 assert.equal(new Set(catalog.sports.map(x=>x.id)).size,catalog.sports.length,'unique sport IDs');
 for (const s of catalog.sports) {
   assert.ok(s.url.startsWith('https://'),s.name+' official destination');
-  assert.ok(existsSync(join(root,'assets',s.image)),s.name+' thumbnail');
+  assert.ok(s.accessTier,s.name+' access tier');
+  if(s.image) assert.ok(existsSync(join(root,'assets',s.image)),s.name+' thumbnail');
 }
 runInNewContext(readFileSync(join(root,'app.js'),'utf8'),sandbox,{filename:'app.js'});
 assert.match(ui.innerHTML,/German Live TV/);
 const click=(name,value)=>ui.callbacks.click({target:{closest(){return {dataset:{[name]:value}};}}});
-for (const [route,expected] of [['live','Live TV'],['sports','Sports you can watch'],['guide','TV Programme Guide'],['favorites','My Favourites'],['settings','Settings & Sources'],['search','Search']]) {
+for (const [route,expected] of [['live','Live TV'],['sports','Live sports TV'],['guide','TV Programme Guide'],['favorites','My Favourites'],['settings','Settings & Sources'],['search','Search']]) {
   click('nav',route);
   assert.ok(ui.innerHTML.includes(expected),`route ${route}`);
 }
@@ -89,11 +93,27 @@ assert.match(ui.innerHTML,/data-channel="morethansports"/,'free sports tiles lau
 click('channel','morethansports');
 assert.match(ui.innerHTML,/Retry in app/,'sports card routes to built-in stream player');
 click('nav','sports');
-click('sportFilter','Free selection');
+click('sportFilter','Play in app');
 assert.ok(ui.innerHTML.includes('Red Bull TV'),'free sports filter');
 assert.ok(!ui.innerHTML.includes('Sky Sport Bundesliga'),'free list excludes premium Sky');
+assert.match(ui.innerHTML,/1080p verified/,'playable sports expose verified quality');
+click('nav','sports');
+click('sport','nba-league-pass');
+assert.match(ui.innerHTML,/NBA League Pass/,'sports provider details identify the selected service');
+assert.match(ui.innerHTML,/protected player/,'subscription sports explain licensed playback boundary');
+assert.match(ui.innerHTML,/Show playable sports/,'provider details link back to in-app playback');
+assert.ok(!ui.innerHTML.includes('data-official'),'sports directory does not silently redirect');
 click('sportFilter','Subscription');
 assert.ok(ui.innerHTML.includes('Sky Sport Bundesliga'),'subscription filter');
+click('sportFilter','Basketball');
+assert.ok(ui.innerHTML.includes('Courtside 1891'),'basketball filter');
+assert.ok(ui.innerHTML.includes('NBA League Pass'),'basketball provider');
+click('sportFilter','Ice Hockey');
+assert.ok(ui.innerHTML.includes('IIHF TV'),'ice hockey filter');
+click('sportFilter','Golf');
+assert.ok(ui.innerHTML.includes('Golf on Movistar'),'golf filter');
+click('sportFilter','Cricket');
+assert.ok(ui.innerHTML.includes('ICC.tv Cricket'),'cricket filter');
 click('sportFilter','Football');
 assert.ok(ui.innerHTML.includes('Sportschau'),'free ARD sports entry');
 assert.ok(!ui.innerHTML.includes('MotoGP'),'football filter excludes motorsport');
@@ -117,5 +137,7 @@ assert.ok(!appSource.includes("if(video.canPlayType('application/vnd.apple.mpegu
 assert.ok(appSource.includes('Playback confirmed'),'player waits for advancing video before recording success');
 assert.ok(appSource.includes('capLevelToPlayerSize:false'),'built-in playback may select a verified 1080p rendition even in the compact dashboard player');
 assert.ok(appSource.includes('preferredMaxHeight'),'known unstable top renditions can be capped to a stable source quality');
+assert.ok(!appSource.includes('scrollIntoView'),'sports detail must not push the page downward');
+assert.ok(appSource.includes('sportPlayable'),'sports cards share one verified in-app playback rule');
 assert.ok(existsSync(join(root,'.nojekyll')),'GitHub Pages compatible');
 console.log('PASS — HLS.js-first playback, advancing-video confirmation, official embed support, Spain source status, 7 routes, UI controls');
