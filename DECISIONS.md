@@ -11,6 +11,8 @@
 - Do not add official ARD-family streams that return 403 from Spain, even when their manifests are visible on broadcaster pages.
 - Treat Joyn and Zattoo as legitimate viewing platforms, not source feeds. Account access does not grant a third-party embed licence.
 - Keep real-time EPG empty until a stable, licensed and browser-consumable data source is verified.
+- Supersede that pending state for v0.12: use IPTV-EPG.org's explicitly free XMLTV links, exact XMLTV channel IDs and a same-origin compact snapshot. Preserve an honest empty state for any channel without an exact match, display source freshness, and never treat schedule availability as playback entitlement.
+- Refresh the compact guide twice daily through GitHub Actions. Keep only a rolling three-day window so phones do not download the full Germany, Spain and UK country files.
 
 ## 18 October 2026
 

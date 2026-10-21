@@ -7,8 +7,8 @@
 - Local checkout: `C:\Users\acer\AI-Workspace\Projects\Active\global-tv-hub`
 - Repository and canonical branch: `https://github.com/Maxi1412/global-tv-hub` → `main`
 - Live PWA: `https://maxi1412.github.io/global-tv-hub/`
-- Published release: **v0.11.0** implementation at `2c11b73295e33a44a09b99dd9a519b763a6ce096`
-- Current local checkout: aligned with canonical GitHub `main` after the v0.11 logo deployment and release documentation update
+- Current release candidate: **v0.12.0**, adding real current/upcoming/next-day programme data below every channel player and throughout the Guide route.
+- Current local checkout: v0.12 changes prepared against canonical GitHub `main`; verify the final remote SHA, QA and Pages deployment after publishing.
 - Published v0.8 implementation commit: `12e33b5ca9470fc090669fea47ec74585f9d7e15`
 - Last published baseline before this release: v0.7.1 at `16ef64bac6a4ca556c7d1868b2689d934a479c83`
 - GitHub `main`, GitHub Pages and the live browser build were rechecked on 21 October 2026. Recheck again before future edits; do not rely on the old baseline SHA.
@@ -30,7 +30,7 @@ Selecting a German television or sports channel should start reliable, HD-prefer
 - Never publish pirate feeds, extract subscription tokens, bypass DRM/geoblocking, or present Sky/DAZN/RTL+/Joyn content as free.
 - Do not invent programme titles, fixtures, start times or “LIVE” badges. Ship EPG data only after its licence, stable IDs, update cadence and Spain-local time handling are verified.
 
-## Current v0.11 implementation
+## Current v0.12 implementation
 
 - Catalogue: **55 channels**.
 - Every fixed catalogue channel has a locally stored broadcaster/channel logo. The same identity is used in Home, Search, Favourites, Live TV and Guide; custom streams retain a safe text fallback.
@@ -39,12 +39,14 @@ Selecting a German television or sports channel should start reliable, HD-prefer
 - Success rule: decoded dimensions must be non-zero and video time must advance by at least 1.5 seconds. A transient `playing` event is not enough.
 - Fatal errors after playback begins now invoke recovery/fallback instead of leaving a false connected status.
 - Source labels show the published Spain browser screen separately from the current device's local result.
-- The Guide now exposes honest channel availability while a licensed real-time EPG remains pending.
+- Each selected channel now has an in-flow programme panel below the player with current programme, progress, upcoming programmes and Today/Tomorrow/day-after navigation. The full Guide route shows real now/next listings.
+- Programme data comes from a compact same-origin snapshot built from IPTV-EPG.org's free XMLTV country links. Exact IDs populate 54 of 55 fixed channels; Terra Mater WILD remains explicitly unmatched.
+- `.github/workflows/update-epg.yml` regenerates compressed `epg.json.gz` twice daily. It uses no API key, paid route or broadcaster playback token.
 - Hamburg 1 plays through the official player inside the existing video frame. Known-blocked ZDF-family/ARTE/DF1 sources are no longer retried.
 - Sports directory: 38 entries, including five direct playable channels and 33 accurately labelled provider-only or unavailable entries.
 - Provider details render directly below the sports hero, retain the top scroll position and explain the selected provider instead of reusing one generic bottom panel.
 - Dedicated filters cover basketball, ice hockey, golf, cricket, rugby, handball, American football and athletics in addition to existing football, tennis and motorsport discovery.
-- Service-worker shell cache is v11 and includes all 51 unique channel-logo files; broadcaster and stream requests remain excluded from caching.
+- Service-worker shell cache is v12 and includes the current compact guide plus all 51 unique channel-logo files; broadcaster and stream requests remain excluded from caching.
 
 ## Spain evidence from 21 October 2026
 

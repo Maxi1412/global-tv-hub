@@ -1,7 +1,8 @@
-const fs=require('node:fs'),assert=require('node:assert/strict'),vm=require('node:vm');
+const fs=require('node:fs'),assert=require('node:assert/strict'),vm=require('node:vm'),zlib=require('node:zlib');
 const html=fs.readFileSync('index.html','utf8');
 const app=fs.readFileSync('app.js','utf8');
 const data=fs.readFileSync('data.js','utf8');
+const epg=JSON.parse(zlib.gunzipSync(fs.readFileSync('epg.json.gz')));
 assert.match(html,/<script src="\.\/data\.js"><\/script>/,'External catalogue script missing');
 assert.match(html,/<script src="\.\/app\.js" defer><\/script>/,'External app script missing');
 for(const [name,source] of [['app.js',app],['data.js',data]])new vm.Script(source,{filename:name});
@@ -10,6 +11,8 @@ for(const text of ['Global TV Hub','Sports Hub','TV Guide','Sky Sports F1','DAZN
 const manifest=JSON.parse(fs.readFileSync('manifest.webmanifest','utf8'));assert.equal(manifest.display,'standalone');
 for(const icon of manifest.icons)assert.ok(fs.existsSync(icon.src.replace(/^\.\//,'')),'Missing '+icon.src);
 for(const f of ['sw.js','SOURCES.md','icon.svg','.nojekyll'])assert.ok(fs.existsSync(f),'Missing '+f);
+assert.equal(epg.schemaVersion,1,'EPG schema');
+assert.ok(Object.values(epg.channels).filter(list=>list.length).length>=50,'EPG channel coverage');
 new vm.Script(fs.readFileSync('sw.js','utf8'),{filename:'sw.js'});
 assert.ok(!html.includes('http://'),'Unencrypted http link');
 console.log('PASS: external app scripts parse, PWA routes, sports providers, local favourites, manifest and offline files are present.');

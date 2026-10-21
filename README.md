@@ -1,8 +1,10 @@
-# Global TV Hub v0.11.0 — real channel identity, verified playback and honest provider access
+# Global TV Hub v0.12.0 — live playback with now, next and next-day programme guide
 
 Global TV Hub is a static PWA for German, international and sports television. The approved premium dark dashboard is unchanged. Selecting a configured channel stays inside the app.
 
-The v0.11 interface uses real locally stored broadcaster/channel logos for all 55 fixed catalogue entries. Logos appear consistently on Home, Search, Favourites, Live TV and Guide surfaces, with a readable text fallback for user-added custom streams. The v11 offline shell pre-caches these assets instead of depending on third-party image hosts at runtime.
+The v0.12 player now places the selected channel's real programme schedule directly below its video: the current programme, progress, upcoming shows and Today/Tomorrow/day-after controls. The full Guide route shows now and next across the catalogue. The compact, compressed XMLTV snapshot currently has listings for 54 of 55 fixed channels; Terra Mater WILD retains an explicit no-listing state because no verified exact match was found. Times are converted to the viewer's local timezone, and programme listings never imply that a blocked or subscription channel is playable.
+
+The v0.11 interface uses real locally stored broadcaster/channel logos for all 55 fixed catalogue entries. Logos appear consistently on Home, Search, Favourites, Live TV and Guide surfaces, with a readable text fallback for user-added custom streams. The v12 offline shell pre-caches those assets and the latest compact guide snapshot instead of depending on third-party image hosts at runtime.
 
 The v0.10 Sports Hub applies one playback rule to every card. Five cards start verified television inside the PWA; all other sports cards show their exact official-provider, subscription or regional status without scrolling the page or pretending to play. Basketball, ice hockey, golf, cricket, rugby, handball, American football and athletics now have dedicated filters.
 
@@ -12,7 +14,7 @@ On 21 October 2026, every configured channel was rechecked in Chrome on Windows 
 
 Premium RTL/ProSieben/Sat.1, Sky, DAZN, F1, football and similar services remain unavailable in the built-in player unless the rights holder supplies an authorised third-party integration. Joyn, Zattoo, FIFA+ on DAZN and other legitimate platforms were researched individually; an account or free tier is not an embed licence. The app does not scrape protected streams, bypass DRM/geographic controls, or advertise paid channels as free.
 
-Run `node tests/smoke.cjs` for deterministic UI/catalogue checks and `node tests/probe-sources.cjs` for a network-path audit. See `QA_REPORT.md`, `SOURCES.md`, and `CODEX_HANDOFF.md` for evidence and limitations.
+Run `node scripts/update-epg.cjs` to refresh the programme snapshot, `node tests/smoke.cjs` for deterministic UI/catalogue checks and `node tests/probe-sources.cjs` for a network-path audit. GitHub Actions refreshes the guide twice daily. See `QA_REPORT.md`, `SOURCES.md`, and `CODEX_HANDOFF.md` for evidence and limitations.
 
 ## v0.10 — Sports playback and provider directory
 

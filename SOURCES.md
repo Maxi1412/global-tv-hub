@@ -2,6 +2,15 @@
 
 Updated 21 October 2026. This PWA is an independent directory/player, not a broadcaster. Source URLs remain controlled by their owners and can change or restrict individual programmes. “Screened” below means a short Chrome/Windows sample through a confirmed ES network exit with decoded dimensions, advancing video and a visually inspected frame; it is not a long-run uptime promise, audio certification or rights clearance.
 
+## v0.12 programme-guide source
+
+- Source service: [IPTV-EPG.org free country guides](https://iptv-epg.org/guides), using its public XMLTV links for Germany, Spain and the United Kingdom.
+- The source page describes the files as free, up-to-date XMLTV data intended to be copied into compatible guide applications. No account, key, paid route or protected broadcaster stream is used.
+- `scripts/update-epg.cjs` maps exact XMLTV IDs, converts timestamp offsets to ISO instants and retains only the useful current/upcoming portion of the rolling three-day window in compressed `epg.json.gz`. The browser formats those instants in the viewer's local timezone.
+- Current generation result: 54 of 55 catalogue channels and 3,184 current/upcoming programme records. Terra Mater WILD has no exact published match and deliberately displays “No verified schedule” instead of another channel's data.
+- Refresh cadence: 03:17 and 15:17 UTC through `.github/workflows/update-epg.yml`, plus manual workflow dispatch. The app shows snapshot freshness and a clear error state if the guide fails.
+- Programme metadata is informational and can change. A listing for RTL, Sky, DAZN or another protected channel is not a playback licence, source feed or indication that Global TV Hub can unlock it.
+
 ## v0.10 sports directory review
 
 - Direct in-app sports television: More Than Sports TV, Motorvision, World of Freesports and Red Bull TV reconfirmed at 1920×1080; Teledeporte reconfirmed at its 1280×720 maximum. Every sample advanced video and reported ready state 4.
@@ -55,7 +64,7 @@ The retained catalogue has 21 HLS channels (25 URLs including fallbacks) plus on
 - **FIFA+ on DAZN** is free after registration and carries selected international football, not every premium league or match. DAZN does not authorise framing its service without consent.
 - **UEFA.tv**, **Sportschau**, **ZDF Sport**, **SPORT1**, **Red Bull TV**, **More Than Sports TV**, **Teledeporte**, **Motorvision** and **World of Freesports** remain useful lawful free selections, but their event schedules and territorial rights differ.
 - **Formula 1 in Spain** remains DAZN-controlled through 2030 for complete live coverage. RTL shows selected 2026 sessions/races in Germany, and Sky/WOW or Sky Sports/NOW are paid territory-specific services. None supplies this project with a licensed browser feed or partner SDK.
-- **Real programme titles and fixtures** remain unconnected. Broadcaster pages expose current schedules, but no stable, licensed, cross-origin EPG feed suitable for this static PWA was verified. The app continues to show no fabricated programme data.
+- **Real programme titles** are connected in v0.12 through the compact XMLTV snapshot above. Sport-card fixtures outside those linear channel schedules are still not invented or inferred.
 
 ## Channel logo provenance — 21 October 2026
 

@@ -1,3 +1,16 @@
+## v0.12.0 programme-guide audit (21 October 2026)
+
+- XMLTV generation: 55/55 catalogue keys, 54 channels with exact real listings, 3,184 current/upcoming programme records in the compact rolling window and one explicit unmatched channel (Terra Mater WILD).
+- The player view now renders programme data directly beneath the video; Today, Tomorrow and day-after controls update only the schedule panel and do not restart playback.
+- The full Guide route shows now/next listings and category filters. Browser times are derived from ISO instants and shown in the viewer's local timezone.
+- Premium, blocked and unavailable channel listings remain visually separate from playback capability; no guide record creates or unlocks a stream.
+- The approved dark dashboard, existing playback sources, favourites, custom streams and local storage keys are preserved.
+- `node --check` for app/data/service worker/EPG updater, `node tests/smoke.cjs`, `node tests/qa.cjs` and `git diff --check`: PASS.
+- Desktop 1280×720: current programme loaded, Tomorrow switched to 14 following programmes, document width equalled viewport width and the console reported zero errors or warnings.
+- Mobile 390×844: schedule remained visible beneath the player, its width matched the stage (364px), 24-hour times rendered correctly and horizontal overflow was zero.
+- Full Guide on mobile: 55 rows, 54 with current-day programmes and one honest empty state; Tomorrow produced real listings for 53 channels and zero horizontal overflow.
+- Deployment results are recorded below after the release reaches canonical `main` and GitHub Pages.
+
 ## v0.11.0 channel-logo audit (21 October 2026)
 
 - Every one of the 55 fixed catalogue channels has a local PNG logo and deterministic existence coverage in `tests/smoke.cjs`.

@@ -1,3 +1,13 @@
+## v0.12.0 — Now, next and next-day programme guide
+
+- Add a selected-channel programme panel directly below the existing player without redesigning the approved dark dashboard.
+- Show the real current programme, progress, programme description, upcoming programmes and Today/Tomorrow/day-after navigation in local time.
+- Replace the placeholder Guide route with real now/next listings and channel-category filters.
+- Map all 55 fixed catalogue channels to exact XMLTV IDs where available; 54 currently have programme data and Terra Mater WILD remains explicitly unmatched rather than borrowing another schedule.
+- Add `scripts/update-epg.cjs`, a compact compressed same-origin `epg.json.gz`, and a twice-daily credential-free GitHub Actions refresh.
+- Keep schedules separate from playback rights: premium/blocked channels can have listings without being labelled playable.
+- Bump the visible app release and offline shell cache to v0.12/v12 while preserving favourites, custom streams, playback sources and local diagnostics.
+
 ## v0.11.0 — Real channel logos throughout the PWA
 
 - Replace generated text wordmarks with locally stored broadcaster/channel logos for every one of the 55 fixed catalogue channels.

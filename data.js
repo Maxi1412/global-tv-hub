@@ -136,7 +136,7 @@ window.TV_DATA = {
   },
   sourceAuditMeta:{testedAt:'2026-10-21T01:18:00+02:00',region:'ES',browser:'Chrome on Windows',sampleWindowSeconds:'8–30',meaning:'Decoded moving video at the selected highest stable rendition; not a future uptime, audio or rights guarantee'},
   logoSourceMeta:{reviewedAt:'2026-10-21',note:'Locally stored broadcaster marks matched through broadcaster media pages, Wikimedia Commons and the IPTV-org logo index. Marks belong to their respective owners.'},
-  researchDate:'21 October 2026 · v0.11 channel logo and identity review'
+  researchDate:'21 October 2026 · v0.12 programme guide integration'
 };
 
 /* Local copies prevent channel cards from depending on third-party image hosts at runtime. */

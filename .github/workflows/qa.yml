@@ -18,6 +18,7 @@ jobs:
           node --check app.js
           node --check data.js
           node --check sw.js
+          node --check scripts/update-epg.cjs
       - name: App and catalogue smoke test
         run: node tests/smoke.cjs
       - name: Probe public HLS manifests (CI-region availability only)

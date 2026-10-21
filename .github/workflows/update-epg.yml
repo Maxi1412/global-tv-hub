@@ -1,0 +1,38 @@
+name: Update programme guide
+
+on:
+  schedule:
+    - cron: '17 3,15 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-programme-guide
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Build compact EPG snapshot
+        run: node scripts/update-epg.cjs
+      - name: Publish changed schedule data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add epg.json.gz
+          if git diff --cached --quiet; then
+            echo "Programme guide is unchanged"
+          else
+            git commit -m "chore: refresh programme guide"
+            git push origin HEAD:main
+          fi
