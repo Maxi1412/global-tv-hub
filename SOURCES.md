@@ -2,6 +2,24 @@
 
 Updated 21 October 2026. This PWA is an independent directory/player, not a broadcaster. Source URLs remain controlled by their owners and can change or restrict individual programmes. “Screened” below means a short Chrome/Windows sample through a confirmed ES network exit with decoded dimensions, advancing video and a visually inspected frame; it is not a long-run uptime promise, audio certification or rights clearance.
 
+## v0.13 full-catalogue playback truth
+
+- The catalogue has **55 listings**, not 55 playable feeds. The current built-in capability is **21 HLS channels plus one official Hamburg 1 embedded player**. Thirty-three listings have no authorised browser-compatible player.
+- The 21 HLS channels were re-opened individually through the real mobile Live TV UI. Every one decoded, remained unpaused/ready, had buffered media, advanced for a further 3.5 seconds and exposed increasing audio-decoder bytes. The official Hamburg 1 inner video also advanced; merely loading its iframe was not accepted.
+- Highest observed output: 16 HLS channels at 1920×1080; ALEX, hr, Teledeporte and tagesschau24 at 1280×720; QVC at 960×540; Hamburg 1 at 854×480. These are source/device observations, not promises. The player cannot create genuine 1080p from lower-resolution media.
+- The 33 unavailable entries were also selected one by one. None exposed a misleading playback/retry control or activated the HLS video. Their guide data and channel logos do not imply playback access.
+- `tests/browser-full-playback-audit.js` records the channel, outcome, startup time, decoded resolution, ready/paused state, buffer, time advance, audio bytes, embedded-video evidence and browser errors for future runs.
+
+## Current platform and integration boundary
+
+- ZDF's official streaming FAQ states that its 24/7 live channels are generally available only in Germany; worldwide event streams are programme-specific and do not provide a replacement linear feed.
+- Joyn legitimately offers free consumer live TV including ProSieben/SAT.1-family channels, but its own site limits framing to Joyn-controlled domains. Consumer availability is not a third-party feed or licence for this GitHub Pages origin.
+- RTL+ and Sky/WOW similarly prevent cross-origin framing, and their playback is controlled by accounts, entitlements, tokens and DRM. A subscription proves that a user can watch through that provider, not that this independent PWA may extract or redistribute the stream.
+- waipu.tv documents temporary EU viewing for eligible German-resident subscribers and package/mobile-option requirements. It does not expose an authorised static-PWA stream connection.
+- SPORT1 documents regional limits for its free stream; DF1 promotes an official Germany-oriented livestream. Neither supplied a lawful browser-compatible feed that passed from the ES test network during this audit.
+- Fresh broadcaster-page inspection found phoenix requesting an official ZDF CDN master that returned HTTP 403 in Spain; ONE's current published HLS hostname failed DNS resolution. They remain unavailable rather than being added as false-working sources.
+- No pirate restream, subscription-token extraction, DRM bypass or geographic-control bypass is accepted as a replacement. The correct route for protected channels is a documented partner embed/SDK/feed with permission for this origin and territory.
+
 ## v0.12 programme-guide source
 
 - Source service: [IPTV-EPG.org free country guides](https://iptv-epg.org/guides), using its public XMLTV links for Germany, Spain and the United Kingdom.

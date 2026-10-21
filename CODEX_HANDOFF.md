@@ -7,8 +7,8 @@
 - Local checkout: `C:\Users\acer\AI-Workspace\Projects\Active\global-tv-hub`
 - Repository and canonical branch: `https://github.com/Maxi1412/global-tv-hub` → `main`
 - Live PWA: `https://maxi1412.github.io/global-tv-hub/`
-- Current published release: **v0.12.0**, adding real current/upcoming/next-day programme data below every channel player and throughout the Guide route.
-- Published v0.12 implementation commit: `65edc2c732aec31e0176a22765512b9cb9c473ae`; its GitHub Actions QA and Pages deployment passed and the exact public mobile build was rechecked.
+- Current release: **v0.13.0**, correcting direct-live startup/status truth and adding a repeatable 55-entry browser playback audit. Recheck the canonical `main` SHA and deployment jobs before future edits.
+- Previous published v0.12 implementation commit: `65edc2c732aec31e0176a22765512b9cb9c473ae`; its GitHub Actions QA and Pages deployment passed.
 - Published v0.8 implementation commit: `12e33b5ca9470fc090669fea47ec74585f9d7e15`
 - Last published baseline before this release: v0.7.1 at `16ef64bac6a4ca556c7d1868b2689d934a479c83`
 - GitHub `main`, GitHub Pages and the live browser build were rechecked on 21 October 2026. Recheck again before future edits; do not rely on the old baseline SHA.
@@ -30,15 +30,16 @@ Selecting a German television or sports channel should start reliable, HD-prefer
 - Never publish pirate feeds, extract subscription tokens, bypass DRM/geoblocking, or present Sky/DAZN/RTL+/Joyn content as free.
 - Do not invent programme titles, fixtures, start times or “LIVE” badges. Ship EPG data only after its licence, stable IDs, update cadence and Spain-local time handling are verified.
 
-## Current v0.12 implementation
+## Current v0.13 implementation
 
 - Catalogue: **55 channels**.
 - Every fixed catalogue channel has a locally stored broadcaster/channel logo. The same identity is used in Home, Search, Favourites, Live TV and Guide; custom streams retain a safe text fallback.
-- Automatic in-app playback: **21 HLS channels / 25 retained HLS URLs**, plus **one official Hamburg 1 YouTube embed**.
+- Configured in-app playback: **21 HLS channels / 25 retained HLS URLs**, plus **one official Hamburg 1 YouTube embed**. The other 33 catalogue entries do not have an authorised browser-compatible player.
 - Player: HLS.js first in Chromium, native HLS only as a fallback, automatic source failover, Full-HD-first quality selection, adaptive/manual quality menu, local device diagnostics and retry controls.
 - Success rule: decoded dimensions must be non-zero and video time must advance by at least 1.5 seconds. A transient `playing` event is not enough.
 - Fatal errors after playback begins now invoke recovery/fallback instead of leaving a false connected status.
-- Source labels show the published Spain browser screen separately from the current device's local result.
+- Source labels show the dated Spain browser screen separately from the current device's local result. A configured player is `Ready to test` until it succeeds on that device; it is not pre-labelled working.
+- A direct installed-PWA/`#live` launch no longer stalls on “Preparing in-app source”. It presents an explicit Play action because browsers may require a user gesture; selecting a configured channel still starts playback immediately.
 - Each selected channel now has an in-flow programme panel below the player with current programme, progress, upcoming programmes and Today/Tomorrow/day-after navigation. The full Guide route shows real now/next listings.
 - Programme data comes from a compact same-origin snapshot built from IPTV-EPG.org's free XMLTV country links. Exact IDs populate 54 of 55 fixed channels; Terra Mater WILD remains explicitly unmatched.
 - `.github/workflows/update-epg.yml` regenerates compressed `epg.json.gz` twice daily. It uses no API key, paid route or broadcaster playback token.
@@ -46,7 +47,17 @@ Selecting a German television or sports channel should start reliable, HD-prefer
 - Sports directory: 38 entries, including five direct playable channels and 33 accurately labelled provider-only or unavailable entries.
 - Provider details render directly below the sports hero, retain the top scroll position and explain the selected provider instead of reusing one generic bottom panel.
 - Dedicated filters cover basketball, ice hockey, golf, cricket, rugby, handball, American football and athletics in addition to existing football, tennis and motorsport discovery.
-- Service-worker shell cache is v12 and includes the current compact guide plus all 51 unique channel-logo files; broadcaster and stream requests remain excluded from caching.
+- Service-worker shell cache is v13 and includes the current compact guide plus all 51 unique channel-logo files; broadcaster and stream requests remain excluded from caching.
+
+## Full catalogue evidence from 21 October 2026
+
+- Network location was confirmed as country code `ES`. The audit used the real deployed/mobile UI with Android Chrome device emulation, not manifest-only requests.
+- All 55 catalogue entries were selected individually. Result: **21 HLS playback confirmations, one official embedded-player confirmation, 33 honest unavailable states, zero UI/audit failures and zero browser errors**.
+- Each HLS confirmation required decoded dimensions, non-paused ready state, buffered media, advancing video across a further 3.5-second sample and increasing browser audio-decoder bytes.
+- Hamburg 1's YouTube frame was inspected directly: its inner video advanced 3.52 seconds and reported 854×480, ready state 4 and audio enabled. An iframe load alone was not counted.
+- Sixteen HLS channels rendered 1920×1080. ALEX, hr, Teledeporte and tagesschau24 rendered 1280×720. QVC rendered 960×540. The app states these source limits and does not claim invented Full HD.
+- The screenshot symptom was reproduced: directly reopening the installed-style `#live` route left v0.12 on “Preparing” with a 0×0 inactive video. Clicking Das Erste then produced advancing 1920×1080 playback. v0.13 replaces the false pending state with a truthful ready/Play state.
+- `tests/browser-full-playback-audit.js` retains this channel-by-channel method for repeat runs. A short dated pass is evidence for that window, not a permanent uptime or programme-rights guarantee.
 
 ## Spain evidence from 21 October 2026
 

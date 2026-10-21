@@ -1,4 +1,4 @@
-/* Global TV Hub — channel catalogue. Links and current ES behavior were reviewed 2026-10-21.
+/* Global TV Hub — channel catalogue. Links and current ES behavior were re-audited 2026-10-21.
    A short browser screen is evidence for that test window, NOT an uptime or rights guarantee. */
 window.TV_DATA = {
   channels: [
@@ -134,9 +134,9 @@ window.TV_DATA = {
     ardalpha:{result:'playback-screened',resolution:'1920×1080',engine:'HLS.js',note:'Moving picture observed at the forced highest rendition.'},
     brsouth:{result:'playback-screened',resolution:'1920×1080',engine:'HLS.js',note:'Moving picture observed from Spain.'}
   },
-  sourceAuditMeta:{testedAt:'2026-10-21T01:18:00+02:00',region:'ES',browser:'Chrome on Windows',sampleWindowSeconds:'8–30',meaning:'Decoded moving video at the selected highest stable rendition; not a future uptime, audio or rights guarantee'},
+  sourceAuditMeta:{testedAt:'2026-10-21T19:39:50+02:00',region:'ES',browser:'Chrome on Windows plus Android Chrome device emulation against the v0.13 candidate and deployed baseline',sampleWindowSeconds:'3.5 stability after confirmed startup',meaning:'21 HLS channels decoded and advanced with audio bytes increasing; the Hamburg 1 official embed separately decoded and advanced. This is not a future uptime or rights guarantee.'},
   logoSourceMeta:{reviewedAt:'2026-10-21',note:'Locally stored broadcaster marks matched through broadcaster media pages, Wikimedia Commons and the IPTV-org logo index. Marks belong to their respective owners.'},
-  researchDate:'21 October 2026 · v0.12 programme guide integration'
+  researchDate:'21 October 2026 · v0.13 full deployed playback audit'
 };
 
 /* Local copies prevent channel cards from depending on third-party image hosts at runtime. */

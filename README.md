@@ -1,6 +1,10 @@
-# Global TV Hub v0.12.0 — live playback with now, next and next-day programme guide
+# Global TV Hub v0.13.0 — device-tested playback and honest source status
 
 Global TV Hub is a static PWA for German, international and sports television. The approved premium dark dashboard is unchanged. Selecting a configured channel stays inside the app.
+
+The v0.13 release fixes the installed-PWA/direct-`#live` state that could remain on “Preparing in-app source” without starting anything. A directly opened channel now says that it is ready and presents an explicit Play button; selecting a configured channel from the catalogue still starts the browser test immediately. Historical audit results are no longer worded as if they prove that a source is working on the current device.
+
+The catalogue contains 55 channel entries, but that is not the playable count. The fully repeated ES/mobile-emulation audit confirmed **21 HLS players plus one official Hamburg 1 embed**. The remaining **33 entries have no authorised browser-compatible in-app player** and deliberately expose no false Play/Retry control. Sixteen HLS channels rendered 1920×1080; ALEX, hr, Teledeporte and tagesschau24 rendered 1280×720; QVC rendered 960×540; Hamburg 1's official player rendered 854×480. The app cannot manufacture genuine 1080p when a source supplies less.
 
 The v0.12 player now places the selected channel's real programme schedule directly below its video: the current programme, progress, upcoming shows and Today/Tomorrow/day-after controls. The full Guide route shows now and next across the catalogue. The compact, compressed XMLTV snapshot currently has listings for 54 of 55 fixed channels; Terra Mater WILD retains an explicit no-listing state because no verified exact match was found. Times are converted to the viewer's local timezone, and programme listings never imply that a blocked or subscription channel is playable.
 
@@ -10,11 +14,11 @@ The v0.10 Sports Hub applies one playback rule to every card. Five cards start v
 
 The player prefers HLS.js in Chromium, records success only after decoded video time advances, and selects the highest stable rendition up to 1080p. ALEX is intentionally capped at 720p because its advertised 1080p rendition stalled repeatedly; Auto remains available in the quality menu.
 
-On 21 October 2026, every configured channel was rechecked in Chrome on Windows through an ES network exit. All 21 HLS channels confirmed advancing after the Full-HD-first change: 16 decoded at 1920×1080, four at 1280×720 and QVC at 960×540. Hamburg 1's official YouTube embed decoded at 854×480. Every one of the 25 retained HLS URLs also passed manifest, media-playlist and small segment-path checks. These short samples do not guarantee future uptime, audio, every device or programme rights.
+On 21 October 2026, every catalogue entry was opened through the actual Live TV interface using Android Chrome device emulation on a network exit confirmed as ES. Each HLS pass required non-zero decoded dimensions, ready state, playing state, buffer, advancing time across a further 3.5-second stability window and increasing audio-decoder bytes. Hamburg 1 was checked inside its cross-origin official YouTube frame and its decoded video advanced. These short samples do not guarantee future uptime, every physical device or programme rights.
 
 Premium RTL/ProSieben/Sat.1, Sky, DAZN, F1, football and similar services remain unavailable in the built-in player unless the rights holder supplies an authorised third-party integration. Joyn, Zattoo, FIFA+ on DAZN and other legitimate platforms were researched individually; an account or free tier is not an embed licence. The app does not scrape protected streams, bypass DRM/geographic controls, or advertise paid channels as free.
 
-Run `node scripts/update-epg.cjs` to refresh the programme snapshot, `node tests/smoke.cjs` for deterministic UI/catalogue checks and `node tests/probe-sources.cjs` for a network-path audit. GitHub Actions refreshes the guide twice daily. See `QA_REPORT.md`, `SOURCES.md`, and `CODEX_HANDOFF.md` for evidence and limitations.
+Run `node scripts/update-epg.cjs` to refresh the programme snapshot, `node tests/smoke.cjs` for deterministic UI/catalogue checks, `node tests/probe-sources.cjs` for the network-path audit, and `playwright-cli run-code --filename=tests/browser-full-playback-audit.js` from an open Playwright session for the full 55-entry UI playback audit. GitHub Actions refreshes the guide twice daily. See `QA_REPORT.md`, `SOURCES.md`, and `CODEX_HANDOFF.md` for evidence and limitations.
 
 ## v0.10 — Sports playback and provider directory
 

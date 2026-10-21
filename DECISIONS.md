@@ -2,6 +2,14 @@
 
 ## 21 October 2026
 
+- Count catalogue entries separately from playable integrations: publish “55 listed · 21 HLS + 1 official embed”, never “55 working channels” or an ambiguous “22 in-app sources”.
+- Never reuse a dated audit as a current-device claim. Show `Ready to test`, `Working now on this device`, or `Unavailable` according to current local evidence.
+- A direct `#live`/installed-PWA launch cannot rely on autoplay because browsers may require a user gesture. Present a real Play button and do not leave the UI on an indefinite “Preparing” status.
+- Require actual browser media evidence in the full-catalogue audit: decoded dimensions, playing/ready state, buffer and advancing video across a stability interval. A valid manifest alone is not playback proof.
+- Treat an official embedded player as confirmed only when its inner video can be observed advancing, not merely when an iframe loads.
+- Preserve genuine source ceilings. Do not upscale or label a 720p, 540p or 480p source as 1080p.
+- Do not treat another platform's consumer playback as a reusable feed. Accounts, subscriptions, tokens, DRM, territory rules and domain allowlists remain controlled by that provider; add premium playback only through an authorised integration.
+
 - Apply a single rule to every sports card: only a channel with a configured in-app source and advancing-video evidence receives `Play in app`. All other cards identify the official service and access limitation.
 - Keep provider details at the top of Sports Hub and focus them without scrolling. The prior shared bottom panel caused the reported downward jump and made different sports appear identical.
 - Add legitimate sport-specific providers for basketball, ice hockey, golf, cricket, rugby, handball, American football and athletics, but do not turn an official website, free account or subscription into a claimed PWA stream.

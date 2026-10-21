@@ -1,3 +1,20 @@
+# Global TV Hub — QA report
+
+## v0.13.0 full channel playback and status audit (21 October 2026)
+
+- Reproduced the reported installed/mobile failure on the exact v0.12 Pages app: loading `#live` directly left Das Erste on “Preparing in-app source” for more than 22 seconds with a 0×0 inactive video. Selecting Das Erste then produced 1920×1080 advancing playback in 3.03 seconds. Root cause: the initial hash route rendered the player but did not call the click-triggered playback path.
+- v0.13 removes the false pending state. A direct `#live` load says `Ready · press Play to test this source on this device`; tapping a configured catalogue channel still initiates playback immediately.
+- Corrected the header from the ambiguous `55 channels · 22 in-app sources` to `55 listed · 21 HLS + 1 official embed`.
+- Full Android-Chrome-emulation audit opened all 55 channels through the actual Live TV UI on an ES network: 21 HLS playback confirmations, one official embed playback confirmation, 33 honest unavailable states, zero audit/UI failures and zero browser console/page errors.
+- HLS proof required a successful app confirmation plus decoded dimensions, non-paused ready state, buffer and at least 2.5 seconds of advance during a separate 3.5-second stability sample. All 21 advanced approximately 3.5 seconds and exposed increasing audio-decoder bytes.
+- Quality result: 16 HLS channels rendered 1920×1080; ALEX, hr, Teledeporte and tagesschau24 rendered 1280×720; QVC rendered 960×540. All five sports HLS channels passed: More Than Sports TV, Motorvision, World of Freesports and Red Bull TV at 1080p, Teledeporte at 720p.
+- Observed HLS startup confirmations ranged from approximately 2.1 to 9.3 seconds in the full candidate pass. This is a short join-time sample, not an SLA.
+- Hamburg 1 was not counted merely because its iframe loaded. The official YouTube frame's inner video advanced 3.52 seconds, reported 854×480, ready state 4, not paused and audio enabled.
+- Every one of the 33 entries without a configured browser player exposed zero playback/retry controls and kept the HLS video inactive. This includes the ZDF family, ARTE/DF1/private German channels and protected Sky/Eurosport/DAZN/SPORT1 entries.
+- A repeatable audit lives in `tests/browser-full-playback-audit.js`; deterministic syntax, smoke, QA and diff checks remain required before deployment.
+- Network-path regression after the browser pass: 25/25 retained HLS URLs returned a root manifest, selected media playlist and capped segment sample from Elche, Spain; 20 advertised a 1080p rendition. This is supporting transport evidence, not a replacement for playback.
+- Scope: these are short playback samples from the dated ES test window. They do not guarantee future CDN uptime, every ISP/device, long-run buffering performance or that a rights-restricted programme will remain viewable.
+
 ## v0.12.0 programme-guide audit (21 October 2026)
 
 - XMLTV generation: 55/55 catalogue keys, 54 channels with exact real listings, 3,184 current/upcoming programme records in the compact rolling window and one explicit unmatched channel (Terra Mater WILD).

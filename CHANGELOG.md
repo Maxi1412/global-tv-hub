@@ -1,3 +1,16 @@
+# Global TV Hub changelog
+
+## v0.13.0 — 2026-10-21
+
+- Fix the installed-PWA/direct-`#live` state that could remain indefinitely on “Preparing in-app source”; show an explicit ready/Play state instead.
+- Replace the ambiguous “22 in-app sources” display with the exact capability count: 55 listed, 21 HLS players and one official embedded player.
+- Separate dated Spain audit results from current-device results throughout channel tiles, the channel list, player status and channel details.
+- Add `tests/browser-full-playback-audit.js`, which opens every one of the 55 channel entries through the actual UI and records startup, decoded resolution, ready/paused state, buffer, advancing time, audio-decoder bytes, embedded-video progress, unavailable-state correctness and browser errors.
+- Reconfirm all 21 HLS channels and the Hamburg 1 embedded player through Android Chrome emulation on an ES network; retain 33 honest unavailable states with no false retry control.
+- Publish exact observed quality: 16 HLS channels at 1080p, four at 720p, QVC at 540p and Hamburg 1 at 480p.
+- Grey unavailable-channel dots and blue configured-player dots make capability clearer without changing the approved dashboard structure.
+- Refresh the offline shell to v13 while preserving favourites, custom streams, guide data and playback diagnostics.
+
 ## v0.12.0 — Now, next and next-day programme guide
 
 - Add a selected-channel programme panel directly below the existing player without redesigning the approved dark dashboard.
@@ -68,8 +81,6 @@
 - Clarify unavailable Sky/DAZN premium channels and prevent misleading live-race claims.
 - Bump offline PWA cache to v6 and extend smoke tests for stream-linked sports cards.
 - Playback in Spain remains unverified; no authenticated or pirated Sky feeds included.
-
-# Global TV Hub changelog
 
 ## v0.3 — 2026-10-17
 - Add Sky Sport 1 HD, Sky Sport 2 HD, Sky Sport F1 HD and Sky Sport Premier League (Germany), plus Sky Sports UK Main Event/F1/Premier League and Eurosport German/Spanish channel launchers.
