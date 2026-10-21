@@ -1,8 +1,10 @@
-# Global TV Hub v0.9.0 — Full-HD-first Spain-screened playback
+# Global TV Hub v0.10.0 — verified sports playback and honest provider access
 
 Global TV Hub is a static PWA for German, international and sports television. The approved premium dark dashboard is unchanged. Selecting a configured channel stays inside the app.
 
-The v0.9 player prefers HLS.js in Chromium, records success only after decoded video time advances, and selects the highest stable rendition up to 1080p. ALEX is intentionally capped at 720p because its advertised 1080p rendition stalled repeatedly; Auto remains available in the quality menu.
+The v0.10 Sports Hub applies one playback rule to every card. Five cards start verified television inside the PWA; all other sports cards show their exact official-provider, subscription or regional status without scrolling the page or pretending to play. Basketball, ice hockey, golf, cricket, rugby, handball, American football and athletics now have dedicated filters.
+
+The player prefers HLS.js in Chromium, records success only after decoded video time advances, and selects the highest stable rendition up to 1080p. ALEX is intentionally capped at 720p because its advertised 1080p rendition stalled repeatedly; Auto remains available in the quality menu.
 
 On 21 October 2026, every configured channel was rechecked in Chrome on Windows through an ES network exit. All 21 HLS channels confirmed advancing after the Full-HD-first change: 16 decoded at 1920×1080, four at 1280×720 and QVC at 960×540. Hamburg 1's official YouTube embed decoded at 854×480. Every one of the 25 retained HLS URLs also passed manifest, media-playlist and small segment-path checks. These short samples do not guarantee future uptime, audio, every device or programme rights.
 
@@ -10,9 +12,11 @@ Premium RTL/ProSieben/Sat.1, Sky, DAZN, F1, football and similar services remain
 
 Run `node tests/smoke.cjs` for deterministic UI/catalogue checks and `node tests/probe-sources.cjs` for a network-path audit. See `QA_REPORT.md`, `SOURCES.md`, and `CODEX_HANDOFF.md` for evidence and limitations.
 
-## v0.6 — Direct sports streams
+## v0.10 — Sports playback and provider directory
 
-The in-app Sports dashboard includes direct, one-click HLS sources for Red Bull TV, More Than Sports TV, Teledeporte (RTVE Spain), Motorvision free FAST and World of Freesports. Clicking those playable cards selects the associated live TV channel and automatically attempts playback inside Global TV Hub. DF1 remains listed for honest discovery but is not offered as playable because its current official source blocks Spain. No external site or manual source entry is required for the retained free sources.
+The in-app Sports dashboard includes direct, one-click HLS sources for Red Bull TV, More Than Sports TV, Teledeporte (RTVE Spain), Motorvision free FAST and World of Freesports. Four decoded at 1920×1080; Teledeporte decoded at its 1280×720 source maximum. Clicking those cards automatically starts the associated channel inside Global TV Hub. DF1 remains unavailable because its official source blocks Spain.
+
+Official access entries now cover football, Formula 1, tennis, basketball, ice hockey, golf, cricket, rugby, handball, American football, athletics and other Olympic sports. They do not silently redirect and are not mislabelled as working streams. A licensed provider connection is still required before any subscription or provider-controlled event can play inside this independent PWA.
 
 **Important:** These sources received a new short Spain browser and quality screen on 21 October 2026, documented in `SOURCES.md`. That does not guarantee future CORS, worldwide rights, uptime, audio or long-run stability. The player automatically retries configured alternatives and offers quality choices when the manifest advertises them.
 

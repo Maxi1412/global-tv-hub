@@ -7,8 +7,8 @@
 - Local checkout: `C:\Users\acer\AI-Workspace\Projects\Active\global-tv-hub`
 - Repository and canonical branch: `https://github.com/Maxi1412/global-tv-hub` → `main`
 - Live PWA: `https://maxi1412.github.io/global-tv-hub/`
-- Published release: **v0.9.0** implementation at `ec3c4843d82d198649fdf8a45ab923333af19476`
-- Current local checkout: aligned with canonical GitHub `main`; the v0.9 public build was verified after deployment
+- Published release: **v0.10.0** implementation at `025e09af06c7865b917254f3bd562ca21cf47504`
+- Current local checkout: aligned with canonical GitHub `main` after the final documentation and reusable browser-audit update
 - Published v0.8 implementation commit: `12e33b5ca9470fc090669fea47ec74585f9d7e15`
 - Last published baseline before this release: v0.7.1 at `16ef64bac6a4ca556c7d1868b2689d934a479c83`
 - GitHub `main`, GitHub Pages and the live browser build were rechecked on 21 October 2026. Recheck again before future edits; do not rely on the old baseline SHA.
@@ -30,7 +30,7 @@ Selecting a German television or sports channel should start reliable, HD-prefer
 - Never publish pirate feeds, extract subscription tokens, bypass DRM/geoblocking, or present Sky/DAZN/RTL+/Joyn content as free.
 - Do not invent programme titles, fixtures, start times or “LIVE” badges. Ship EPG data only after its licence, stable IDs, update cadence and Spain-local time handling are verified.
 
-## Current v0.9 implementation candidate
+## Current v0.10 implementation
 
 - Catalogue: **55 channels**.
 - Automatic in-app playback: **21 HLS channels / 25 retained HLS URLs**, plus **one official Hamburg 1 YouTube embed**.
@@ -40,7 +40,10 @@ Selecting a German television or sports channel should start reliable, HD-prefer
 - Source labels show the published Spain browser screen separately from the current device's local result.
 - The Guide now exposes honest channel availability while a licensed real-time EPG remains pending.
 - Hamburg 1 plays through the official player inside the existing video frame. Known-blocked ZDF-family/ARTE/DF1 sources are no longer retried.
-- Service-worker shell cache is v9; broadcaster and stream requests remain excluded from caching.
+- Sports directory: 38 entries, including five direct playable channels and 33 accurately labelled provider-only or unavailable entries.
+- Provider details render directly below the sports hero, retain the top scroll position and explain the selected provider instead of reusing one generic bottom panel.
+- Dedicated filters cover basketball, ice hockey, golf, cricket, rugby, handball, American football and athletics in addition to existing football, tennis and motorsport discovery.
+- Service-worker shell cache is v10; broadcaster and stream requests remain excluded from caching.
 
 ## Spain evidence from 21 October 2026
 
@@ -105,6 +108,17 @@ See `SOURCES.md` for the channel matrix and `QA_REPORT.md` for the test method a
 - Exact deployed app: all 21 HLS channels reached `Playback confirmed` with advancing time and no media error. Sixteen decoded at 1920×1080; ALEX, hr, Teledeporte and tagesschau24 decoded at 1280×720; QVC decoded at 960×540.
 - Deployed Hamburg 1 official embed played at 854×480 inside the PWA. Deployed ZDF had no source, retry control, iframe or video URL.
 - Deployed 390×844 Guide had no horizontal overflow. The v9 service-worker cache populated and the app shell reloaded offline.
+
+## Verification completed for v0.10
+
+- Syntax, deterministic smoke/QA and `git diff --check`: PASS.
+- All 33 provider-only Sports Hub cards retained scroll position zero and showed card-specific name/status details; mobile 390×844 had no horizontal overflow.
+- All five direct sports channels decoded and advanced: four at 1920×1080 and Teledeporte at 1280×720.
+- All other 16 HLS channels decoded and advanced: twelve at 1920×1080, ALEX/hr/tagesschau24 at 1280×720, and QVC at 960×540.
+- All 25 retained HLS URLs passed manifest, media-playlist and segment sampling from the ES network.
+- GitHub Actions PWA QA: PASS — `https://github.com/Maxi1412/global-tv-hub/actions/runs/39560452576`.
+- GitHub Pages build/deployment: PASS — `https://github.com/Maxi1412/global-tv-hub/actions/runs/39560451626`.
+- Exact deployed app matched the local result: 33/33 provider-card interactions, 5/5 sports HLS channels, 16/16 other HLS channels, the Hamburg 1 official embed and mobile 390×844 layout all passed.
 
 ## Commands
 

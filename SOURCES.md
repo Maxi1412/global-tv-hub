@@ -2,6 +2,15 @@
 
 Updated 21 October 2026. This PWA is an independent directory/player, not a broadcaster. Source URLs remain controlled by their owners and can change or restrict individual programmes. “Screened” below means a short Chrome/Windows sample through a confirmed ES network exit with decoded dimensions, advancing video and a visually inspected frame; it is not a long-run uptime promise, audio certification or rights clearance.
 
+## v0.10 sports directory review
+
+- Direct in-app sports television: More Than Sports TV, Motorvision, World of Freesports and Red Bull TV reconfirmed at 1920×1080; Teledeporte reconfirmed at its 1280×720 maximum. Every sample advanced video and reported ready state 4.
+- All 33 provider-only cards were clicked in the browser. Each kept scroll position at zero, named the selected provider and displayed its own access status. None claimed playback or silently opened an external service.
+- Added official discovery entries for IIHF TV and NHL.TV/DAZN (ice hockey), Courtside 1891 and NBA League Pass (basketball), Movistar Plus+ and Sky Germany golf, ICC.tv cricket, RugbyPass TV, EHFTV handball, NFL Game Pass, World Athletics+, Olympic Channel and LALIGA+.
+- These services control accounts, subscriptions, DRM, territory and event rights. They are provider references, not authorised static HLS feeds for Global TV Hub.
+
+Official services reviewed: https://iihf.tv/ · https://www.nba.com/watch/league-pass-stream/ · https://www.icc-cricket.com/icc-tv · https://rugbypass.tv/home · https://ehftv.com/ · https://worldathletics.org/watch/live · https://www.movistarplus.es/deportes/golf · https://www.sky.de/sport/golf
+
 ## v0.9 Spain browser and quality screen
 
 | Channel | Result in Spain | Highest rendered sample | Notes |

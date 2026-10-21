@@ -1,3 +1,17 @@
+## v0.10.0 sports interaction and playback audit (21 October 2026)
+
+- `node --check app.js`, `node --check data.js`, `node tests/smoke.cjs`, `node tests/qa.cjs` and `git diff --check`: PASS.
+- Sports card browser audit: 33 provider-only cards clicked; zero forced-scroll failures, missing headings or missing access statuses.
+- Sports filters: Play in app (5), Basketball (2), Ice Hockey (2), Golf (2), Cricket (1), Rugby (1), Handball (1), American Football (1) and Athletics (1): PASS.
+- Mobile 390×844 Sports Hub: 390px document width, no horizontal overflow.
+- Five direct sports channels: 5/5 decoded and advanced. Four rendered 1920×1080; Teledeporte rendered 1280×720. Startup confirmation was approximately 2.9–4.1 seconds in this short local Spain pass.
+- Remaining direct HLS regression: 16/16 decoded and advanced. Twelve rendered 1920×1080, ALEX/hr/tagesschau24 rendered 1280×720, and QVC rendered 960×540.
+- Network path audit: 25/25 root manifests, media playlists and segment samples passed; 20 URLs advertised a 1080p rendition.
+- Browser scripts are retained in `tests/browser-sports-audit.js`, `tests/browser-sports-playback.js`, `tests/browser-channel-regression.js` and `tests/browser-embed-audit.js` for repeatable local or deployed verification.
+- GitHub Actions PWA QA: PASS — https://github.com/Maxi1412/global-tv-hub/actions/runs/39560452576
+- GitHub Pages build/deployment: PASS — https://github.com/Maxi1412/global-tv-hub/actions/runs/39560451626
+- Exact deployed app: 33/33 provider cards passed the no-scroll/distinct-status audit; 5/5 sports HLS and 16/16 other HLS channels advanced at the documented resolutions. Hamburg 1's official YouTube frame loaded in-app. Mobile 390×844 remained overflow-free.
+
 ## v0.9.0 Full HD and platform audit (21 October 2026)
 
 ### Channel-by-channel playback result

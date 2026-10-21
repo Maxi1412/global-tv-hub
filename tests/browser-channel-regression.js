@@ -1,11 +1,12 @@
 async page => {
   await page.setViewportSize({width:1440,height:900});
-  await page.goto('http://127.0.0.1:8765/?channel-list=1#live');
+  const base = page.url().startsWith('http') ? await page.evaluate(() => location.origin + (location.pathname.endsWith('/') ? location.pathname : location.pathname.replace(/[^/]*$/, ''))) : 'http://127.0.0.1:8765/';
+  await page.goto(`${base}?channel-list=1#live`);
   const sports = new Set(['morethansports','teledeporte','motorvision','worldfreesports','redbulltv']);
   const channelIds = await page.evaluate(() => window.TV_DATA.channels.filter(channel => channel.stream).map(channel => channel.id));
   const results = [];
   for (const id of channelIds.filter(id => !sports.has(id))) {
-    await page.goto(`http://127.0.0.1:8765/?channel-audit=${id}#live`);
+    await page.goto(`${base}?channel-audit=${id}#live`);
     const startedAt = Date.now();
     try {
       await page.locator(`[data-channel="${id}"]`).first().evaluate(element => element.click());

@@ -1,9 +1,10 @@
 async page => {
   await page.setViewportSize({width:1440,height:900});
+  const base = page.url().startsWith('http') ? await page.evaluate(() => location.origin + (location.pathname.endsWith('/') ? location.pathname : location.pathname.replace(/[^/]*$/, ''))) : 'http://127.0.0.1:8765/';
   const channelIds = ['morethansports','teledeporte','motorvision','worldfreesports','redbulltv'];
   const results = [];
   for (const id of channelIds) {
-    await page.goto(`http://127.0.0.1:8765/?sports-audit=${id}#sports`);
+    await page.goto(`${base}?sports-audit=${id}#sports`);
     const startedAt = Date.now();
     let error = null;
     try {

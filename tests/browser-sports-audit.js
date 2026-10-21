@@ -1,12 +1,13 @@
 async page => {
-  await page.goto('http://127.0.0.1:8765/#sports');
+  const base = page.url().startsWith('http') ? await page.evaluate(() => location.origin + (location.pathname.endsWith('/') ? location.pathname : location.pathname.replace(/[^/]*$/, ''))) : 'http://127.0.0.1:8765/';
+  await page.goto(`${base}?sports-ui-audit=1#sports`);
   const providerIds = await page.locator('[data-sport]').evaluateAll(elements =>
     [...new Set(elements.map(element => element.dataset.sport))]
   );
   const providerResults = [];
   for (const id of providerIds) {
     await page.evaluate(() => window.scrollTo(0, 0));
-    await page.locator(`[data-sport="${id}"]`).first().click();
+    await page.locator(`[data-sport="${id}"]`).first().evaluate(element => element.click());
     await page.waitForTimeout(40);
     providerResults.push({
       id,
@@ -18,11 +19,11 @@ async page => {
   const filters = ['Play in app','Basketball','Ice Hockey','Golf','Cricket','Rugby','Handball','American Football','Athletics'];
   const filterResults = [];
   for (const label of filters) {
-    await page.getByRole('button', {name:label, exact:true}).click();
+    await page.locator(`[data-sport-filter="${label}"]`).first().evaluate(element => element.click());
     filterResults.push({label, cards:await page.locator('.sport-tile').count()});
   }
   await page.setViewportSize({width:390,height:844});
-  await page.goto('http://127.0.0.1:8765/#sports');
+  await page.goto(`${base}?sports-ui-mobile=1#sports`);
   const mobile = await page.evaluate(() => ({
     viewport: document.documentElement.clientWidth,
     pageWidth: document.documentElement.scrollWidth,

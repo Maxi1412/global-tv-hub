@@ -2,6 +2,9 @@
 
 ## 21 October 2026
 
+- Apply a single rule to every sports card: only a channel with a configured in-app source and advancing-video evidence receives `Play in app`. All other cards identify the official service and access limitation.
+- Keep provider details at the top of Sports Hub and focus them without scrolling. The prior shared bottom panel caused the reported downward jump and made different sports appear identical.
+- Add legitimate sport-specific providers for basketball, ice hockey, golf, cricket, rugby, handball, American football and athletics, but do not turn an official website, free account or subscription into a claimed PWA stream.
 - Prefer the highest stable rendition up to 1080p for built-in HLS playback. Preserve Auto as a user-selectable fallback.
 - Cap ALEX at 720p: its advertised 1080p rendition repeatedly stalled while 720p advanced reliably.
 - Do not label every channel Full HD. Publish exact source ceilings: four HLS channels at 720p, QVC at 540p and Hamburg 1 at 480p.

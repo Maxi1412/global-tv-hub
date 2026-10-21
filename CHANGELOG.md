@@ -1,3 +1,12 @@
+## v0.10.0 — Sports playback rules and expanded discovery
+
+- Fix non-playable sports cards forcing the page downward into the same repeated explanation.
+- Apply one visual and behavioral rule to all sports cards: verified direct channels play inside the PWA; provider-controlled services show exact access details without redirecting or claiming playback.
+- Publish the verified ceiling on every direct sports card: four 1080p channels and Teledeporte at 720p.
+- Add dedicated basketball, ice hockey, golf, cricket, rugby, handball, American football and athletics filters with legitimate official services.
+- Add repeatable browser audits for all sports cards, five sports streams, the remaining 16 HLS channels and mobile overflow.
+- Bump the visible release and offline shell cache to v0.10/v10 while preserving the approved dark dashboard.
+
 ## v0.9.0 — Full-HD-first playback and current platform audit
 
 - Re-test every catalogue channel and every retained HLS path from Spain, including decoded resolution, advancing time, errors and visually inspected station/programme frames.
