@@ -2,6 +2,15 @@
 
 Updated 21 October 2026. This PWA is an independent directory/player, not a broadcaster. Source URLs remain controlled by their owners and can change or restrict individual programmes. “Screened” below means a short Chrome/Windows sample through a confirmed ES network exit with decoded dimensions, advancing video and a visually inspected frame; it is not a long-run uptime promise, audio certification or rights clearance.
 
+## v0.14 visible-picture correction
+
+- A fresh two-frame visual capture was performed for every one of the 21 configured HLS channels after stable decoder startup. Twenty displayed real moving programme content. Das Erste alone displayed ARD's official legal-rights slate on both retained official feeds, despite 1920×1080 advancing media and audio.
+- The automated test is now intentionally a **transport** audit. It proves decoded dimensions, time advance, buffer, frame production and audio bytes; it no longer claims those metrics prove that the advertised programme is visible.
+- Das Erste is published as `programme-blackout` for the current Spain audit. It remains selectable because later programmes can become available, but the app no longer calls the current slate “working.”
+- Joyn's official ProSieben consumer player was opened and returned `CODE: GEO_BLOCKED` in Spain. Joyn's SAT.1 player created no video and its entitlement request returned HTTP 400. Joyn also sends a Content Security Policy limiting `frame-ancestors` to Joyn-controlled domains.
+- ZDF's official live page sends `X-Frame-Options: SAMEORIGIN`; its own FAQ states the continuous channel streams are Germany-only. ZDF video embeds are allowed only through ZDF's supplied embed function on eligible individual videos, not by framing the 24/7 live page.
+- Zattoo documents an API/playback SDK and content-inclusive white-label platform for contracted B2B operators. That is a legitimate future partner route, not a free consumer-stream URL available to this static PWA.
+
 ## v0.13 full-catalogue playback truth
 
 - The catalogue has **55 listings**, not 55 playable feeds. The current built-in capability is **21 HLS channels plus one official Hamburg 1 embedded player**. Thirty-three listings have no authorised browser-compatible player.
@@ -13,7 +22,7 @@ Updated 21 October 2026. This PWA is an independent directory/player, not a broa
 ## Current platform and integration boundary
 
 - ZDF's official streaming FAQ states that its 24/7 live channels are generally available only in Germany; worldwide event streams are programme-specific and do not provide a replacement linear feed.
-- Joyn legitimately offers free consumer live TV including ProSieben/SAT.1-family channels, but its own site limits framing to Joyn-controlled domains. Consumer availability is not a third-party feed or licence for this GitHub Pages origin.
+- Joyn legitimately offers free consumer live TV including ProSieben/SAT.1-family channels in its supported territory, but its own site limits framing to Joyn-controlled domains. Live tests from Spain returned a ProSieben geo-block and a failed SAT.1 entitlement request; consumer availability is not a third-party feed or licence for this GitHub Pages origin.
 - RTL+ and Sky/WOW similarly prevent cross-origin framing, and their playback is controlled by accounts, entitlements, tokens and DRM. A subscription proves that a user can watch through that provider, not that this independent PWA may extract or redistribute the stream.
 - waipu.tv documents temporary EU viewing for eligible German-resident subscribers and package/mobile-option requirements. It does not expose an authorised static-PWA stream connection.
 - SPORT1 documents regional limits for its free stream; DF1 promotes an official Germany-oriented livestream. Neither supplied a lawful browser-compatible feed that passed from the ES test network during this audit.

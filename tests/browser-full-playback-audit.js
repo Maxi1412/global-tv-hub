@@ -35,7 +35,7 @@ async page => {
         await page.waitForFunction(() => {
           const video = document.querySelector('#stream-video');
           const status = document.querySelector('#player-status')?.textContent || '';
-          return video && video.videoWidth > 0 && video.currentTime > 0 && status.startsWith('Playback confirmed');
+          return video && video.videoWidth > 0 && video.currentTime > 0 && status.startsWith('Signal decoded');
         }, {timeout:30000});
         const first = await page.locator('#stream-video').evaluate(video => {
           const quality=video.getVideoPlaybackQuality ? video.getVideoPlaybackQuality() : null;
@@ -72,7 +72,7 @@ async page => {
           id:channel.id,
           name:channel.name,
           category:channel.category,
-          outcome:advancedSeconds >= 2.5 && second.readyState >= 3 && !second.paused && audioBytesAdded > 0 ? 'playback-confirmed' : 'playback-unstable',
+          outcome:advancedSeconds >= 2.5 && second.readyState >= 3 && !second.paused && audioBytesAdded > 0 ? 'transport-confirmed' : 'transport-unstable',
           startupMs:Date.now() - startedAt - 3500,
           advancedSeconds,
           resolution:`${second.width}x${second.height}`,
@@ -102,7 +102,7 @@ async page => {
           id:channel.id,
           name:channel.name,
           category:channel.category,
-          outcome:advancedSeconds>=2.5&&second?.width>0&&!second.paused?'official-embed-playback-confirmed':'official-embed-loaded',
+          outcome:advancedSeconds>=2.5&&second?.width>0&&!second.paused?'official-embed-transport-confirmed':'official-embed-loaded',
           startupMs:Date.now() - startedAt,
           advancedSeconds,
           resolution:second?.width?`${second.width}x${second.height}`:null,
@@ -149,14 +149,14 @@ async page => {
     device,
     summary:{
       total:results.length,
-      playbackConfirmed:results.filter(item => item.outcome === 'playback-confirmed').length,
-      playbackUnstable:results.filter(item => item.outcome === 'playback-unstable').length,
-      embedPlaybackConfirmed:results.filter(item => item.outcome === 'official-embed-playback-confirmed').length,
+      transportConfirmed:results.filter(item => item.outcome === 'transport-confirmed').length,
+      transportUnstable:results.filter(item => item.outcome === 'transport-unstable').length,
+      embedTransportConfirmed:results.filter(item => item.outcome === 'official-embed-transport-confirmed').length,
       embedLoadedOnly:results.filter(item => item.outcome === 'official-embed-loaded').length,
       unavailableHonest:results.filter(item => item.outcome === 'unavailable-honest').length,
       failures:results.filter(item => ['audit-failed','unavailable-ui-failure'].includes(item.outcome)).length,
-      fullHd:results.filter(item => item.outcome === 'playback-confirmed' && Number(item.resolution.split('x')[1]) >= 1080).length,
-      belowFullHd:results.filter(item => item.outcome === 'playback-confirmed' && Number(item.resolution.split('x')[1]) < 1080).length,
+      fullHd:results.filter(item => item.outcome === 'transport-confirmed' && Number(item.resolution.split('x')[1]) >= 1080).length,
+      belowFullHd:results.filter(item => item.outcome === 'transport-confirmed' && Number(item.resolution.split('x')[1]) < 1080).length,
       browserErrors:browserErrors.length
     },
     results,

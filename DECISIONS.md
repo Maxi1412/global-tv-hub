@@ -2,6 +2,11 @@
 
 ## 21 October 2026
 
+- Supersede the v0.13 `Working now` label. Decoder motion, audio bytes and 1080p dimensions prove transport, not that the advertised programme is visible; use `Signal decoded` until the picture itself is reviewed.
+- Keep a programme-rights slate distinct from transport failure. Das Erste can remain selectable because availability changes by programme, but its current published Spain result is `programme-blackout`.
+- Require a two-frame visual-content review alongside the automated full-catalogue transport audit before publishing a source as showing real programming.
+- Do not frame Joyn or ZDF live consumer pages: current response headers explicitly disallow this origin. Joyn's Spain geo/entitlement failures also prevent ProSieben and SAT.1 playback here.
+
 - Count catalogue entries separately from playable integrations: publish “55 listed · 21 HLS + 1 official embed”, never “55 working channels” or an ambiguous “22 in-app sources”.
 - Never reuse a dated audit as a current-device claim. Show `Ready to test`, `Working now on this device`, or `Unavailable` according to current local evidence.
 - A direct `#live`/installed-PWA launch cannot rely on autoplay because browsers may require a user gesture. Present a real Play button and do not leave the UI on an indefinite “Preparing” status.

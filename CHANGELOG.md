@@ -1,5 +1,15 @@
 # Global TV Hub changelog
 
+## v0.14.0 — 2026-10-21
+
+- Correct the central audit flaw: decoded, advancing media is now labelled `Signal decoded`, not `Working now` or `Playback confirmed`.
+- Add a second, visible-content audit that captures two real video frames per configured HLS channel for human review instead of inferring programme availability from decoder counters.
+- Re-audit all 21 HLS channels from Spain. Twenty showed real moving programme pictures; both official Das Erste feeds showed ARD's legal-rights slate at 1920×1080 and are now published as a programme blackout.
+- Re-test ProSieben and SAT.1 in Joyn's own consumer player from Spain. ProSieben returned `CODE: GEO_BLOCKED`; SAT.1 produced no video and its entitlement request returned HTTP 400.
+- Verify that Joyn sends `frame-ancestors 'self' https://*.joyn.de ...` and ZDF sends `X-Frame-Options: SAMEORIGIN`, so neither consumer player can be embedded on the GitHub Pages origin.
+- Rename the automated full-catalogue outcomes to transport confirmation, preserve 33 honest unavailable states, and add `tests/browser-visual-content-audit.js` as the visible-frame gate.
+- Refresh the offline shell to v14 without changing the approved dark dashboard, favourites, custom streams, guide, logos or local source connections.
+
 ## v0.13.0 — 2026-10-21
 
 - Fix the installed-PWA/direct-`#live` state that could remain indefinitely on “Preparing in-app source”; show an explicit ready/Play state instead.

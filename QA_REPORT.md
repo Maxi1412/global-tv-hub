@@ -1,5 +1,16 @@
 # Global TV Hub — QA report
 
+## v0.14.0 visible-programme audit (21 October 2026)
+
+- Reproduced the user's report in the real Windows Chrome app. Das Erste decoded 1920×1080 with audio on both configured official feeds, but the actual picture was ARD's blue “not available for legal reasons” slate. The previous automated success label was therefore false for programme availability.
+- Opened ZDF, ProSieben and SAT.1 through the deployed PWA on the PC. ZDF correctly had no player; ProSieben and SAT.1 also had no authorised in-app integration.
+- Opened Joyn's own ProSieben and SAT.1 pages from the same Spain network. ProSieben's consumer player displayed `CODE: GEO_BLOCKED` / “not available in your country.” SAT.1 created no video element and the Joyn entitlement-token request returned HTTP 400.
+- Response-header check: Joyn restricts `frame-ancestors` to Joyn-controlled domains; ZDF sends `X-Frame-Options: SAMEORIGIN`. A working consumer website is therefore not an embeddable PWA source.
+- Visible-content capture: 21/21 configured HLS channels produced two frames 2.5 seconds apart after stable startup. Human review found 20 real programme pictures and one programme blackout (Das Erste). The five direct sports channels all showed actual sports/motoring content in the captured frames.
+- Revised full 55-entry candidate audit: 21 transport confirmations, one advancing official embed, 33 honest unavailable states, zero failures and zero browser errors. Sixteen HLS transports were 1080p, four were 720p and QVC was 540p; resolution does not override rights status.
+- `node --check app.js`, `node --check data.js`, `node tests/smoke.cjs` and `git diff --check`: PASS before deployment.
+- The UI now distinguishes `Signal decoded`, `Programme blocked`, `Unavailable from Spain` and `No in-app player`. An older locally cached `Playback confirmed` result is explicitly downgraded to “Previously decoded · picture was not certified.”
+
 ## v0.13.0 full channel playback and status audit (21 October 2026)
 
 - Reproduced the reported installed/mobile failure on the exact v0.12 Pages app: loading `#live` directly left Das Erste on “Preparing in-app source” for more than 22 seconds with a 0×0 inactive video. Selecting Das Erste then produced 1920×1080 advancing playback in 3.03 seconds. Root cause: the initial hash route rendered the player but did not call the click-triggered playback path.
