@@ -9,7 +9,11 @@
 - Desktop 1280×720: current programme loaded, Tomorrow switched to 14 following programmes, document width equalled viewport width and the console reported zero errors or warnings.
 - Mobile 390×844: schedule remained visible beneath the player, its width matched the stage (364px), 24-hour times rendered correctly and horizontal overflow was zero.
 - Full Guide on mobile: 55 rows, 54 with current-day programmes and one honest empty state; Tomorrow produced real listings for 53 channels and zero horizontal overflow.
-- Deployment results are recorded below after the release reaches canonical `main` and GitHub Pages.
+- Published implementation commit: `65edc2c732aec31e0176a22765512b9cb9c473ae`.
+- GitHub Actions PWA QA: PASS — https://github.com/Maxi1412/global-tv-hub/actions/runs/39610304485
+- GitHub Pages build/deployment: PASS — https://github.com/Maxi1412/global-tv-hub/actions/runs/39610303875
+- Exact deployed 390×844 player: v0.12.0 loaded real Das Erste current/next data; Tomorrow rendered 14 programmes, schedule width matched the 364px player stage and the 390px document had zero horizontal overflow.
+- Exact deployed full Guide: 55 rows rendered; 54 contained current-day data and 53 contained next-day data. Today/Tomorrow navigation worked and the browser console reported zero errors or warnings.
 
 ## v0.11.0 channel-logo audit (21 October 2026)
 

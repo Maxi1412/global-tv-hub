@@ -7,8 +7,8 @@
 - Local checkout: `C:\Users\acer\AI-Workspace\Projects\Active\global-tv-hub`
 - Repository and canonical branch: `https://github.com/Maxi1412/global-tv-hub` → `main`
 - Live PWA: `https://maxi1412.github.io/global-tv-hub/`
-- Current release candidate: **v0.12.0**, adding real current/upcoming/next-day programme data below every channel player and throughout the Guide route.
-- Current local checkout: v0.12 changes prepared against canonical GitHub `main`; verify the final remote SHA, QA and Pages deployment after publishing.
+- Current published release: **v0.12.0**, adding real current/upcoming/next-day programme data below every channel player and throughout the Guide route.
+- Published v0.12 implementation commit: `65edc2c732aec31e0176a22765512b9cb9c473ae`; its GitHub Actions QA and Pages deployment passed and the exact public mobile build was rechecked.
 - Published v0.8 implementation commit: `12e33b5ca9470fc090669fea47ec74585f9d7e15`
 - Last published baseline before this release: v0.7.1 at `16ef64bac6a4ca556c7d1868b2689d934a479c83`
 - GitHub `main`, GitHub Pages and the live browser build were rechecked on 21 October 2026. Recheck again before future edits; do not rely on the old baseline SHA.
@@ -133,6 +133,16 @@ See `SOURCES.md` for the channel matrix and `QA_REPORT.md` for the test method a
 - GitHub Actions PWA QA: PASS — `https://github.com/Maxi1412/global-tv-hub/actions/runs/39563456219`.
 - GitHub Pages build/deployment: PASS — `https://github.com/Maxi1412/global-tv-hub/actions/runs/39563454331`.
 
+## Verification completed for v0.12
+
+- Syntax, deterministic smoke/QA and `git diff --check`: PASS.
+- Generated `epg.json.gz`: 3,184 current/upcoming records, all 55 catalogue keys represented and exact listings for 54 channels; Terra Mater WILD keeps an honest empty state.
+- Current network regression: 25/25 retained HLS URLs returned a root manifest, media playlist and segment sample; 20 advertised a 1080p rendition. This is transport evidence, not new visual playback evidence.
+- GitHub Actions PWA QA: PASS — `https://github.com/Maxi1412/global-tv-hub/actions/runs/39610304485`.
+- GitHub Pages build/deployment: PASS — `https://github.com/Maxi1412/global-tv-hub/actions/runs/39610303875`.
+- Exact deployed 390×844 player: v0.12.0 loaded real Das Erste current/next data; Tomorrow rendered 14 programmes beneath the player, schedule width matched the 364px stage and document width matched the 390px viewport.
+- Exact deployed full Guide: all 55 rows rendered; 54 had a current-day listing and 53 had a next-day listing. Today/Tomorrow navigation worked, horizontal overflow was zero and the console reported zero errors or warnings.
+
 ## Commands
 
 ```powershell
@@ -154,6 +164,6 @@ The probe writes `source-health-ci.json`. It deliberately samples only 32 KiB of
 2. Run longer stability samples and record join time, stalls, rendered bitrate/resolution, audio, live latency and fallback behavior.
 3. Seek source-owner permission/provenance evidence where a retained public feed came through a community directory.
 4. Contact RTL, Joyn, Sky/WOW, DAZN and Eurosport only through formal partner routes if licensed premium playback remains a product requirement.
-5. Choose a licensed EPG/sports schedule provider with stable channel IDs and static-Pages-compatible delivery; otherwise add a small backend without committing credentials.
+5. Monitor the current free XMLTV source for update failures, identifier drift and provenance/licensing changes; evaluate a formal licensed EPG provider before any commercial use.
 6. Keep `main` canonical, run all QA before publishing, verify the exact live Pages app after each deployment, and use Git history for rollback.
 
