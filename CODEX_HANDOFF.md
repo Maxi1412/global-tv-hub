@@ -7,8 +7,8 @@
 - Local checkout: `C:\Users\acer\AI-Workspace\Projects\Active\global-tv-hub`
 - Repository and canonical branch: `https://github.com/Maxi1412/global-tv-hub` → `main`
 - Live PWA: `https://maxi1412.github.io/global-tv-hub/`
-- Published release: **v0.10.0** implementation at `025e09af06c7865b917254f3bd562ca21cf47504`
-- Current local checkout: aligned with canonical GitHub `main` after the final documentation and reusable browser-audit update
+- Published release: **v0.11.0** implementation at `2c11b73295e33a44a09b99dd9a519b763a6ce096`
+- Current local checkout: aligned with canonical GitHub `main` after the v0.11 logo deployment and release documentation update
 - Published v0.8 implementation commit: `12e33b5ca9470fc090669fea47ec74585f9d7e15`
 - Last published baseline before this release: v0.7.1 at `16ef64bac6a4ca556c7d1868b2689d934a479c83`
 - GitHub `main`, GitHub Pages and the live browser build were rechecked on 21 October 2026. Recheck again before future edits; do not rely on the old baseline SHA.
@@ -30,9 +30,10 @@ Selecting a German television or sports channel should start reliable, HD-prefer
 - Never publish pirate feeds, extract subscription tokens, bypass DRM/geoblocking, or present Sky/DAZN/RTL+/Joyn content as free.
 - Do not invent programme titles, fixtures, start times or “LIVE” badges. Ship EPG data only after its licence, stable IDs, update cadence and Spain-local time handling are verified.
 
-## Current v0.10 implementation
+## Current v0.11 implementation
 
 - Catalogue: **55 channels**.
+- Every fixed catalogue channel has a locally stored broadcaster/channel logo. The same identity is used in Home, Search, Favourites, Live TV and Guide; custom streams retain a safe text fallback.
 - Automatic in-app playback: **21 HLS channels / 25 retained HLS URLs**, plus **one official Hamburg 1 YouTube embed**.
 - Player: HLS.js first in Chromium, native HLS only as a fallback, automatic source failover, Full-HD-first quality selection, adaptive/manual quality menu, local device diagnostics and retry controls.
 - Success rule: decoded dimensions must be non-zero and video time must advance by at least 1.5 seconds. A transient `playing` event is not enough.
@@ -43,7 +44,7 @@ Selecting a German television or sports channel should start reliable, HD-prefer
 - Sports directory: 38 entries, including five direct playable channels and 33 accurately labelled provider-only or unavailable entries.
 - Provider details render directly below the sports hero, retain the top scroll position and explain the selected provider instead of reusing one generic bottom panel.
 - Dedicated filters cover basketball, ice hockey, golf, cricket, rugby, handball, American football and athletics in addition to existing football, tennis and motorsport discovery.
-- Service-worker shell cache is v10; broadcaster and stream requests remain excluded from caching.
+- Service-worker shell cache is v11 and includes all 51 unique channel-logo files; broadcaster and stream requests remain excluded from caching.
 
 ## Spain evidence from 21 October 2026
 
@@ -120,6 +121,16 @@ See `SOURCES.md` for the channel matrix and `QA_REPORT.md` for the test method a
 - GitHub Pages build/deployment: PASS — `https://github.com/Maxi1412/global-tv-hub/actions/runs/39560451626`.
 - Exact deployed app matched the local result: 33/33 provider-card interactions, 5/5 sports HLS channels, 16/16 other HLS channels, the Hamburg 1 official embed and mobile 390×844 layout all passed.
 
+## Verification completed for v0.11
+
+- Syntax, deterministic smoke/QA and `git diff --check`: PASS.
+- Every one of the 55 fixed channels has a mapped local asset; all 51 unique PNGs decoded successfully through the local HTTP build.
+- Local and exact deployed 390×844 Home/Live TV views had zero horizontal overflow and zero browser console errors or warnings.
+- Exact deployed Live TV list rendered 55 logo elements; all 55 loaded with non-zero native dimensions and no fallback or broken-image state.
+- Post-change ES network regression: 25/25 retained HLS URLs returned a root manifest, media playlist and segment sample; the logo-only release did not change playback configuration.
+- GitHub Actions PWA QA: PASS — `https://github.com/Maxi1412/global-tv-hub/actions/runs/39563456219`.
+- GitHub Pages build/deployment: PASS — `https://github.com/Maxi1412/global-tv-hub/actions/runs/39563454331`.
+
 ## Commands
 
 ```powershell
@@ -143,3 +154,4 @@ The probe writes `source-health-ci.json`. It deliberately samples only 32 KiB of
 4. Contact RTL, Joyn, Sky/WOW, DAZN and Eurosport only through formal partner routes if licensed premium playback remains a product requirement.
 5. Choose a licensed EPG/sports schedule provider with stable channel IDs and static-Pages-compatible delivery; otherwise add a small backend without committing credentials.
 6. Keep `main` canonical, run all QA before publishing, verify the exact live Pages app after each deployment, and use Git history for rollback.
+
