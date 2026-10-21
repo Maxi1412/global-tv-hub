@@ -1,6 +1,8 @@
-# Global TV Hub v0.10.0 — verified sports playback and honest provider access
+# Global TV Hub v0.11.0 — real channel identity, verified playback and honest provider access
 
 Global TV Hub is a static PWA for German, international and sports television. The approved premium dark dashboard is unchanged. Selecting a configured channel stays inside the app.
+
+The v0.11 interface uses real locally stored broadcaster/channel logos for all 55 fixed catalogue entries. Logos appear consistently on Home, Search, Favourites, Live TV and Guide surfaces, with a readable text fallback for user-added custom streams. The v11 offline shell pre-caches these assets instead of depending on third-party image hosts at runtime.
 
 The v0.10 Sports Hub applies one playback rule to every card. Five cards start verified television inside the PWA; all other sports cards show their exact official-provider, subscription or regional status without scrolling the page or pretending to play. Basketball, ice hockey, golf, cricket, rugby, handball, American football and athletics now have dedicated filters.
 

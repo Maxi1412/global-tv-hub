@@ -57,6 +57,14 @@ The retained catalogue has 21 HLS channels (25 URLs including fallbacks) plus on
 - **Formula 1 in Spain** remains DAZN-controlled through 2030 for complete live coverage. RTL shows selected 2026 sessions/races in Germany, and Sky/WOW or Sky Sports/NOW are paid territory-specific services. None supplies this project with a licensed browser feed or partner SDK.
 - **Real programme titles and fixtures** remain unconnected. Broadcaster pages expose current schedules, but no stable, licensed, cross-origin EPG feed suitable for this static PWA was verified. The app continues to show no fabricated programme data.
 
+## Channel logo provenance — 21 October 2026
+
+- The app stores 51 unique local PNG assets for all 55 fixed channel entries; BR Nord/Süd, DW language feeds, Eurosport territories and SPORT1 entries intentionally share their correct network mark.
+- Channel/logo matching was checked against the public [IPTV-org logo index](https://github.com/iptv-org/api/blob/master/README.md), which exposes channel IDs, active status, file dimensions and original asset URLs.
+- German public/private broadcaster marks were preferentially taken from current Wikimedia Commons files where available; the relevant catalogues are [German television logos by channel](https://commons.wikimedia.org/wiki/Category:Logos_of_television_channels_in_Germany_by_name) and [German television SVG logos](https://commons.wikimedia.org/wiki/Category:SVG_logos_of_television_channels_of_Germany).
+- Sky variants were matched to their exact Sport, F1, Premier League, Bundesliga, Main Event, Football, Cricket and Tennis identities; Sky's own [press logo asset directory](https://skygroup.sky/en-gb/press/assets/logos) was also checked as the official brand reference.
+- Assets are kept locally only to make the PWA reliable and offline-capable. All channel names and marks remain the property of their respective owners; inclusion does not imply affiliation or permission to redistribute television programming.
+
 ## Free and broadcaster routes
 - ARD: https://www.ardmediathek.de/LIVE — geoblocking can apply to individual programmes.
 - ZDF: https://www.zdf.de/live-tv — continuous streams are generally Germany-restricted.

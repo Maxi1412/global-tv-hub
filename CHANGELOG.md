@@ -1,3 +1,12 @@
+## v0.11.0 — Real channel logos throughout the PWA
+
+- Replace generated text wordmarks with locally stored broadcaster/channel logos for every one of the 55 fixed catalogue channels.
+- Show the same channel identity in Home/Search/Favourites cards, the Live TV channel list and both Guide views.
+- Keep a text fallback for user-added custom streams and for any image that fails to decode.
+- Add all logo assets to offline shell cache v11 so installed PWAs do not depend on third-party image hosts after installation.
+- Preserve the approved dark dashboard, playback rules, source statuses, favourites and custom streams.
+- Add deterministic coverage that fails if any fixed channel is missing its local logo asset.
+
 ## v0.10.0 — Sports playback rules and expanded discovery
 
 - Fix non-playable sports cards forcing the page downward into the same repeated explanation.
@@ -94,3 +103,4 @@
 - Desktop and mobile UI smoke-tested in headless Chromium using static inline assets; stream access not tested.
 
 - Included FIFA+ on DAZN under the free football sports options, following the official May/June 2026 migration.
+

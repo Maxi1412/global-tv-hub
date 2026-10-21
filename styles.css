@@ -37,3 +37,17 @@
 .sport-detail-grid strong{display:block;margin-top:5px;font-size:12px;line-height:1.45;color:#ddecfb}
 .sport-detail p{margin:9px 0;color:#a8c0d7;font-size:12px;line-height:1.65}
 @media(max-width:620px){.sport-art{height:119px}.sport-symbol{width:30px;height:30px;font-size:15px}.sport-detail{padding:14px}.sport-detail-grid{grid-template-columns:minmax(0,1fr)}}
+
+/* v0.11: authentic channel logos, locally cached with a readable custom-stream fallback. */
+.channel-logo-frame{position:relative;z-index:1;display:grid;place-items:center;overflow:hidden;background:linear-gradient(145deg,#fff,#e8f1f8);border:1px solid #ffffffad;border-radius:9px;box-shadow:0 6px 18px #00101f66,inset 0 0 0 1px #0b294111}
+.channel-logo-image{position:relative;z-index:2;display:block;width:100%;height:100%;object-fit:contain}
+.channel-logo-fallback{max-width:100%;overflow:hidden;text-overflow:ellipsis;color:#f4f8ff;font-size:13px;font-weight:900;line-height:1;text-align:center;text-shadow:0 1px 9px #00152f;white-space:nowrap}
+.channel-logo-frame:not(.has-logo){background:linear-gradient(135deg,var(--tile),#102033);border-color:#45627d}
+.channel-logo-frame.has-logo .channel-logo-fallback{display:none}
+.poster-logo{width:calc(100% - 22px);max-width:142px;height:62px;margin-top:10px;padding:9px 12px}
+.channel-poster>.status-tag{z-index:4}
+.channel-logo-frame.list-logo{width:56px;min-width:56px;height:43px;padding:6px 7px;border-radius:7px;font-size:inherit}
+.guide-station{gap:9px;min-width:0}
+.guide-station>span:last-child{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.channel-logo-frame.guide-logo{width:48px;min-width:48px;height:32px;padding:4px 6px;border-radius:6px}
+@media(max-width:620px){.poster-logo{width:calc(100% - 14px);height:48px;margin-top:12px;padding:7px 9px;border-radius:7px}.channel-logo-frame.list-logo{width:58px;min-width:58px;height:45px}.guide-row{grid-template-columns:124px 1fr}.channel-logo-frame.guide-logo{width:38px;min-width:38px;height:28px}.guide-station{gap:6px;padding:9px}}

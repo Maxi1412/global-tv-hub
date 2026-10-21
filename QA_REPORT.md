@@ -1,3 +1,12 @@
+## v0.11.0 channel-logo audit (21 October 2026)
+
+- Every one of the 55 fixed catalogue channels has a local PNG logo and deterministic existence coverage in `tests/smoke.cjs`.
+- Local HTTP/browser load: all 51 unique logo files returned successfully; shared network marks cover the remaining regional/language variants.
+- Mobile 390×844 Home and Live TV: all visible logos decoded, channel list reported 55/55 logo elements, document overflow was zero and the console reported zero errors or warnings.
+- Desktop 1440×900 Home: six featured broadcaster marks decoded at their stored native dimensions with zero broken images and zero horizontal overflow.
+- Text fallback remains available for custom M3U channels or a future failed image decode.
+- The approved dark dashboard, source status badges and playback behaviour remained intact; the release cache is `global-tv-hub-shell-v11`.
+
 ## v0.10.0 sports interaction and playback audit (21 October 2026)
 
 - `node --check app.js`, `node --check data.js`, `node tests/smoke.cjs`, `node tests/qa.cjs` and `git diff --check`: PASS.

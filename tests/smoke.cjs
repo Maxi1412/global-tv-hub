@@ -39,6 +39,8 @@ assert.equal(catalog.sports.filter(s=>s.channelId).length,5,'five sports cards h
 assert.ok(catalog.sports.filter(s=>s.channelId).every(s=>s.quality),'every directly playable sports card publishes its verified maximum');
 assert.ok(catalog.channels.every(x=>x.official===null||x.official.startsWith('https://')));
 assert.ok(catalog.channels.every(x=>x.stream===null||x.stream.startsWith('https://')));
+assert.ok(catalog.channels.every(x=>x.logo&&x.logo.startsWith('./assets/logos/')),'every fixed channel has a local logo');
+for (const channel of catalog.channels) assert.ok(existsSync(join(root,channel.logo.slice(2))),channel.name+' logo asset');
 assert.equal(new Set(catalog.channels.map(x=>x.id)).size,catalog.channels.length,'unique channel IDs');
 assert.equal(new Set(catalog.sports.map(x=>x.id)).size,catalog.sports.length,'unique sport IDs');
 for (const s of catalog.sports) {
@@ -48,6 +50,7 @@ for (const s of catalog.sports) {
 }
 runInNewContext(readFileSync(join(root,'app.js'),'utf8'),sandbox,{filename:'app.js'});
 assert.match(ui.innerHTML,/German Live TV/);
+assert.match(ui.innerHTML,/channel-logo-image/,'home channel cards render broadcaster logos');
 const click=(name,value)=>ui.callbacks.click({target:{closest(){return {dataset:{[name]:value}};}}});
 for (const [route,expected] of [['live','Live TV'],['sports','Live sports TV'],['guide','TV Programme Guide'],['favorites','My Favourites'],['settings','Settings & Sources'],['search','Search']]) {
   click('nav',route);
@@ -132,6 +135,8 @@ assert.equal(loc.hash,'#search');
 const sw=readFileSync(join(root,'sw.js'),'utf8');
 assert.ok(sw.includes('fetch(req).then'),'network-first version freshness');
 assert.ok(sw.includes('u.origin!==self.location.origin'),'external broadcaster requests excluded from caching');
+assert.ok(sw.includes("global-tv-hub-shell-v11"),'logo release refreshes the offline shell cache');
+assert.ok(sw.includes("'skyuktennis'"),'offline shell includes channel logos');
 const appSource=readFileSync(join(root,'app.js'),'utf8');
 assert.ok(!appSource.includes("if(video.canPlayType('application/vnd.apple.mpegurl'))"),'Chromium native-HLS claim must not bypass HLS.js');
 assert.ok(appSource.includes('Playback confirmed'),'player waits for advancing video before recording success');
