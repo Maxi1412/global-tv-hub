@@ -1,6 +1,16 @@
 # Global TV Hub — sports, quality and source status
 
-Updated 21 October 2026. This PWA is an independent directory/player, not a broadcaster. Source URLs remain controlled by their owners and can change or restrict individual programmes. “Screened” below means a short Chrome/Windows sample through a confirmed ES network exit with decoded dimensions, advancing video and a visually inspected frame; it is not a long-run uptime promise, audio certification or rights clearance.
+Updated 22 October 2026. This PWA is an independent directory/player, not a broadcaster. Source URLs remain controlled by their owners and can change or restrict individual programmes. “Screened” below means a short Chrome/Windows sample through a confirmed ES network exit with decoded dimensions, advancing video and a visually inspected frame; it is not a long-run uptime promise, audio certification or rights clearance.
+
+## 22 October third-party alternative review
+
+- A new full deployed-browser pass again confirmed all 21 configured HLS transports and the official Hamburg 1 embed. The 33 non-playing entries are channels without an authorised browser-compatible integration, not newly dead configured URLs.
+- The current `iptv-org` Germany list was searched channel by channel. Its ZDF, 3sat, ARTE and phoenix entries point back to geo-blocked broadcaster CDNs. Several other entries use private IP restreams or unrelated operator playlists and are not acceptable production sources.
+- Publicly reachable ANTIK `test_*` playlists were rejected. ANTIK documents its television offer as a retransmission service for contracted end customers; a raw test URL does not grant this independent public PWA redistribution rights.
+- Zattoo documents that its Free service cannot be used abroad. Its paid EU portability depends on an eligible account, home territory and package/device rules; RTL and ProSiebenSat.1 availability is restricted on some web/mobile plans.
+- waipu.tv can serve eligible German-resident subscribers temporarily in Spain, but private-group mobile use needs the appropriate paid package/option. MagentaTV likewise requires a verified German residence and provider account for temporary EU portability. These are useful consumer viewing routes, not third-party feed licences.
+- Joyn states that its free live-TV offer is Germany-only. Joyn+ portability covers eligible paid content during temporary EU travel, but the consumer player still does not permit framing on this origin.
+- Result: no lawful, account-free third-party feed was verified for ZDF-family, RTL/VOX/n-tv, ProSieben/SAT.1/Kabel Eins, Sky, DAZN, Eurosport or SPORT1 that can be placed inside this static PWA. Exposed subscription tokens, operator test playlists, private restreams and geo/DRM bypasses remain excluded.
 
 ## v0.14 visible-picture correction
 

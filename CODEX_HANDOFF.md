@@ -1,6 +1,6 @@
 # CODEX HANDOFF — GLOBAL TV HUB
 
-**Updated:** 21 October 2026 (Europe/Madrid/Paris time)
+**Updated:** 22 October 2026 (Europe/Madrid/Paris time)
 
 ## Canonical project
 
@@ -8,6 +8,7 @@
 - Repository and canonical branch: `https://github.com/Maxi1412/global-tv-hub` → `main`
 - Live PWA: `https://maxi1412.github.io/global-tv-hub/`
 - Current release: **v0.14.1**, correcting decoder-versus-programme status and adding a repeatable visible-frame audit. Its implementation parent, `8a2f7ae16239e41716cc17f7199715e336ea2d0f`, passed GitHub Actions QA and Pages deployment; always recheck the current canonical `main` head before future work.
+- Post-release alternative-source recheck on 22 October: the deployed 55-entry audit again confirmed all 21 HLS transports and the Hamburg 1 embed, with 33 honest unavailable entries and zero failures. Public-list candidates for the missing channels were either still geo-blocked broadcaster CDNs, provider-customer/test retransmissions or private restreams; no authorised account-free replacement was found.
 - Previous published v0.12 implementation commit: `65edc2c732aec31e0176a22765512b9cb9c473ae`; its GitHub Actions QA and Pages deployment passed.
 - Published v0.8 implementation commit: `12e33b5ca9470fc090669fea47ec74585f9d7e15`
 - Last published baseline before this release: v0.7.1 at `16ef64bac6a4ca556c7d1868b2689d934a479c83`

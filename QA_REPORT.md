@@ -1,5 +1,14 @@
 # Global TV Hub — QA report
 
+## v0.14.1 alternate-source recheck (22 October 2026)
+
+- Re-ran `tests/browser-full-playback-audit.js` against the published Pages build after the request to use third-party alternatives. Result: 55/55 catalogue entries resolved correctly, with 21 advancing HLS transports, one advancing official Hamburg 1 embed, 33 honest unavailable states, zero unstable configured transports, zero audit failures and zero browser errors.
+- The HLS quality matrix was unchanged: 16 transports decoded at 1920×1080 and five decoded below Full HD because of their real source ceilings. This confirms that the currently configured group was not the reported failure group during this test window.
+- Rechecked the current public `iptv-org` Germany list for ZDF, 3sat, ARTE, phoenix, RTL, VOX, RTLZWEI, n-tv, ProSieben-family and other missing entries. The broadcaster CDN entries remain explicitly geo-blocked; other tempting entries were private IP restreams or ANTIK test playlists.
+- ANTIK's own documentation describes ANTIK TV as a customer retransmission service supplied under a subscription/contract. A reachable ANTIK test playlist is therefore not an authorised public feed for redistribution by this PWA and was not added.
+- Zattoo Free cannot be used abroad. Paid Zattoo EU portability requires an eligible account and still restricts RTL/ProSiebenSat.1 channels on some web/mobile packages. waipu.tv and MagentaTV similarly require an eligible German-resident account and provider-controlled playback; Joyn Free live TV remains Germany-only. None of these consumer services grants a reusable stream or iframe permission to this GitHub Pages origin.
+- No source was changed in this pass. Doing so solely because an exposed playlist currently answers would convert a verified provider/territory restriction into an unauthorised and fragile restream, not a reliable repair.
+
 ## v0.14.1 deployed visible-programme audit (21 October 2026)
 
 - Reproduced the user's report in the real Windows Chrome app. Das Erste decoded 1920×1080 with audio on both configured official feeds, but the actual picture was ARD's blue “not available for legal reasons” slate. The previous automated success label was therefore false for programme availability.

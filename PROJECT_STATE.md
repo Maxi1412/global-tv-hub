@@ -1,8 +1,10 @@
 # Project State
 
-**Updated:** 21 October 2026
+**Updated:** 22 October 2026
 
 - Current release: v0.14.1 visible-programme audit and transport/status correction, published from canonical `main` after full verification.
+- A 22 October deployed replay again passed all 55 entries: 21 advancing HLS transports, one advancing official embed, 33 honest unavailable states, zero unstable transports, zero failures and zero browser errors.
+- A fresh third-party-source review found no authorised account-free replacement for the 33 provider-controlled entries. Geo-blocked broadcaster URLs, ANTIK customer/test retransmissions, private IP restreams and subscription-platform playback URLs were not added.
 - The approved premium dark dashboard, favourites, custom streams, local diagnostics, logos and programme guide are preserved.
 - The app no longer calls decoded transport “working.” Current-device results use `Signal decoded`; programme availability requires visible-picture review and can be `Programme blocked` separately.
 - Corrected the catalogue header: there are 55 listed channels, **21 configured HLS players and one official embed**, not 22 universally working feeds.

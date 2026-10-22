@@ -2,6 +2,8 @@
 
 ## v0.14.1 — 2026-10-21
 
+- 22 October follow-up: re-run the deployed 55-entry audit after a request for third-party mirrors. All 21 configured HLS transports and the official embed advanced again; the remaining 33 entries still lack an authorised integration rather than suffering a newly dead configured source.
+- Review current third-party listings and consumer platforms. Reject geo-blocked broadcaster endpoints, ANTIK subscriber/test retransmissions, private IP restreams and protected consumer-player URLs as unsafe or unauthorised production sources; document Zattoo/Joyn/waipu.tv/MagentaTV account and portability constraints.
 - Re-run the full deployed 55-entry browser audit: 21 HLS transports and the official Hamburg 1 embed advanced, 33 unavailable entries remained honest, 16 streams decoded at 1080p, and there were zero audit or browser errors.
 - Capture two fresh visible frames for all 21 HLS channels. Das Erste had changed from an earlier rights slate to its real 1080p programme; BR Fernsehen Nord and Süd currently showed BR's official programme-rights slate. Publish the latest time-dependent status without treating decoded transport as programme access.
 - Rename the viewer feedback action from the misleading `Picture is rights-blocked` to `Report rights slate`, and refresh the offline shell cache to v15 without altering the approved dashboard design or local user data.
