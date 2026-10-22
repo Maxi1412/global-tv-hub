@@ -48,7 +48,7 @@ assert.ok(catalog.sports.some(x=>x.id==='redbulltv' && x.accessTier==='Play in a
 assert.ok(catalog.sports.some(x=>x.id==='fifaplus' && x.accessTier==='Free official'),'FIFA+ official free selection on DAZN');
 assert.ok(catalog.sports.some(x=>x.id==='skyf1' && x.accessTier==='Subscription'),'paid provider directory');
 for(const category of ['Basketball','Ice Hockey','Golf','Cricket','Rugby','Handball','American Football','Athletics']) assert.ok(catalog.sports.some(x=>x.category===category),'sports category '+category);
-assert.equal(catalog.sports.filter(s=>s.channelId).length,7,'seven sports cards have direct in-app channel bindings');
+assert.equal(catalog.sports.filter(s=>s.channelId).length,9,'nine sports cards have direct in-app channel bindings');
 assert.ok(catalog.sports.filter(s=>s.channelId).every(s=>s.quality),'every directly playable sports card publishes its verified maximum');
 assert.ok(catalog.channels.every(x=>x.official===null||x.official.startsWith('https://')));
 assert.ok(catalog.channels.every(x=>x.stream===null||x.stream.startsWith('https://')));
@@ -151,7 +151,7 @@ assert.equal(loc.hash,'#search');
 const sw=readFileSync(join(root,'sw.js'),'utf8');
 assert.ok(sw.includes('fetch(req).then'),'network-first version freshness');
 assert.ok(sw.includes('u.origin!==self.location.origin'),'external broadcaster requests excluded from caching');
-assert.ok(sw.includes("global-tv-hub-shell-v16"),'current FAST sports expansion refreshes the offline shell cache');
+assert.ok(sw.includes("global-tv-hub-shell-v17"),'playback repair refreshes the offline shell cache');
 assert.ok(sw.includes("'./epg.json.gz'"),'offline shell includes the latest compact programme guide');
 assert.ok(sw.includes("'skyuktennis'"),'offline shell includes channel logos');
 const appSource=readFileSync(join(root,'app.js'),'utf8');
@@ -168,4 +168,4 @@ assert.ok(existsSync(join(root,'scripts','update-epg.cjs')),'programme-guide ref
 assert.ok(existsSync(join(root,'.github','workflows','update-epg.yml')),'scheduled programme-guide refresh workflow');
 assert.ok(existsSync(join(root,'tests','browser-full-playback-audit.js')),'repeatable full-catalogue browser playback audit');
 assert.ok(existsSync(join(root,'tests','browser-visual-content-audit.js')),'repeatable visible-frame capture audit');
-console.log('PASS — HLS.js transport, visible-content audit rules, 57-channel audit, real now/next/tomorrow guide, 7 routes, UI controls');
+console.log(`PASS — HLS.js transport, visible-content audit rules, ${catalog.channels.length}-channel catalogue, real now/next/tomorrow guide, 7 routes, UI controls`);

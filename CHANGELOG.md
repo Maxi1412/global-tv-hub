@@ -1,5 +1,20 @@
 # Global TV Hub changelog
 
+## v0.16.0 — 2026-10-23 (pre-release; local QA complete, ready to deploy)
+
+- Reproduce Tennis Channel International's new browser failure: its previously working Rakuten master no longer supplies CORS. Replace it with a public LG international FAST master that played actual tennis at 1920×1080 in the PWA and sustained video/audio for 15 seconds.
+- Add owner-published Billiard TV HLS at 1080p and FloHockey 24/7's official YouTube embed. Inspect actual branded billiards instruction and hockey programming; FloHockey Auto selected 480p while manual 1080p sustained a 15-second sample. Do not imply complete NHL or premium tennis access.
+- Expand the candidate catalogue to 59 entries: 24 HLS channels, two official embeds and 33 unsupported entries; expand direct Sports Hub cards to nine and add Billiards discovery.
+- Start HLS at the preferred HD rendition, apply per-channel automatic ceilings, then retain adaptive bitrate behavior. Remove the permanent manual quality lock while preserving explicit user choices and ALEX/NRWision's stable 720p caps.
+- Confirm adaptive playback under a 1.76 Mbps throttle: 1080p reduced to 360p, with 37.62 seconds of video advance over 40 seconds and a brief adaptation rebuffer; restored-network playback continued. A focused ARD follow-up sustained 25 seconds while adapting through available renditions with no errors.
+- Verify Hamburg 1's official YouTube player at 1920×1080 with a visible branded interview and five seconds of video advance. Its older 480p Auto result was a dated observation, not a source ceiling; quality remains controlled by the embedded player.
+- Add local Billiard TV and FloHockey logos, shell cache v17, and explicit empty EPG mappings for the new stations. Exact programme-guide coverage remains 54 of 59 candidate channels.
+- Re-audit the 57-entry published baseline: 22 HLS transports and one official embed advanced, Tennis failed CORS and 33 entries remained unsupported. Visible-frame review of those 22 HLS transports found 18 actual programmes and four rights notices; repaired Tennis and new Billiard subsequently showed actual programmes.
+- Extend alternative-source research to Reddit/Famelack, ntv's current DRM/frame policy, ONE's changed hostname and United TV/Techlive's contracted B2B distribution route. No account-free supported player was found for the 33 unsupported entries.
+- Complete syntax/deterministic QA/smoke/diff checks, 28/28 retained HLS manifest/media/segment probes, 390×844 mobile nine-card sports/logo/overflow checks and offline v17 app-shell reload.
+- Pass the final local 59-entry audit at 00:32:59 Europe/Paris: 24/24 HLS transports sustained the ten-second gate, 2/2 official embeds advanced non-advertising video, 33 unsupported entries stayed honest, and unstable transports/audit failures/browser errors were all zero. Seventeen HLS samples rendered 1080p, six rendered 720p and QVC rendered 540p. Retain the full evidence in `CHANNEL_AUDIT_2026-10-23.md`.
+- Local gates are complete; GitHub QA, Pages deployment and exact public-build verification remain pending. The 33 unsupported entries are not working channels.
+
 ## v0.15.0 — 2026-10-22
 
 - Add FIFA+ German FAST and Tennis Channel International as one-click in-app sports channels after manifest, segment, codec, audio, advancing-video and visible-frame verification from Spain.

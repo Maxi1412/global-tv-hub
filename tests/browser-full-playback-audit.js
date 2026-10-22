@@ -20,7 +20,7 @@ async page => {
   const browserErrors = [];
   let activeId = '';
   const onConsole = message => {
-    if (message.type() === 'error') browserErrors.push({id:activeId,type:'console',detail:message.text().slice(0,220)});
+    if (message.type() === 'error') browserErrors.push({id:activeId,type:'console',source:message.location().url,detail:message.text().slice(0,220)});
   };
   const onPageError = error => browserErrors.push({id:activeId,type:'pageerror',detail:String(error.message || error).slice(0,220)});
   page.on('console', onConsole);
@@ -36,7 +36,10 @@ async page => {
           const video = document.querySelector('#stream-video');
           const status = document.querySelector('#player-status')?.textContent || '';
           return video && video.videoWidth > 0 && video.currentTime > 0 && status.startsWith('Signal decoded');
-        }, {timeout:30000});
+        }, null, {timeout:30000});
+        const startupMs=Date.now()-startedAt;
+        // Allow the first adaptive switch to settle, then measure a longer window.
+        await page.waitForTimeout(3000);
         const first = await page.locator('#stream-video').evaluate(video => {
           const quality=video.getVideoPlaybackQuality ? video.getVideoPlaybackQuality() : null;
           return {
@@ -51,7 +54,7 @@ async page => {
             audioDecodedBytes:Number(video.webkitAudioDecodedByteCount || 0)
           };
         });
-        await page.waitForTimeout(3500);
+        await page.waitForTimeout(10000);
         const second = await page.locator('#stream-video').evaluate(video => {
           const quality=video.getVideoPlaybackQuality ? video.getVideoPlaybackQuality() : null;
           return {
@@ -72,8 +75,8 @@ async page => {
           id:channel.id,
           name:channel.name,
           category:channel.category,
-          outcome:advancedSeconds >= 2.5 && second.readyState >= 3 && !second.paused && audioBytesAdded > 0 ? 'transport-confirmed' : 'transport-unstable',
-          startupMs:Date.now() - startedAt - 3500,
+          outcome:advancedSeconds >= 9 && second.readyState >= 3 && !second.paused && audioBytesAdded > 0 ? 'transport-confirmed' : 'transport-unstable',
+          startupMs,
           advancedSeconds,
           resolution:`${second.width}x${second.height}`,
           readyState:second.readyState,
@@ -88,29 +91,38 @@ async page => {
         await frame.waitFor({state:'visible',timeout:15000});
         await page.waitForTimeout(3500);
         const child = page.frames().find(item => item !== page.mainFrame());
+        // A preroll advertisement is not proof that the channel programme plays.
+        await child?.waitForFunction(() => {
+          const video=document.querySelector('video');
+          return !document.querySelector('.ad-showing') && video?.videoWidth>0 && video.readyState>=3 && !video.paused;
+        }, null, {timeout:90000}).catch(() => null);
+        const startupMs=Date.now()-startedAt;
         const first = await child?.locator('video').evaluate(video => ({
           time:video.currentTime,width:video.videoWidth,height:video.videoHeight,
-          readyState:video.readyState,paused:video.paused,muted:video.muted,volume:video.volume
+          readyState:video.readyState,paused:video.paused,muted:video.muted,volume:video.volume,
+          adShowing:!!document.querySelector('.ad-showing')
         })).catch(() => null);
         await page.waitForTimeout(3500);
         const second = await child?.locator('video').evaluate(video => ({
           time:video.currentTime,width:video.videoWidth,height:video.videoHeight,
-          readyState:video.readyState,paused:video.paused,muted:video.muted,volume:video.volume
+          readyState:video.readyState,paused:video.paused,muted:video.muted,volume:video.volume,
+          adShowing:!!document.querySelector('.ad-showing')
         })).catch(() => null);
         const advancedSeconds=first&&second?Number((second.time-first.time).toFixed(2)):0;
+        const embedConfirmed=advancedSeconds>=2.5&&second?.width>0&&!second.paused&&!first.adShowing&&!second.adShowing;
         results.push({
           id:channel.id,
           name:channel.name,
           category:channel.category,
-          outcome:advancedSeconds>=2.5&&second?.width>0&&!second.paused?'official-embed-transport-confirmed':'official-embed-loaded',
-          startupMs:Date.now() - startedAt,
+          outcome:embedConfirmed?'official-embed-transport-confirmed':'official-embed-loaded',
+          startupMs,
           advancedSeconds,
           resolution:second?.width?`${second.width}x${second.height}`:null,
           readyState:second?.readyState||0,
           muted:second?.muted??null,
           volume:second?.volume??null,
           frameUrl:child?.url() || null,
-          note:advancedSeconds>=2.5?'Decoded video advanced inside the official embed.':'Embed loaded without decoded-video confirmation.'
+          note:embedConfirmed?'Decoded non-ad video advanced inside the official embed.':'Embed loaded without non-ad decoded-video confirmation.'
         });
       } else {
         await page.waitForTimeout(80);

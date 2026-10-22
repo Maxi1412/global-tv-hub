@@ -1,18 +1,20 @@
 # CODEX HANDOFF — GLOBAL TV HUB
 
-**Updated:** 22 October 2026 (Europe/Madrid/Paris time)
+**Updated:** 23 October 2026 (Europe/Madrid/Paris time)
 
 ## Canonical project
 
 - Local checkout: `C:\Users\acer\AI-Workspace\Projects\Active\global-tv-hub`
 - Repository and canonical branch: `https://github.com/Maxi1412/global-tv-hub` → `main`
 - Live PWA: `https://maxi1412.github.io/global-tv-hub/`
-- Current release: **v0.15.0**, adding two verified free FAST sports channels and a stable NRWision quality cap. Implementation commit `bdc6795fcd165ba6ebab93077e551727e8d15b1c` passed GitHub PWA QA (`39788315271`), Pages deployment (`39788315100`) and the full published-app playback audit; always recheck current canonical `main` before future edits.
-- Post-release alternative-source recheck on 22 October: the deployed 55-entry audit again confirmed all 21 HLS transports and the Hamburg 1 embed, with 33 honest unavailable entries and zero failures. Public-list candidates for the missing channels were either still geo-blocked broadcaster CDNs, provider-customer/test retransmissions or private restreams; no authorised account-free replacement was found.
+- Current work: **v0.16.0 pre-release — local gates complete, ready to deploy**. Tennis Channel's newly broken CORS path is repaired; Billiard TV and official FloHockey 24/7 playback are added. Full local QA and offline v17 shell reload passed. GitHub QA, Pages deployment and exact public-build verification remain pending; do not report this candidate as deployed.
+- Published release baseline: **v0.15.0**. Implementation commit `bdc6795fcd165ba6ebab93077e551727e8d15b1c` passed its dated GitHub PWA QA (`39788315271`), Pages deployment (`39788315100`) and published-app audit. The local checkout was refreshed to canonical `main` at `438a1b49f680cffa604b38ea2cdbef884c14ab7a` for the latest EPG snapshot before v0.16 edits; recheck the remote before publishing.
+- Fresh 23 October published-baseline audit selected all 57 entries: 22 HLS transports and the Hamburg 1 embed advanced, Tennis Channel failed browser CORS, and 33 entries remained unsupported. Yesterday's pass does not certify today's source behavior.
+- Historical v0.14.1 alternative-source recheck on 22 October selected 55 entries: 21 HLS transports, Hamburg 1 and 33 unsupported states. Its count predates the published v0.15 expansion.
 - Previous published v0.12 implementation commit: `65edc2c732aec31e0176a22765512b9cb9c473ae`; its GitHub Actions QA and Pages deployment passed.
 - Published v0.8 implementation commit: `12e33b5ca9470fc090669fea47ec74585f9d7e15`
 - Last published baseline before this release: v0.7.1 at `16ef64bac6a4ca556c7d1868b2689d934a479c83`
-- GitHub `main`, GitHub Pages and the live browser build were rechecked on 21 October 2026. Recheck again before future edits; do not rely on the old baseline SHA.
+- GitHub `main` and the live baseline were refreshed on 23 October 2026. Recheck again before future edits; do not rely on an older baseline SHA.
 
 The older handoff incorrectly described this as an unpublished local prototype. That statement is superseded: the GitHub repository and Pages app are real, canonical and active.
 
@@ -31,26 +33,43 @@ Selecting a German television or sports channel should start reliable, HD-prefer
 - Never publish pirate feeds, extract subscription tokens, bypass DRM/geoblocking, or present Sky/DAZN/RTL+/Joyn content as free.
 - Do not invent programme titles, fixtures, start times or “LIVE” badges. Ship EPG data only after its licence, stable IDs, update cadence and Spain-local time handling are verified.
 
-## Current v0.15 implementation
+## Current v0.16 candidate implementation
 
-- Catalogue: **57 channels**.
+- Catalogue: **59 channels**. The request to make every channel playable remains unfinished: 33 entries still lack a supported in-app integration.
 - Every fixed catalogue channel has a locally stored broadcaster/channel logo. The same identity is used in Home, Search, Favourites, Live TV and Guide; custom streams retain a safe text fallback.
-- Configured in-app playback: **23 HLS channels / 27 retained HLS URLs**, plus **one official Hamburg 1 YouTube embed**. The other 33 catalogue entries do not have an authorised browser-compatible player.
-- Player: HLS.js first in Chromium, native HLS only as a fallback, automatic source failover, Full-HD-first quality selection, adaptive/manual quality menu, local device diagnostics and retry controls.
+- Configured in-app playback: **24 HLS channels plus two official YouTube embeds**, Hamburg 1 and FloHockey 24/7. The other 33 entries have no supported browser-compatible player.
+- Player: HLS.js first in Chromium, native HLS only as a fallback, automatic source failover and HD-preferred adaptive quality. Startup selects the preferred rendition; per-channel `autoLevelCapping` retains the stable ceilings while automatic bitrate adaptation can reduce output when bandwidth falls. The prior permanent manual quality lock is removed; explicit user quality choices, diagnostics and retry controls remain.
+- Tennis Channel International now uses a public LG international FAST master after its Rakuten master stopped sending CORS. Billiard TV uses the HLS published by its owner. FloHockey uses its own YouTube live player `9aMu8HuYpRk`; it is selected hockey programming, not complete NHL access.
 - Transport rule: decoded dimensions must be non-zero and video time must advance by at least 1.5 seconds. A transient `playing` event is not enough, and transport is never presented as proof that the programme is visible.
 - Fatal errors after playback begins now invoke recovery/fallback instead of leaving a false connected status.
 - Source labels show the dated Spain picture audit separately from current-device transport. A configured player is `Ready to test` until it decodes; after that it says `Signal decoded`, not `Working now`.
 - A direct installed-PWA/`#live` launch no longer stalls on “Preparing in-app source”. It presents an explicit Play action because browsers may require a user gesture; selecting a configured channel still starts playback immediately.
 - Each selected channel now has an in-flow programme panel below the player with current programme, progress, upcoming programmes and Today/Tomorrow/day-after navigation. The full Guide route shows real now/next listings.
-- Programme data comes from a compact same-origin snapshot built from IPTV-EPG.org's free XMLTV country links. Exact IDs populate 54 of 57 fixed channels; Terra Mater WILD, FIFA+ FAST and Tennis Channel remain explicitly unmatched.
+- Programme data comes from a compact same-origin snapshot built from IPTV-EPG.org's free XMLTV country links. Exact mappings cover 54 of 59 candidate channels; Terra Mater WILD, FIFA+ FAST, Tennis Channel, Billiard TV and FloHockey remain explicitly unmatched.
 - `.github/workflows/update-epg.yml` regenerates compressed `epg.json.gz` twice daily. It uses no API key, paid route or broadcaster playback token.
-- Hamburg 1 plays through the official player inside the existing video frame. Known-blocked ZDF-family/ARTE/DF1 sources are no longer retried.
-- Sports directory: 40 entries, including seven direct playable channels and 33 accurately labelled provider-only or unavailable entries.
+- Hamburg 1 and FloHockey play through their official players inside the existing video frame. Known-blocked ZDF-family/ARTE/DF1 sources are not retried.
+- Sports directory: 42 entries, including nine direct channel cards and 33 accurately labelled provider-only or unavailable entries.
 - Provider details render directly below the sports hero, retain the top scroll position and explain the selected provider instead of reusing one generic bottom panel.
 - Dedicated filters cover basketball, ice hockey, golf, cricket, rugby, handball, American football and athletics in addition to existing football, tennis and motorsport discovery.
-- Service-worker shell cache is v16 and includes the current compact guide plus all 53 unique channel-logo files; broadcaster and stream requests remain excluded from caching.
+- Candidate service-worker shell cache is v17 and includes the compact guide plus all 55 unique local channel-logo files; broadcaster and stream requests remain excluded from caching.
 
-## v0.15 evidence
+## v0.16 targeted evidence and pending release gates
+
+- Fresh live-baseline audit: 57 entries selected; 22 advancing HLS transports, one advancing official embed, one failing Tennis transport and 33 unsupported states. Tennis's old Rakuten master still answered at network level but omitted the CORS header required by Chrome.
+- Repaired Tennis source: `https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg01444-tennischannelth-tennischnlintl-lggb/playlist.m3u8`. Master, 1080p playlist and sampled media returned 200 with compatible CORS; the actual app showed tennis at 1920×1080 after about four seconds, sustaining advancing video/audio for 15 seconds. The master generates media paths at runtime. Owner and LG sources identify the international FAST service; its delivery name is GB and no Spain-specific competition entitlement is claimed.
+- Billiard TV: owner-published `https://bbb-billi-streamstak.otteravision.com/bbb/billi/billi.m3u8`; actual app startup about 4.8 seconds, 1920×1080 and sustained video/audio for 15 seconds, with branded billiards instruction visible.
+- FloHockey 24/7: official embed `https://www.youtube-nocookie.com/embed/9aMu8HuYpRk`. Real hockey was inspected after preroll advertising and a station break. Auto chose 480p; selecting 1080p in YouTube's menu sustained video/audio for 15 seconds. An ad or iframe load alone was not accepted as channel-programme proof.
+- Existing-channel visible-frame audit: 22 HLS transports, 18 actual programmes and four official rights notices (hr, BR Nord, BR Süd, ARD-alpha). Das Erste showed its programme. Repaired Tennis and new Billiard samples give 20 actual HLS programmes plus four notices in this window; transport success does not remove a rights notice.
+- Candidate HLS ceilings: 17 at 1080p, six at 720p (ALEX, hr, Teledeporte, FIFA+, tagesschau24, NRWision) and QVC at 540p. Both official embeds have now sustained 1080p through YouTube's quality settings. Hamburg 1 showed a branded non-advertising interview with five seconds of video advance at 1920×1080; the quality preference had persisted from the FloHockey test. Earlier 480p Auto samples describe that startup window, not a source ceiling.
+- New broad research included Reddit/Famelack leads, ntv's own 24-hour page and ONE's changed hostname. ntv's media is DRM-controlled, its direct path returned 403 and its CSP restricts framing to ntv domains. ONE's old dot hostname fails DNS; the resolving hyphen hostname still returned 403. Famelack repeats the same geo-blocked broadcaster and ANTIK operator/test sources for the missing mainstream stations. United TV/Techlive is an additional legitimate contracted B2B lead, not a public free feed.
+- The supplied livehdtv RTLZWEI/ProSieben pages had previously shown only 576p through rotating three-hour tokens; their advertised embeds failed on the real PWA origin. No authorization for redistribution was verified, and no extracted token is retained.
+- Completed candidate gates: syntax, deterministic QA/smoke and diff checks passed; 28/28 retained HLS URLs passed root-manifest, media-playlist and segment probes. Mobile 390×844 showed all nine direct Sports Hub cards with decoded logos and zero horizontal overflow.
+- Adaptive bandwidth regression: at 1.76 Mbps, output reduced from 1080p to 360p, advanced 37.62 seconds over 40 seconds and briefly rebuffered during adaptation. After restoring the network, video advanced 10.02 seconds over another ten seconds. Do not infer zero buffering from this pass.
+- ARD's first short 3.5-second candidate sample briefly appeared unstable. Its follow-up sustained 25 seconds continuously, adapting 1080→540→720→1080 with no errors. The final full-catalogue audit used a three-second warmup and ten-second HLS stability sample and passed ARD.
+- [Final local per-channel audit](CHANNEL_AUDIT_2026-10-23.md), completed 23 October 2026 at 00:32:59 Europe/Paris (`2026-10-22T22:32:59.298Z`): all 59 entries selected, 24/24 HLS transports sustained the ten-second gate, 2/2 official embeds advanced non-advertising video, 33 unsupported entries stayed honest, zero unstable transports, zero audit failures and zero browser errors. Rendered HLS samples: 17 at 1080p, six at 720p, QVC at 540p. This is not a claim of 59 working channels.
+- Offline shell v17 reload passed. All local release gates are complete; **pending:** GitHub QA, Pages deployment and the exact deployed 59-entry audit. Fill those results and the implementation SHA before calling v0.16 released.
+
+## Historical v0.15 evidence (22 October 2026)
 
 - The user-supplied platform list yielded two direct free FAST candidates after manifest, segment, codec, browser and visible-frame screening: FIFA+ German FAST and Tennis Channel International.
 - Both use partner-hosted Wurl/Amagi delivery, decoded H.264/AAC with audio and advancing video in Spain, and have an honest 1280×720 source ceiling. FIFA+ showed an actual football replay; Tennis Channel showed branded moving programming.
@@ -193,10 +212,10 @@ The probe writes `source-health-ci.json`. It deliberately samples only 32 KiB of
 
 ## Next work, in order
 
-1. Check the deployed Pages build on physical Android Chrome and any target TV browser, including autoplay, remote/focus input and PWA installation.
-2. Run longer stability samples and record join time, stalls, rendered bitrate/resolution, audio, live latency and fallback behavior.
-3. Seek source-owner permission/provenance evidence where a retained public feed came through a community directory.
-4. Contact RTL, Joyn, Sky/WOW, DAZN and Eurosport only through formal partner routes if licensed premium playback remains a product requirement.
-5. Monitor the current free XMLTV source for update failures, identifier drift and provenance/licensing changes; evaluate a formal licensed EPG provider before any commercial use.
-6. Keep `main` canonical, run all QA before publishing, verify the exact live Pages app after each deployment, and use Git history for rollback.
+1. Complete the pending v0.16 release gates above. Keep failures, unsupported states, decoded transport and visible programme access separate in the result; never call 59 catalogue entries 59 working channels.
+2. Publish only after the local gates pass; verify GitHub QA and Pages deployment, then re-run the exact public build and update this handoff with the implementation SHA and actual results.
+3. Check physical Android Chrome and target TV browsers, including autoplay, remote/focus input, YouTube preroll/quality controls and PWA installation. Run longer samples for join time, stalls, bitrate/resolution, audio, latency and fallback.
+4. Seek source-owner permission/provenance evidence where a retained public feed came through a community directory. Consider formal provider/SDK routes for the 33 unsupported entries; no such agreement exists yet.
+5. Monitor the free XMLTV source for update failures, identifier drift and provenance/licensing changes; preserve five explicit unmatched states and evaluate a formal EPG provider before commercial use.
+6. Keep `main` canonical, preserve the approved UI and user storage, and use Git history for rollback.
 

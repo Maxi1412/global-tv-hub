@@ -28,6 +28,8 @@ const channelMap = Object.freeze({
   worldfreesports: ['de', 'WorldofFreesports.de'],
   fifaplusfast: null,
   tennischannel: null,
+  billiardtv: null,
+  flohockey: null,
   ard: ['de', 'DasErste.de'],
   zdf: ['de', 'ZDF.de'],
   rtl: ['de', 'RTL.de'],
