@@ -32,7 +32,9 @@ for(const id of ['redbulltv','morethansports','teledeporte','motorvision','world
 assert.ok(catalog.channels.some(c=>c.id==='df1'&&c.stream===null),'dead / Spain-blocked DF1 feed must not be attempted');
 assert.ok(catalog.channels.some(c=>c.id==='hamburg1'&&c.embed?.startsWith('https://www.youtube-nocookie.com/embed/')),'official Hamburg 1 player stays in app');
 assert.equal(catalog.sourceAuditMeta.region,'ES','published browser screen identifies Spain region');
-assert.equal(catalog.sourceAudit.ard.result,'programme-blackout','current ARD sample records the visible rights slate, not merely decoded transport');
+assert.equal(catalog.sourceAudit.ard.result,'playback-screened','latest ARD sample records the visible programme after an earlier same-day rights slate');
+assert.equal(catalog.sourceAudit.brnorth.result,'programme-blackout','current BR Nord sample records the visible rights slate, not merely decoded transport');
+assert.equal(catalog.sourceAudit.brsouth.result,'programme-blackout','current BR Süd sample records the visible rights slate, not merely decoded transport');
 assert.equal(catalog.channels.find(x=>x.id==='alexberlin').preferredMaxHeight,720,'ALEX broken 1080p rendition is capped at stable 720p');
 assert.ok(Object.values(catalog.sourceAudit).filter(x=>x.resolution==='1920×1080').length>=16,'current audit records at least 16 Full HD sources');
 assert.equal(catalog.sourceAudit.zdf.result,'geo-blocked','blocked manifest is not labelled playable');
@@ -77,7 +79,7 @@ assert.ok(!ui.innerHTML.includes('Programme data not connected'),'old placeholde
 assert.match(ui.innerHTML,/VLC export/);
 assert.match(ui.innerHTML,/quality-select/);
 assert.match(ui.innerHTML,/Try another feed/,'in-app fallback control');
-assert.match(ui.innerHTML,/Picture is rights-blocked/,'rights notice handling');
+assert.match(ui.innerHTML,/Report rights slate/,'rights notice handling');
 assert.match(ui.innerHTML,/Last full Spain audit/,'channel details distinguish historical audit evidence from this device');
 click('filter','News');
 assert.match(ui.innerHTML,/tagesschau24/);
@@ -148,7 +150,7 @@ assert.equal(loc.hash,'#search');
 const sw=readFileSync(join(root,'sw.js'),'utf8');
 assert.ok(sw.includes('fetch(req).then'),'network-first version freshness');
 assert.ok(sw.includes('u.origin!==self.location.origin'),'external broadcaster requests excluded from caching');
-assert.ok(sw.includes("global-tv-hub-shell-v14"),'picture-content-audit release refreshes the offline shell cache');
+assert.ok(sw.includes("global-tv-hub-shell-v15"),'current picture-content audit refreshes the offline shell cache');
 assert.ok(sw.includes("'./epg.json.gz'"),'offline shell includes the latest compact programme guide');
 assert.ok(sw.includes("'skyuktennis'"),'offline shell includes channel logos');
 const appSource=readFileSync(join(root,'app.js'),'utf8');

@@ -7,7 +7,7 @@
 - Local checkout: `C:\Users\acer\AI-Workspace\Projects\Active\global-tv-hub`
 - Repository and canonical branch: `https://github.com/Maxi1412/global-tv-hub` → `main`
 - Live PWA: `https://maxi1412.github.io/global-tv-hub/`
-- Current release candidate: **v0.14.0**, correcting decoder-versus-programme status and adding a repeatable visible-frame audit. Recheck the canonical `main` SHA and deployment jobs after publishing.
+- Current release: **v0.14.1**, correcting decoder-versus-programme status and adding a repeatable visible-frame audit. Its implementation parent, `8a2f7ae16239e41716cc17f7199715e336ea2d0f`, passed GitHub Actions QA and Pages deployment; always recheck the current canonical `main` head before future work.
 - Previous published v0.12 implementation commit: `65edc2c732aec31e0176a22765512b9cb9c473ae`; its GitHub Actions QA and Pages deployment passed.
 - Published v0.8 implementation commit: `12e33b5ca9470fc090669fea47ec74585f9d7e15`
 - Last published baseline before this release: v0.7.1 at `16ef64bac6a4ca556c7d1868b2689d934a479c83`
@@ -47,13 +47,14 @@ Selecting a German television or sports channel should start reliable, HD-prefer
 - Sports directory: 38 entries, including five direct playable channels and 33 accurately labelled provider-only or unavailable entries.
 - Provider details render directly below the sports hero, retain the top scroll position and explain the selected provider instead of reusing one generic bottom panel.
 - Dedicated filters cover basketball, ice hockey, golf, cricket, rugby, handball, American football and athletics in addition to existing football, tennis and motorsport discovery.
-- Service-worker shell cache is v14 and includes the current compact guide plus all 51 unique channel-logo files; broadcaster and stream requests remain excluded from caching.
+- Service-worker shell cache is v15 and includes the current compact guide plus all 51 unique channel-logo files; broadcaster and stream requests remain excluded from caching.
 
 ## v0.14 correction and live evidence
 
 - Actual Windows Chrome reproduced the user's ARD complaint: both official Das Erste feeds decoded at 1920×1080 with audio, but the visible picture was ARD's rights slate, not the scheduled programme.
 - A two-frame visual audit then opened all 21 HLS channels. Twenty showed actual moving programme pictures; Das Erste alone showed a programme blackout. Five direct sports channels showed real sports/motoring content.
 - The full 55-entry candidate audit recorded 21 transport confirmations, one advancing official embed, 33 honest unavailable states, zero failures and zero browser errors.
+- A later exact deployed v0.14.0 rerun at 22:22 local time again captured all 21 HLS channels: Das Erste had changed to its actual 1080p programme, while BR Fernsehen Nord and Süd displayed BR's official rights slate. The latest snapshot is therefore 19 visible programmes and two programme blackouts; the changing results are expected programme-rights behaviour.
 - Joyn's official ProSieben player returned `CODE: GEO_BLOCKED` in Spain. Its SAT.1 player produced no video and returned HTTP 400 for the entitlement-token request.
 - Joyn's CSP allows framing only by Joyn-controlled domains; ZDF sends `X-Frame-Options: SAMEORIGIN`. A working consumer website cannot be reused as an in-app player without a provider partnership.
 - Zattoo's official B2B platform advertises Stream API, Playback SDK and content-inclusive white-label services. That is the legitimate route to broader channel integration, but it requires a commercial agreement and cannot be synthesized from free consumer URLs.

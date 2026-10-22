@@ -1,5 +1,11 @@
 # Global TV Hub changelog
 
+## v0.14.1 — 2026-10-21
+
+- Re-run the full deployed 55-entry browser audit: 21 HLS transports and the official Hamburg 1 embed advanced, 33 unavailable entries remained honest, 16 streams decoded at 1080p, and there were zero audit or browser errors.
+- Capture two fresh visible frames for all 21 HLS channels. Das Erste had changed from an earlier rights slate to its real 1080p programme; BR Fernsehen Nord and Süd currently showed BR's official programme-rights slate. Publish the latest time-dependent status without treating decoded transport as programme access.
+- Rename the viewer feedback action from the misleading `Picture is rights-blocked` to `Report rights slate`, and refresh the offline shell cache to v15 without altering the approved dashboard design or local user data.
+
 ## v0.14.0 — 2026-10-21
 
 - Correct the central audit flaw: decoded, advancing media is now labelled `Signal decoded`, not `Working now` or `Playback confirmed`.

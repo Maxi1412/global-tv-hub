@@ -1,6 +1,6 @@
 # Global TV Hub — QA report
 
-## v0.14.0 visible-programme audit (21 October 2026)
+## v0.14.1 deployed visible-programme audit (21 October 2026)
 
 - Reproduced the user's report in the real Windows Chrome app. Das Erste decoded 1920×1080 with audio on both configured official feeds, but the actual picture was ARD's blue “not available for legal reasons” slate. The previous automated success label was therefore false for programme availability.
 - Opened ZDF, ProSieben and SAT.1 through the deployed PWA on the PC. ZDF correctly had no player; ProSieben and SAT.1 also had no authorised in-app integration.
@@ -8,8 +8,12 @@
 - Response-header check: Joyn restricts `frame-ancestors` to Joyn-controlled domains; ZDF sends `X-Frame-Options: SAMEORIGIN`. A working consumer website is therefore not an embeddable PWA source.
 - Visible-content capture: 21/21 configured HLS channels produced two frames 2.5 seconds apart after stable startup. Human review found 20 real programme pictures and one programme blackout (Das Erste). The five direct sports channels all showed actual sports/motoring content in the captured frames.
 - Revised full 55-entry candidate audit: 21 transport confirmations, one advancing official embed, 33 honest unavailable states, zero failures and zero browser errors. Sixteen HLS transports were 1080p, four were 720p and QVC was 540p; resolution does not override rights status.
+- Exact deployed v0.14.0 rerun at 22:22 local time: 21/21 HLS transports advanced with audio, the official Hamburg 1 embed advanced, 33 unavailable entries exposed no false playback controls, and browser/audit failures remained zero. The new two-frame set showed 19 actual programme pictures; Das Erste was now showing its real 1080p programme while BR Fernsehen Nord and Süd showed BR's official legal-rights slate.
+- Manual Windows Chrome checks on the published build agreed with the automation: Das Erste and Deutsche Welle showed real 1920×1080 pictures; ZDF remained unavailable in Spain; ProSieben reported Joyn `CODE: GEO_BLOCKED`; SAT.1's official Joyn entitlement path remained unavailable.
+- Final v0.14.1 local mobile regression at 390×844: all 55 entries passed the same channel-by-channel gate (21 HLS transports, one advancing official embed, 33 honest unavailable states, zero failures and zero browser errors); document width equalled the 390px viewport.
+- Implementation parent `8a2f7ae16239e41716cc17f7199715e336ea2d0f`: GitHub Actions PWA QA PASS — https://github.com/Maxi1412/global-tv-hub/actions/runs/39668439518 ; GitHub Pages deployment PASS — https://github.com/Maxi1412/global-tv-hub/actions/runs/39668437021 .
 - `node --check app.js`, `node --check data.js`, `node tests/smoke.cjs` and `git diff --check`: PASS before deployment.
-- The UI now distinguishes `Signal decoded`, `Programme blocked`, `Unavailable from Spain` and `No in-app player`. An older locally cached `Playback confirmed` result is explicitly downgraded to “Previously decoded · picture was not certified.”
+- The UI now distinguishes `Signal decoded`, `Programme blocked`, `Unavailable from Spain` and `No in-app player`. An older locally cached `Playback confirmed` result is explicitly downgraded to “Previously decoded · picture was not certified.” The viewer action is labelled `Report rights slate`, avoiding a false claim that every currently visible picture is blocked.
 
 ## v0.13.0 full channel playback and status audit (21 October 2026)
 

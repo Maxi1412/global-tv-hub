@@ -4,9 +4,9 @@ Updated 21 October 2026. This PWA is an independent directory/player, not a broa
 
 ## v0.14 visible-picture correction
 
-- A fresh two-frame visual capture was performed for every one of the 21 configured HLS channels after stable decoder startup. Twenty displayed real moving programme content. Das Erste alone displayed ARD's official legal-rights slate on both retained official feeds, despite 1920×1080 advancing media and audio.
+- A fresh two-frame visual capture was performed for every one of the 21 configured HLS channels after stable decoder startup. The latest deployed pass displayed real programme pictures on 19 channels. Das Erste showed its real 1080p programme after displaying ARD's legal-rights slate earlier the same day; BR Nord and BR Süd displayed BR's official programme-rights slate in the latest pass.
 - The automated test is now intentionally a **transport** audit. It proves decoded dimensions, time advance, buffer, frame production and audio bytes; it no longer claims those metrics prove that the advertised programme is visible.
-- Das Erste is published as `programme-blackout` for the current Spain audit. It remains selectable because later programmes can become available, but the app no longer calls the current slate “working.”
+- BR Nord and BR Süd are published as `programme-blackout` for the latest Spain audit. Das Erste remains `playback-screened` for the latest sample, with its earlier blackout retained in the audit note. These changing results demonstrate why the app reports decoded transport separately from visible programme access.
 - Joyn's official ProSieben consumer player was opened and returned `CODE: GEO_BLOCKED` in Spain. Joyn's SAT.1 player created no video and its entitlement request returned HTTP 400. Joyn also sends a Content Security Policy limiting `frame-ancestors` to Joyn-controlled domains.
 - ZDF's official live page sends `X-Frame-Options: SAMEORIGIN`; its own FAQ states the continuous channel streams are Germany-only. ZDF video embeds are allowed only through ZDF's supplied embed function on eligible individual videos, not by framing the 24/7 live page.
 - Zattoo documents an API/playback SDK and content-inclusive white-label platform for contracted B2B operators. That is a legitimate future partner route, not a free consumer-stream URL available to this static PWA.
@@ -54,7 +54,7 @@ Official services reviewed: https://iihf.tv/ · https://www.nba.com/watch/league
 | ALEX Berlin | Moving video | 1280×720 | 720p remained stable. The advertised 1080p rendition stalled and is deliberately capped. |
 | Dokusat | Moving video | 1920×1080 | Public playout candidate; 1080p observed. |
 | hr-fernsehen | Moving video | 1280×720 | Highest rendition is 720p. An earlier sample showed a broadcaster rights slate. |
-| BR Nord | Moving video | 1920×1080 | Public broadcaster CDN. |
+| BR Nord | Programme rights slate | 1920×1080 transport | BR's official slate replaced the current programme; retry a later programme. |
 | Terra Mater WILD | Moving video | 1920×1080 | Highest rendition selected and decoded. |
 | Red Bull TV | Moving video | 1920×1080 | Free channel content; not premium live Formula 1. |
 | More Than Sports TV | Moving video | 1920×1080 | Sports programming observed. |
@@ -78,7 +78,7 @@ Official services reviewed: https://iihf.tv/ · https://www.nba.com/watch/league
 | DW English | Moving video | 1920×1080 | Advancing playback observed. |
 | DW Español | Moving video | 1920×1080 | Highest rendition selected and decoded. |
 | ARD-alpha | Moving video | 1920×1080 | Highest rendition selected and decoded. |
-| BR Süd | Moving video | 1920×1080 | Moving programme observed. |
+| BR Süd | Programme rights slate | 1920×1080 transport | BR's official slate replaced the current programme; retry a later programme. |
 
 The retained catalogue has 21 HLS channels (25 URLs including fallbacks) plus one official embedded player. All 21 HLS channels confirmed advancing after the v0.9 Full-HD-first change: 16 decoded at 1920×1080, four at their 1280×720 source/stability limit, and QVC at its 960×540 source limit. Hamburg 1's official embed decoded at 854×480. On the same ES network, all 25 HLS URLs returned a root manifest, media playlist and segment bytes. Network-path success is not a substitute for the browser evidence above.
 
