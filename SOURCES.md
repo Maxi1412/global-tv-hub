@@ -2,6 +2,17 @@
 
 Updated 22 October 2026. This PWA is an independent directory/player, not a broadcaster. Source URLs remain controlled by their owners and can change or restrict individual programmes. “Screened” below means a short Chrome/Windows sample through a confirmed ES network exit with decoded dimensions, advancing video and a visually inspected frame; it is not a long-run uptime promise, audio certification or rights clearance.
 
+## v0.15 supplied-resource follow-up
+
+- The supplied research document was checked lead by lead. Its most useful current result was two free FAST channels that could be tested as direct browser media rather than merely as provider pages: FIFA+ German FAST and Tennis Channel International.
+- FIFA+ source: partner-hosted Wurl HLS identified as the Rakuten TV German FIFA+ feed. Final app test: H.264/AAC, audio decoded, time advanced, 1280×720 maximum, and an actual football match replay was visible.
+- Tennis Channel source: partner-hosted Amagi/Rakuten HLS. Final app test: H.264/AAC, audio decoded, time advanced, 1280×720 maximum, and branded moving Tennis Channel programming was visible.
+- Samsung Germany's current free channel list independently includes `Tennis Channel Deutschland` and `FIFA+`. That supports channel identity and free FAST status; it is not used to claim that every premium match is available.
+- Final clean local browser audit: **57 listings, 23 advancing HLS transports, one advancing official embed, 33 honest unavailable entries, zero unstable transports, zero failures and zero browser errors**.
+- All 27 retained HLS URLs passed manifest, selected-playlist and segment sampling from Spain. Fifteen app channels rendered 1080p; seven rendered at their real 720p ceiling; QVC rendered 540p.
+- NRWision's manifest advertised 1080p, but that rendition stalled in two Chrome runs. The app now caps it to the stable 720p rendition; this is preferable to a higher label that does not keep playing.
+- FAST catalogue presence does not authorise extraction of Sky, DAZN, RTL+, Joyn or other protected services. No premium DRM/entitlement bypass was added.
+
 ## 22 October third-party alternative review
 
 - A new full deployed-browser pass again confirmed all 21 configured HLS transports and the official Hamburg 1 embed. The 33 non-playing entries are channels without an authorised browser-compatible integration, not newly dead configured URLs.
@@ -10,7 +21,7 @@ Updated 22 October 2026. This PWA is an independent directory/player, not a broa
 - Zattoo documents that its Free service cannot be used abroad. Its paid EU portability depends on an eligible account, home territory and package/device rules; RTL and ProSiebenSat.1 availability is restricted on some web/mobile plans.
 - waipu.tv can serve eligible German-resident subscribers temporarily in Spain, but private-group mobile use needs the appropriate paid package/option. MagentaTV likewise requires a verified German residence and provider account for temporary EU portability. These are useful consumer viewing routes, not third-party feed licences.
 - Joyn states that its free live-TV offer is Germany-only. Joyn+ portability covers eligible paid content during temporary EU travel, but the consumer player still does not permit framing on this origin.
-- Result: no lawful, account-free third-party feed was verified for ZDF-family, RTL/VOX/n-tv, ProSieben/SAT.1/Kabel Eins, Sky, DAZN, Eurosport or SPORT1 that can be placed inside this static PWA. Exposed subscription tokens, operator test playlists, private restreams and geo/DRM bypasses remain excluded.
+- Result for the missing exact channels: no lawful, account-free third-party feed was verified for ZDF-family, RTL/VOX/n-tv, ProSieben/SAT.1/Kabel Eins, Sky, DAZN, Eurosport or SPORT1 that can be placed inside this static PWA. Exposed subscription tokens, operator test playlists, private restreams and geo/DRM bypasses remain excluded.
 
 ## v0.14 visible-picture correction
 
@@ -44,13 +55,13 @@ Updated 22 October 2026. This PWA is an independent directory/player, not a broa
 - Source service: [IPTV-EPG.org free country guides](https://iptv-epg.org/guides), using its public XMLTV links for Germany, Spain and the United Kingdom.
 - The source page describes the files as free, up-to-date XMLTV data intended to be copied into compatible guide applications. No account, key, paid route or protected broadcaster stream is used.
 - `scripts/update-epg.cjs` maps exact XMLTV IDs, converts timestamp offsets to ISO instants and retains only the useful current/upcoming portion of the rolling three-day window in compressed `epg.json.gz`. The browser formats those instants in the viewer's local timezone.
-- Current generation result: 54 of 55 catalogue channels and 3,184 current/upcoming programme records. Terra Mater WILD has no exact published match and deliberately displays “No verified schedule” instead of another channel's data.
+- Current generation result: 54 of 57 catalogue channels and 3,262 current/upcoming programme records. Terra Mater WILD, FIFA+ FAST and Tennis Channel have no verified exact mapping and deliberately display “No verified schedule” instead of another channel's data.
 - Refresh cadence: 03:17 and 15:17 UTC through `.github/workflows/update-epg.yml`, plus manual workflow dispatch. The app shows snapshot freshness and a clear error state if the guide fails.
 - Programme metadata is informational and can change. A listing for RTL, Sky, DAZN or another protected channel is not a playback licence, source feed or indication that Global TV Hub can unlock it.
 
 ## v0.10 sports directory review
 
-- Direct in-app sports television: More Than Sports TV, Motorvision, World of Freesports and Red Bull TV reconfirmed at 1920×1080; Teledeporte reconfirmed at its 1280×720 maximum. Every sample advanced video and reported ready state 4.
+- Direct in-app sports television: More Than Sports TV, Motorvision, World of Freesports and Red Bull TV reconfirmed at 1920×1080; Teledeporte, FIFA+ German FAST and Tennis Channel International confirmed at their 1280×720 maximum. Every final sample advanced video and decoded audio.
 - All 33 provider-only cards were clicked in the browser. Each kept scroll position at zero, named the selected provider and displayed its own access status. None claimed playback or silently opened an external service.
 - Added official discovery entries for IIHF TV and NHL.TV/DAZN (ice hockey), Courtside 1891 and NBA League Pass (basketball), Movistar Plus+ and Sky Germany golf, ICC.tv cricket, RugbyPass TV, EHFTV handball, NFL Game Pass, World Athletics+, Olympic Channel and LALIGA+.
 - These services control accounts, subscriptions, DRM, territory and event rights. They are provider references, not authorised static HLS feeds for Global TV Hub.
@@ -83,7 +94,7 @@ Official services reviewed: https://iihf.tv/ · https://www.nba.com/watch/league
 | NDR International | Moving video | 1920×1080 | Highest rendition selected and decoded. |
 | WDR | Moving video | 1920×1080 | CDN redirected to a playable path; highest rendition decoded. |
 | Hamburg 1 | Official embedded video | 854×480 | Official YouTube player; no authorised 1080p rendition was found. |
-| NRWision | Moving video | 1920×1080 | Reached 1080p after a short quality ramp. |
+| NRWision | Moving video | 1280×720 | 1080p stalled twice in the current audit; capped at stable 720p. |
 | QVC Deutschland | Moving video | 960×540 | Moving programme observed. |
 | DW English | Moving video | 1920×1080 | Advancing playback observed. |
 | DW Español | Moving video | 1920×1080 | Highest rendition selected and decoded. |
@@ -105,7 +116,7 @@ The retained catalogue has 21 HLS channels (25 URLs including fallbacks) plus on
 
 ## Channel logo provenance — 21 October 2026
 
-- The app stores 51 unique local PNG assets for all 55 fixed channel entries; BR Nord/Süd, DW language feeds, Eurosport territories and SPORT1 entries intentionally share their correct network mark.
+- The app stores 53 unique local PNG assets for all 57 fixed channel entries; BR Nord/Süd, DW language feeds, Eurosport territories and SPORT1 entries intentionally share their correct network mark.
 - Channel/logo matching was checked against the public [IPTV-org logo index](https://github.com/iptv-org/api/blob/master/README.md), which exposes channel IDs, active status, file dimensions and original asset URLs.
 - German public/private broadcaster marks were preferentially taken from current Wikimedia Commons files where available; the relevant catalogues are [German television logos by channel](https://commons.wikimedia.org/wiki/Category:Logos_of_television_channels_in_Germany_by_name) and [German television SVG logos](https://commons.wikimedia.org/wiki/Category:SVG_logos_of_television_channels_of_Germany).
 - Sky variants were matched to their exact Sport, F1, Premier League, Bundesliga, Main Event, Football, Cricket and Tennis identities; Sky's own [press logo asset directory](https://skygroup.sky/en-gb/press/assets/logos) was also checked as the official brand reference.

@@ -1,5 +1,16 @@
 # Global TV Hub changelog
 
+## v0.15.0 — 2026-10-22
+
+- Add FIFA+ German FAST and Tennis Channel International as one-click in-app sports channels after manifest, segment, codec, audio, advancing-video and visible-frame verification from Spain.
+- Publish their actual 1280×720 source ceiling and describe them as curated free FAST programming, not substitutes for every Sky/DAZN/premium football or tennis broadcast.
+- Add real local FIFA+ and Tennis Channel logos and include them in offline shell cache v16.
+- Expand the catalogue to 57 channels, 23 HLS players plus one official embed, and the Sports Hub to seven directly playable cards.
+- Regenerate the guide with all 57 catalogue keys; 54 exact channel schedules remain populated and the three unmatched channels stay explicit.
+- Detect repeated NRWision 1080p stalls and cap that source at its stable 720p rendition instead of retaining a higher but unreliable output.
+- Make a resumed `playing` event retain the already-confirmed signal status instead of regressing the UI to “checking playback stability.”
+- Final clean full-catalogue audit: 23 HLS transports and the official embed advanced, 33 unavailable entries stayed honest, and there were zero unstable transports, failures or browser errors. All 27 retained HLS URLs passed Spain manifest/playlist/segment sampling.
+
 ## v0.14.1 — 2026-10-21
 
 - 22 October follow-up: re-run the deployed 55-entry audit after a request for third-party mirrors. All 21 configured HLS transports and the official embed advanced again; the remaining 33 entries still lack an authorised integration rather than suffering a newly dead configured source.

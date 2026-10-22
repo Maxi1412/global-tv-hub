@@ -7,7 +7,7 @@
 - Local checkout: `C:\Users\acer\AI-Workspace\Projects\Active\global-tv-hub`
 - Repository and canonical branch: `https://github.com/Maxi1412/global-tv-hub` → `main`
 - Live PWA: `https://maxi1412.github.io/global-tv-hub/`
-- Current release: **v0.14.1**, correcting decoder-versus-programme status and adding a repeatable visible-frame audit. Its implementation parent, `8a2f7ae16239e41716cc17f7199715e336ea2d0f`, passed GitHub Actions QA and Pages deployment; always recheck the current canonical `main` head before future work.
+- Release prepared: **v0.15.0**, adding two verified free FAST sports channels and a stable NRWision quality cap. Record the final commit, GitHub Actions and Pages deployment below before treating it as published; always recheck current canonical `main`.
 - Post-release alternative-source recheck on 22 October: the deployed 55-entry audit again confirmed all 21 HLS transports and the Hamburg 1 embed, with 33 honest unavailable entries and zero failures. Public-list candidates for the missing channels were either still geo-blocked broadcaster CDNs, provider-customer/test retransmissions or private restreams; no authorised account-free replacement was found.
 - Previous published v0.12 implementation commit: `65edc2c732aec31e0176a22765512b9cb9c473ae`; its GitHub Actions QA and Pages deployment passed.
 - Published v0.8 implementation commit: `12e33b5ca9470fc090669fea47ec74585f9d7e15`
@@ -31,24 +31,34 @@ Selecting a German television or sports channel should start reliable, HD-prefer
 - Never publish pirate feeds, extract subscription tokens, bypass DRM/geoblocking, or present Sky/DAZN/RTL+/Joyn content as free.
 - Do not invent programme titles, fixtures, start times or “LIVE” badges. Ship EPG data only after its licence, stable IDs, update cadence and Spain-local time handling are verified.
 
-## Current v0.14 implementation
+## Current v0.15 implementation
 
-- Catalogue: **55 channels**.
+- Catalogue: **57 channels**.
 - Every fixed catalogue channel has a locally stored broadcaster/channel logo. The same identity is used in Home, Search, Favourites, Live TV and Guide; custom streams retain a safe text fallback.
-- Configured in-app playback: **21 HLS channels / 25 retained HLS URLs**, plus **one official Hamburg 1 YouTube embed**. The other 33 catalogue entries do not have an authorised browser-compatible player.
+- Configured in-app playback: **23 HLS channels / 27 retained HLS URLs**, plus **one official Hamburg 1 YouTube embed**. The other 33 catalogue entries do not have an authorised browser-compatible player.
 - Player: HLS.js first in Chromium, native HLS only as a fallback, automatic source failover, Full-HD-first quality selection, adaptive/manual quality menu, local device diagnostics and retry controls.
 - Transport rule: decoded dimensions must be non-zero and video time must advance by at least 1.5 seconds. A transient `playing` event is not enough, and transport is never presented as proof that the programme is visible.
 - Fatal errors after playback begins now invoke recovery/fallback instead of leaving a false connected status.
 - Source labels show the dated Spain picture audit separately from current-device transport. A configured player is `Ready to test` until it decodes; after that it says `Signal decoded`, not `Working now`.
 - A direct installed-PWA/`#live` launch no longer stalls on “Preparing in-app source”. It presents an explicit Play action because browsers may require a user gesture; selecting a configured channel still starts playback immediately.
 - Each selected channel now has an in-flow programme panel below the player with current programme, progress, upcoming programmes and Today/Tomorrow/day-after navigation. The full Guide route shows real now/next listings.
-- Programme data comes from a compact same-origin snapshot built from IPTV-EPG.org's free XMLTV country links. Exact IDs populate 54 of 55 fixed channels; Terra Mater WILD remains explicitly unmatched.
+- Programme data comes from a compact same-origin snapshot built from IPTV-EPG.org's free XMLTV country links. Exact IDs populate 54 of 57 fixed channels; Terra Mater WILD, FIFA+ FAST and Tennis Channel remain explicitly unmatched.
 - `.github/workflows/update-epg.yml` regenerates compressed `epg.json.gz` twice daily. It uses no API key, paid route or broadcaster playback token.
 - Hamburg 1 plays through the official player inside the existing video frame. Known-blocked ZDF-family/ARTE/DF1 sources are no longer retried.
-- Sports directory: 38 entries, including five direct playable channels and 33 accurately labelled provider-only or unavailable entries.
+- Sports directory: 40 entries, including seven direct playable channels and 33 accurately labelled provider-only or unavailable entries.
 - Provider details render directly below the sports hero, retain the top scroll position and explain the selected provider instead of reusing one generic bottom panel.
 - Dedicated filters cover basketball, ice hockey, golf, cricket, rugby, handball, American football and athletics in addition to existing football, tennis and motorsport discovery.
-- Service-worker shell cache is v15 and includes the current compact guide plus all 51 unique channel-logo files; broadcaster and stream requests remain excluded from caching.
+- Service-worker shell cache is v16 and includes the current compact guide plus all 53 unique channel-logo files; broadcaster and stream requests remain excluded from caching.
+
+## v0.15 evidence
+
+- The user-supplied platform list yielded two direct free FAST candidates after manifest, segment, codec, browser and visible-frame screening: FIFA+ German FAST and Tennis Channel International.
+- Both use partner-hosted Wurl/Amagi delivery, decoded H.264/AAC with audio and advancing video in Spain, and have an honest 1280×720 source ceiling. FIFA+ showed an actual football replay; Tennis Channel showed branded moving programming.
+- Samsung Germany's current free-channel catalogue lists both FIFA+ and Tennis Channel. This confirms their FAST identity but does not turn every premium competition into free programming.
+- First expanded audit exposed a real NRWision problem: its 1080p rendition served bytes but stalled in Chrome. `preferredMaxHeight:720` restored stable 1280×720 playback.
+- Final clean single-session audit: **23/23 HLS transports advanced with audio, one official embed advanced, 33/33 unsupported entries stayed honest, zero unstable transports, zero failures and zero browser errors**.
+- Spain path audit: **27/27 HLS URLs** passed manifest, selected media-playlist and segment sampling. Fifteen channels rendered 1080p, seven rendered 720p and QVC rendered 540p.
+- No protected Sky, DAZN, Joyn, RTL+ or operator test/private restream was added. The supplied document itself correctly notes that platform availability is not a reusable embed/feed licence.
 
 ## v0.14 correction and live evidence
 

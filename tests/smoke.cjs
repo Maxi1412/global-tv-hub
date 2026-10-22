@@ -28,7 +28,7 @@ assert.ok(epg.channels.ard.every(item=>item.start&&item.stop&&item.title),'progr
 assert.equal(epg.mappings.terramater,null,'unmatched channels stay explicit instead of borrowing another schedule');
 assert.ok(catalog.channels.length >= 28,'channel catalogue must contain German and international sports subscriptions');
 assert.ok(catalog.channels.filter(x=>x.stream).length>=18,'at least 18 public playback candidates');
-for(const id of ['redbulltv','morethansports','teledeporte','motorvision','worldfreesports']) assert.ok(catalog.channels.some(c=>c.id===id&&c.stream),'public one-click sports stream: '+id);
+for(const id of ['redbulltv','morethansports','teledeporte','motorvision','worldfreesports','fifaplusfast','tennischannel']) assert.ok(catalog.channels.some(c=>c.id===id&&c.stream),'public one-click sports stream: '+id);
 assert.ok(catalog.channels.some(c=>c.id==='df1'&&c.stream===null),'dead / Spain-blocked DF1 feed must not be attempted');
 assert.ok(catalog.channels.some(c=>c.id==='hamburg1'&&c.embed?.startsWith('https://www.youtube-nocookie.com/embed/')),'official Hamburg 1 player stays in app');
 assert.equal(catalog.sourceAuditMeta.region,'ES','published browser screen identifies Spain region');
@@ -36,7 +36,8 @@ assert.equal(catalog.sourceAudit.ard.result,'playback-screened','latest ARD samp
 assert.equal(catalog.sourceAudit.brnorth.result,'programme-blackout','current BR Nord sample records the visible rights slate, not merely decoded transport');
 assert.equal(catalog.sourceAudit.brsouth.result,'programme-blackout','current BR Süd sample records the visible rights slate, not merely decoded transport');
 assert.equal(catalog.channels.find(x=>x.id==='alexberlin').preferredMaxHeight,720,'ALEX broken 1080p rendition is capped at stable 720p');
-assert.ok(Object.values(catalog.sourceAudit).filter(x=>x.resolution==='1920×1080').length>=16,'current audit records at least 16 Full HD sources');
+assert.equal(catalog.channels.find(x=>x.id==='nrwision').preferredMaxHeight,720,'NRWision broken 1080p rendition is capped at stable 720p');
+assert.ok(Object.values(catalog.sourceAudit).filter(x=>x.resolution==='1920×1080').length>=15,'current audit records at least 15 Full HD sources');
 assert.equal(catalog.sourceAudit.zdf.result,'geo-blocked','blocked manifest is not labelled playable');
 assert.equal(catalog.sourceAudit.prosieben.result,'geo-blocked','official Joyn Spain block is recorded without inventing a stream');
 assert.equal(catalog.sourceAudit.sat1.result,'geo-blocked','official Joyn entitlement failure is recorded without inventing a stream');
@@ -47,7 +48,7 @@ assert.ok(catalog.sports.some(x=>x.id==='redbulltv' && x.accessTier==='Play in a
 assert.ok(catalog.sports.some(x=>x.id==='fifaplus' && x.accessTier==='Free official'),'FIFA+ official free selection on DAZN');
 assert.ok(catalog.sports.some(x=>x.id==='skyf1' && x.accessTier==='Subscription'),'paid provider directory');
 for(const category of ['Basketball','Ice Hockey','Golf','Cricket','Rugby','Handball','American Football','Athletics']) assert.ok(catalog.sports.some(x=>x.category===category),'sports category '+category);
-assert.equal(catalog.sports.filter(s=>s.channelId).length,5,'five sports cards have direct in-app channel bindings');
+assert.equal(catalog.sports.filter(s=>s.channelId).length,7,'seven sports cards have direct in-app channel bindings');
 assert.ok(catalog.sports.filter(s=>s.channelId).every(s=>s.quality),'every directly playable sports card publishes its verified maximum');
 assert.ok(catalog.channels.every(x=>x.official===null||x.official.startsWith('https://')));
 assert.ok(catalog.channels.every(x=>x.stream===null||x.stream.startsWith('https://')));
@@ -150,7 +151,7 @@ assert.equal(loc.hash,'#search');
 const sw=readFileSync(join(root,'sw.js'),'utf8');
 assert.ok(sw.includes('fetch(req).then'),'network-first version freshness');
 assert.ok(sw.includes('u.origin!==self.location.origin'),'external broadcaster requests excluded from caching');
-assert.ok(sw.includes("global-tv-hub-shell-v15"),'current picture-content audit refreshes the offline shell cache');
+assert.ok(sw.includes("global-tv-hub-shell-v16"),'current FAST sports expansion refreshes the offline shell cache');
 assert.ok(sw.includes("'./epg.json.gz'"),'offline shell includes the latest compact programme guide');
 assert.ok(sw.includes("'skyuktennis'"),'offline shell includes channel logos');
 const appSource=readFileSync(join(root,'app.js'),'utf8');
@@ -165,6 +166,6 @@ assert.ok(appSource.includes('data-guide-day'),'guide exposes today and next-day
 assert.ok(existsSync(join(root,'.nojekyll')),'GitHub Pages compatible');
 assert.ok(existsSync(join(root,'scripts','update-epg.cjs')),'programme-guide refresh script');
 assert.ok(existsSync(join(root,'.github','workflows','update-epg.yml')),'scheduled programme-guide refresh workflow');
-assert.ok(existsSync(join(root,'tests','browser-full-playback-audit.js')),'repeatable 55-channel browser playback audit');
+assert.ok(existsSync(join(root,'tests','browser-full-playback-audit.js')),'repeatable full-catalogue browser playback audit');
 assert.ok(existsSync(join(root,'tests','browser-visual-content-audit.js')),'repeatable visible-frame capture audit');
-console.log('PASS — HLS.js transport, visible-content audit rules, 55-channel audit, real now/next/tomorrow guide, 7 routes, UI controls');
+console.log('PASS — HLS.js transport, visible-content audit rules, 57-channel audit, real now/next/tomorrow guide, 7 routes, UI controls');

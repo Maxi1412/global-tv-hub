@@ -26,6 +26,8 @@ const channelMap = Object.freeze({
   df1: ['de', 'DF1.de'],
   motorvision: ['de', 'MOTORVISIONTV.de'],
   worldfreesports: ['de', 'WorldofFreesports.de'],
+  fifaplusfast: null,
+  tennischannel: null,
   ard: ['de', 'DasErste.de'],
   zdf: ['de', 'ZDF.de'],
   rtl: ['de', 'RTL.de'],

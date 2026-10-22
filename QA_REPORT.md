@@ -1,5 +1,19 @@
 # Global TV Hub — QA report
 
+## v0.15.0 free FAST sports expansion (22 October 2026)
+
+- Reviewed the supplied platform research and rejected device-only catalogues, provider login pages, customer/test retransmissions, protected subscription playback and private restreams as direct PWA sources.
+- Added two partner-hosted free FAST sources with open browser delivery: FIFA+ German FAST through Wurl and Tennis Channel International through Amagi/Rakuten. Samsung's current German channel list independently identifies both brands in its free sports catalogue.
+- Before integration, both sources returned HLS manifests, media playlists and media bytes; `ffprobe` decoded H.264/AAC; Chrome decoded audio and 1280×720 video; FIFA+ visibly showed a football match replay and Tennis Channel showed branded moving programming.
+- Full final local browser audit: 57/57 catalogue entries resolved correctly — 23 advancing HLS transports, one advancing official embed, 33 honest unavailable states, zero unstable transports, zero audit failures and zero browser errors.
+- Quality result: 15 HLS channels at 1920×1080, seven at 1280×720 and QVC at 960×540. The two new FAST channels are accurately labelled `720p source maximum`, not invented Full HD.
+- During the first expanded pass, NRWision's 1080p rendition timed out twice even though its manifest/segments answered. Capping it to 720p restored stable browser playback; the final full audit passed it at 1280×720 with audio.
+- Spain network-path audit: 27/27 retained HLS URLs returned a root manifest, selected media playlist and segment sample; 20 advertised a 1080p rendition. This remains transport support, not visible-programme proof.
+- Programme snapshot regenerated: 57 catalogue keys, 54 with exact listings and 3,262 current/upcoming programme records. The new FAST feeds are explicitly unmatched instead of borrowing another channel's schedule.
+- Sports-specific playback audit: all seven in-app sports channels advanced with decoded dimensions and no failures; four rendered 1920×1080 and Teledeporte/FIFA+/Tennis Channel rendered 1280×720.
+- Sports UI audit: all 33 provider-only cards kept the viewport at the top and displayed their own heading/status; the `Play in app` filter returned seven cards; the 390×844 mobile view had no horizontal overflow.
+- Deterministic syntax, smoke/QA and diff checks plus deployment/Pages verification are required before marking v0.15.0 published.
+
 ## v0.14.1 alternate-source recheck (22 October 2026)
 
 - Re-ran `tests/browser-full-playback-audit.js` against the published Pages build after the request to use third-party alternatives. Result: 55/55 catalogue entries resolved correctly, with 21 advancing HLS transports, one advancing official Hamburg 1 embed, 33 honest unavailable states, zero unstable configured transports, zero audit failures and zero browser errors.
