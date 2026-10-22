@@ -10,6 +10,7 @@
 - Detect repeated NRWision 1080p stalls and cap that source at its stable 720p rendition instead of retaining a higher but unreliable output.
 - Make a resumed `playing` event retain the already-confirmed signal status instead of regressing the UI to “checking playback stability.”
 - Final clean full-catalogue audit: 23 HLS transports and the official embed advanced, 33 unavailable entries stayed honest, and there were zero unstable transports, failures or browser errors. All 27 retained HLS URLs passed Spain manifest/playlist/segment sampling.
+- Publish implementation commit `bdc6795fcd165ba6ebab93077e551727e8d15b1c`; GitHub PWA QA and Pages deployment passed, and the exact public build repeated all 57 channel-state checks with zero unstable transports or audit failures.
 
 ## v0.14.1 — 2026-10-21
 

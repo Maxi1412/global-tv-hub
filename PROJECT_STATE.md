@@ -2,7 +2,7 @@
 
 **Updated:** 22 October 2026
 
-- Release prepared: v0.15.0 free FAST sports expansion, pending canonical `main` deployment verification.
+- Current release: v0.15.0 free FAST sports expansion, published from canonical `main`; implementation commit `bdc6795fcd165ba6ebab93077e551727e8d15b1c` passed PWA QA, Pages deployment and the full live-app audit.
 - Added FIFA+ German FAST and Tennis Channel International as one-click in-app sports channels. Both decoded audio/video, advanced and showed the expected channel content from Spain at their 1280×720 source maximum.
 - Current local catalogue: 57 entries, 23 configured HLS players, one official embed and 33 honest unavailable states. Seven Sports Hub cards now launch the internal player.
 - Final clean local Chrome audit: 23/23 HLS transports advanced with audio, Hamburg 1's embedded video advanced, 33/33 no-source entries stayed honest, and there were zero failures, unstable transports or browser errors.

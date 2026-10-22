@@ -7,7 +7,7 @@
 - Local checkout: `C:\Users\acer\AI-Workspace\Projects\Active\global-tv-hub`
 - Repository and canonical branch: `https://github.com/Maxi1412/global-tv-hub` → `main`
 - Live PWA: `https://maxi1412.github.io/global-tv-hub/`
-- Release prepared: **v0.15.0**, adding two verified free FAST sports channels and a stable NRWision quality cap. Record the final commit, GitHub Actions and Pages deployment below before treating it as published; always recheck current canonical `main`.
+- Current release: **v0.15.0**, adding two verified free FAST sports channels and a stable NRWision quality cap. Implementation commit `bdc6795fcd165ba6ebab93077e551727e8d15b1c` passed GitHub PWA QA (`39788315271`), Pages deployment (`39788315100`) and the full published-app playback audit; always recheck current canonical `main` before future edits.
 - Post-release alternative-source recheck on 22 October: the deployed 55-entry audit again confirmed all 21 HLS transports and the Hamburg 1 embed, with 33 honest unavailable entries and zero failures. Public-list candidates for the missing channels were either still geo-blocked broadcaster CDNs, provider-customer/test retransmissions or private restreams; no authorised account-free replacement was found.
 - Previous published v0.12 implementation commit: `65edc2c732aec31e0176a22765512b9cb9c473ae`; its GitHub Actions QA and Pages deployment passed.
 - Published v0.8 implementation commit: `12e33b5ca9470fc090669fea47ec74585f9d7e15`
@@ -57,6 +57,7 @@ Selecting a German television or sports channel should start reliable, HD-prefer
 - Samsung Germany's current free-channel catalogue lists both FIFA+ and Tennis Channel. This confirms their FAST identity but does not turn every premium competition into free programming.
 - First expanded audit exposed a real NRWision problem: its 1080p rendition served bytes but stalled in Chrome. `preferredMaxHeight:720` restored stable 1280×720 playback.
 - Final clean single-session audit: **23/23 HLS transports advanced with audio, one official embed advanced, 33/33 unsupported entries stayed honest, zero unstable transports, zero failures and zero browser errors**.
+- The exact deployed Pages build repeated the same 23/1/33 channel outcomes with zero unstable transports or audit failures. Its one console entry was a non-fatal YouTube `compute-pressure` permissions-policy warning from the cross-origin Hamburg 1 embed, not an application error.
 - Spain path audit: **27/27 HLS URLs** passed manifest, selected media-playlist and segment sampling. Fifteen channels rendered 1080p, seven rendered 720p and QVC rendered 540p.
 - No protected Sky, DAZN, Joyn, RTL+ or operator test/private restream was added. The supplied document itself correctly notes that platform availability is not a reusable embed/feed licence.
 

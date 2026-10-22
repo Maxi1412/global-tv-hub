@@ -12,7 +12,8 @@
 - Programme snapshot regenerated: 57 catalogue keys, 54 with exact listings and 3,262 current/upcoming programme records. The new FAST feeds are explicitly unmatched instead of borrowing another channel's schedule.
 - Sports-specific playback audit: all seven in-app sports channels advanced with decoded dimensions and no failures; four rendered 1920×1080 and Teledeporte/FIFA+/Tennis Channel rendered 1280×720.
 - Sports UI audit: all 33 provider-only cards kept the viewport at the top and displayed their own heading/status; the `Play in app` filter returned seven cards; the 390×844 mobile view had no horizontal overflow.
-- Deterministic syntax, smoke/QA and diff checks plus deployment/Pages verification are required before marking v0.15.0 published.
+- Implementation commit `bdc6795fcd165ba6ebab93077e551727e8d15b1c`: GitHub PWA QA PASS — https://github.com/Maxi1412/global-tv-hub/actions/runs/39788315271 ; Pages deployment PASS — https://github.com/Maxi1412/global-tv-hub/actions/runs/39788315100 .
+- Exact published Pages audit: 23/23 HLS transports advanced with audio, the Hamburg 1 inner video advanced at 854×480, 33 unavailable entries stayed honest, and there were zero unstable transports or audit failures. The only console entry was YouTube's own non-fatal `compute-pressure` permissions-policy warning inside its cross-origin embed; no app JavaScript error occurred.
 
 ## v0.14.1 alternate-source recheck (22 October 2026)
 
